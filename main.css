@@ -1,0 +1,49 @@
+body {
+  margin: 0;
+  overflow: hidden;
+}
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+}
+
+.guiholder {
+  position: fixed;
+  right: 25px;
+  top: 25px;
+  width: 280px;
+  background: rgba(255, 0, 255);
+}
+
+.hideme {
+  display: none;
+}
+
+.label {
+  color: #fff;
+  text-align: center;
+  font-family: sans-serif;
+  padding: 5px;
+  font-size: 12pt;
+}
+
+.guibar {
+  text-align: center;
+  color: #fff;
+  width: 140;
+  font-family: sans-serif;
+  padding: 5px;
+  font-size: 12pt;
+  border-bottom: 1px solid #fff;
+}
+
+.slider {
+  margin: 15px;
+  padding: 3px;
+  width: 85%;
+}
