@@ -268,22 +268,36 @@ function draw() {
 }
 
 function buildGUI() {
-  let guiHolder = createDiv("").class("guiholder");
-  guibar = createDiv("=== QZ HYDRA BRUSHES ===")
-    .parent(guiHolder)
-    .class("guibar");
+  let guiWrapper = createDiv("").class("guiWrapper");
+  let guiContent = createDiv("").parent(guiWrapper).class("guiContent");
 
-  let guiContent = createDiv("").parent(guiHolder); //.draggable()
-  createSpan("  [x]")
-    .parent(guibar)
-    .mousePressed(function () {
-      guiContent.toggleClass("hideme");
-    });
+  let guiInfo = createDiv("").parent(guiContent).class("guiInfo");
+  createDiv("QZs p5*hydra brushes").parent(guiInfo).class("title");
 
-  guiContent = createDiv("").parent(guiHolder);
+  let trashButton = createDiv("Trash").parent(guiInfo).class("trashButton");
+  trashButton.mousePressed(clearCanvas);
 
-  label("SELECT YOUR BRUSH");
-  sel = createSelect().parent(guiContent).class("slider");
+  let saveButton = createDiv("Save").parent(guiInfo).class("saveButton");
+  saveButton.mousePressed(saveCanvas);
+
+  createDiv("Add").parent(guiInfo).class("addButton");
+  createDiv("Print").parent(guiInfo).class("printButton");
+  createDiv("?").parent(guiInfo).class("infoButton");
+
+  let column2 = createDiv("").parent(guiContent).class("column2");
+
+  let selectBrush = createDiv("").parent(column2).class("selectWrapper"); //for select brush
+
+  let column3 = createDiv("").parent(guiContent).class("column3");
+
+  let sliderBackground = createDiv("").parent(column3).class("sliderWrapper"); //for backgroundSlider
+  let sliderHydraZoom = createDiv("").parent(column3).class("sliderWrapper"); //for
+  let sliderBrushSize = createDiv("").parent(column3).class("sliderWrapper");
+  let sliderBrushShape = createDiv("").parent(column3).class("sliderWrapper");
+  let sliderHyperActive = createDiv("").parent(column3).class("sliderWrapper");
+
+  label("SELECT YOUR BRUSH", selectBrush);
+  sel = createSelect().parent(selectBrush).class("slider");
   sel.option("losing my religion", 0);
   sel.option("smells like teen spirit", 1);
   sel.option("poison paradise", 2);
@@ -300,44 +314,46 @@ function buildGUI() {
   //	label('QZs HYDRA BRUSHES')
   //	label('––––––––––––––––––––')
 
-  label("BACKGROUND");
+  label("BACKGROUND", sliderBackground);
   backgroundSlider = createSlider(0, 255, 5, 1)
-    .parent(guiContent)
+    .parent(sliderBackground)
     .class("slider");
 
-  label("HYDRA ZOOM");
-  zoomSlider = createSlider(10, 255, 10, 0).parent(guiContent).class("slider");
+  label("HYDRA ZOOM", sliderHydraZoom);
+  zoomSlider = createSlider(10, 255, 10, 0)
+    .parent(sliderHydraZoom)
+    .class("slider");
 
-  label("BRUSH SIZE");
+  label("BRUSH SIZE", sliderBrushSize);
   sizeSlider = createSlider(0.1, 1, 0.5, 0.001)
-    .parent(guiContent)
+    .parent(sliderBrushSize)
     .class("slider");
 
-  label("BRUSH SHAPE");
+  label("BRUSH SHAPE", sliderBrushShape);
   shapeSlider = createSlider(3, 12, 50, 0.001)
-    .parent(guiContent)
+    .parent(sliderBrushShape)
     .class("slider");
 
-  label("HYPER ACTIVE");
+  label("HYPER ACTIVE", sliderHyperActive);
   hyperSlider = createSlider(0.5, 10, 3, 0.05)
-    .parent(guiContent)
+    .parent(sliderHyperActive)
     .class("slider");
 
   // Set the selected option to "brush1".
   sel.selected("title of brush0", 0);
 
-  label("=======> <=======");
-  let clearButton = createButton("trash me").parent(guiContent).class("slider");
-  clearButton.mousePressed(clearCanvas);
+  // label("=======> <=======");
+  // let clearButton = createButton("trash me").parent(guiContent).class("slider");
+  // clearButton.mousePressed(clearCanvas);
 
   function clearCanvas() {
     cleverlayer.clear();
     background(0);
   }
 
-  label("SAVE");
-  let saveButton = createButton("save me").parent(guiContent).class("slider");
-  saveButton.mousePressed(saveCanvas);
+  // label("SAVE");
+  // let saveButton = createButton("save me").parent(guiContent).class("slider");
+  // saveButton.mousePressed(saveCanvas);
 
   function saveCanvas() {
     var filename = "qz-hydra-brush.png";
@@ -358,7 +374,7 @@ function buildGUI() {
     cleverlayer.save(filename); // use to save specific layer only
   }
 
-  function label(txt) {
-    createDiv(txt).parent(guiContent).class("label");
+  function label(txt, parent) {
+    createDiv(txt).parent(parent).class("label");
   }
 }

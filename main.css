@@ -12,38 +12,34 @@ canvas {
   margin: 0;
 }
 
-.guiholder {
+.guiWrapper {
+  width: 100%;
   position: fixed;
-  right: 25px;
-  top: 25px;
-  width: 280px;
-  background: rgba(255, 0, 255);
+  top: 0;
+  left: 0;
 }
 
-.hideme {
-  display: none;
+.guiContent {
+  display: flex;
+  width: 100%;
+  padding-top: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
-.label {
-  color: #fff;
-  text-align: center;
-  font-family: sans-serif;
-  padding: 5px;
-  font-size: 12pt;
+.guiInfo {
+  display: flex;
+  flex-direction: column;
 }
 
-.guibar {
-  text-align: center;
-  color: #fff;
-  width: 140;
-  font-family: sans-serif;
-  padding: 5px;
-  font-size: 12pt;
-  border-bottom: 1px solid #fff;
+.selectWrapper,
+.sliderWrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
-.slider {
-  margin: 15px;
-  padding: 3px;
-  width: 85%;
+.column3 {
+  display: flex;
+  width: 100%;
 }
