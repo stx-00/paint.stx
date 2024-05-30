@@ -6,6 +6,7 @@ window.onfocus = function () {
   loop();
 };
 
+// let time = new Date();
 //QZ for real REAL_002
 
 /* CUSTOM FUNCTIONS FOR P5LIVE */
@@ -274,15 +275,17 @@ function buildGUI() {
   let guiInfo = createDiv("").parent(guiContent).class("guiInfo");
   createDiv("QZs p5*hydra brushes").parent(guiInfo).class("title");
 
-  let trashButton = createDiv("Trash").parent(guiInfo).class("trashButton");
+  let trashButton = createDiv("Trash")
+    .parent(guiInfo)
+    .class("trashButton button");
   trashButton.mousePressed(clearCanvas);
 
-  let saveButton = createDiv("Save").parent(guiInfo).class("saveButton");
+  let saveButton = createDiv("Save").parent(guiInfo).class("saveButton button");
   saveButton.mousePressed(saveCanvas);
 
-  createDiv("Add").parent(guiInfo).class("addButton");
-  createDiv("Print").parent(guiInfo).class("printButton");
-  createDiv("?").parent(guiInfo).class("infoButton");
+  createDiv("Add").parent(guiInfo).class("addButton button");
+  createDiv("Print").parent(guiInfo).class("printButton button");
+  createDiv("?").parent(guiInfo).class("infoButton button");
 
   let column2 = createDiv("").parent(guiContent).class("column2");
 
@@ -297,7 +300,7 @@ function buildGUI() {
   let sliderHyperActive = createDiv("").parent(column3).class("sliderWrapper");
 
   label("SELECT YOUR BRUSH", selectBrush);
-  sel = createSelect().parent(selectBrush).class("slider");
+  sel = createSelect().parent(selectBrush).class("select");
   sel.option("losing my religion", 0);
   sel.option("smells like teen spirit", 1);
   sel.option("poison paradise", 2);
@@ -315,7 +318,7 @@ function buildGUI() {
   //	label('––––––––––––––––––––')
 
   label("BACKGROUND", sliderBackground);
-  backgroundSlider = createSlider(0, 255, 5, 1)
+  backgroundSlider = createSlider(0, 255, 255, 1)
     .parent(sliderBackground)
     .class("slider");
 

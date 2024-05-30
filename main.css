@@ -1,6 +1,7 @@
 body {
   margin: 0;
   overflow: hidden;
+  font-family: Arial, Helvetica, sans-serif;
 }
 canvas {
   position: fixed;
@@ -15,6 +16,7 @@ canvas {
 .guiWrapper {
   width: 100%;
   position: fixed;
+  display: flex;
   top: 0;
   left: 0;
 }
@@ -25,11 +27,18 @@ canvas {
   padding-top: 15px;
   padding-left: 15px;
   padding-right: 15px;
+  gap: 80px;
 }
 
 .guiInfo {
   display: flex;
   flex-direction: column;
+  gap: 10px;
+  width: 250px;
+}
+
+.title {
+  margin-bottom: 20px;
 }
 
 .selectWrapper,
@@ -39,7 +48,105 @@ canvas {
   flex: 1;
 }
 
+.selectWrapper > .label {
+  margin-bottom: 10px;
+}
+
+.column2 {
+  width: 350px;
+}
+
 .column3 {
   display: flex;
   width: 100%;
+  gap: 80px;
+}
+
+.button {
+  cursor: pointer;
+}
+
+/* General slider styles */
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 3px;
+  background: #ddd;
+  outline: none;
+  opacity: 1;
+  transition: opacity 0.2s;
+  margin: 20px 0;
+}
+
+/* Track styles */
+.slider::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 3px;
+  cursor: pointer;
+  background: #000000;
+  border-radius: 5px;
+  border: 1px solid #aaa;
+}
+
+.slider::-moz-range-track {
+  width: 100%;
+  height: 3px;
+  cursor: pointer;
+  background: #000000;
+  border-radius: 5px;
+  border: 1px solid #aaa;
+}
+
+/* Thumb styles */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background: #ffffff;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 2px solid #000000;
+  margin-top: -12px; /* Adjust to align with track */
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #ffffff;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 2px solid #000000;
+}
+
+/* Basic styling for the select element */
+.select {
+  width: 100%;
+  font-size: 16px;
+  appearance: none; /* Removes default styling */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  position: relative;
+  border: none;
+  background: transparent;
+}
+
+/* Remove border and styles from the options dropdown */
+.select option {
+  border: none;
+  color: black;
+  padding: 10px;
+  margin: 0;
+  box-shadow: none;
+}
+
+/* Remove the popup window border in Firefox */
+.select::-moz-focus-inner {
+  border: 0;
+}
+
+/* Container for the select element */
+.selectWrapper {
+  position: relative;
 }
