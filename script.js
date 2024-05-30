@@ -275,16 +275,16 @@ function buildGUI() {
   let guiInfo = createDiv("").parent(guiContent).class("guiInfo");
   createDiv("QZs p5*hydra brushes").parent(guiInfo).class("title");
 
-  let trashButton = createDiv("Trash")
+  let trashButton = createDiv("trash")
     .parent(guiInfo)
     .class("trashButton button");
   trashButton.mousePressed(clearCanvas);
 
-  let saveButton = createDiv("Save").parent(guiInfo).class("saveButton button");
+  let saveButton = createDiv("save").parent(guiInfo).class("saveButton button");
   saveButton.mousePressed(saveCanvas);
 
-  createDiv("Add").parent(guiInfo).class("addButton button");
-  createDiv("Print").parent(guiInfo).class("printButton button");
+  createDiv("add").parent(guiInfo).class("addButton button");
+  createDiv("print").parent(guiInfo).class("printButton button");
   createDiv("?").parent(guiInfo).class("infoButton button");
 
   let column2 = createDiv("").parent(guiContent).class("column2");
@@ -299,7 +299,7 @@ function buildGUI() {
   let sliderBrushShape = createDiv("").parent(column3).class("sliderWrapper");
   let sliderHyperActive = createDiv("").parent(column3).class("sliderWrapper");
 
-  label("SELECT YOUR BRUSH", selectBrush);
+  label("select your brush", selectBrush);
   sel = createSelect().parent(selectBrush).class("select");
   sel.option("losing my religion", 0);
   sel.option("smells like teen spirit", 1);
@@ -317,27 +317,27 @@ function buildGUI() {
   //	label('QZs HYDRA BRUSHES')
   //	label('––––––––––––––––––––')
 
-  label("BACKGROUND", sliderBackground);
+  label("background", sliderBackground);
   backgroundSlider = createSlider(0, 255, 255, 1)
     .parent(sliderBackground)
     .class("slider");
 
-  label("HYDRA ZOOM", sliderHydraZoom);
+  label("hydra zoom", sliderHydraZoom);
   zoomSlider = createSlider(10, 255, 10, 0)
     .parent(sliderHydraZoom)
     .class("slider");
 
-  label("BRUSH SIZE", sliderBrushSize);
+  label("brush size", sliderBrushSize);
   sizeSlider = createSlider(0.1, 1, 0.5, 0.001)
     .parent(sliderBrushSize)
     .class("slider");
 
-  label("BRUSH SHAPE", sliderBrushShape);
+  label("brush shape", sliderBrushShape);
   shapeSlider = createSlider(3, 12, 50, 0.001)
     .parent(sliderBrushShape)
     .class("slider");
 
-  label("HYPER ACTIVE", sliderHyperActive);
+  label("hyper active", sliderHyperActive);
   hyperSlider = createSlider(0.5, 10, 3, 0.05)
     .parent(sliderHyperActive)
     .class("slider");
