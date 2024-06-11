@@ -212,7 +212,9 @@ synth[6]
 //Ô	speed = 0.1
 
 synth[7]
-  .solid(() => backgroundSlider.value)
+  .solid(() => backgroundSlider.value) //sel.value also works??? but just black????
+  //.solid(() => 0, 0, 0, 0)
+  //.solid(0, 0, 0, 0) // Ensure full transparency
   .mask(
     synth[7].shape(
       () => shapeSlider.value(),
@@ -248,7 +250,7 @@ function draw() {
 
   //	pgSel = 1
 
-  background(backgroundSlider.value()); // background slider not working???
+  background(backgroundSlider.value());
 
   //	clear()
 
@@ -262,7 +264,14 @@ function draw() {
   );
 
   if (mouseIsPressed) {
-    cleverlayer.image(pg[pgSel], mouseX, mouseY);
+    if (pgSel == 7) {
+      // Activate erase mode for synth[7]
+      cleverlayer.erase();
+      cleverlayer.image(pg[pgSel], mouseX, mouseY);
+      cleverlayer.noErase();
+    } else {
+      cleverlayer.image(pg[pgSel], mouseX, mouseY);
+    }
   }
   image(cleverlayer, width / 2, height / 2);
   image(pg[pgSel], mouseX, mouseY);
