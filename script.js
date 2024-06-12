@@ -1,13 +1,19 @@
-// eco-mode = only render if window focused
+let time = new Date();
+let zoomSlider;
+let sizeSlider;
+let hyperSlider;
+let shapeSlider;
+let backgroundSlider;
+let sliderActive = false; // Flag to indicate slider activity
+let sliderClicked = false; // Flag to indicate if the slider was just clicked
+
+// Eco-mode for rendering only if the window is focused
 window.onblur = function () {
   noLoop();
 };
 window.onfocus = function () {
   loop();
 };
-
-// let time = new Date();
-//QZ for real REAL_002
 
 /* CUSTOM FUNCTIONS FOR P5LIVE */
 // keep fullscreen if window resized
@@ -77,11 +83,8 @@ synth[0]
       )
       .modulate(synth[0].noise(0.6, () => hyperSlider.value()))
       .diff(synth[0].src(synth[0].o0))
-      //	.modulateScrollY(synth[0].osc(2))
-      //	.modulate(synth[0].osc().rotate(),.11)
       .scale(0.72)
       .color(188, 25, 50)
-    //	.luma(15)
   )
   .out();
 
@@ -124,8 +127,6 @@ synth[2]
       )
     )
   )
-  // .rotate(1.58)
-  // .blend(synth[2].src(synth[2].o0), 0.94)
   .modulateScale(synth[2].osc(10, 0), -0.03)
   .modulate(synth[2].noise(0.6, () => hyperSlider.value()))
   .scale(0.8, () => 1.05 + 0.1 * Math.sin(0.05 * time))
@@ -212,9 +213,7 @@ synth[6]
 //Ô	speed = 0.1
 
 synth[7]
-  .solid(() => backgroundSlider.value) //sel.value also works??? but just black????
-  //.solid(() => 0, 0, 0, 0)
-  //.solid(0, 0, 0, 0) // Ensure full transparency
+  .solid([1, 0, 0], [0, 1, 0], [0, 0, 1], 1)
   .mask(
     synth[7].shape(
       () => shapeSlider.value(),
@@ -246,13 +245,14 @@ function setup() {
 }
 
 function draw() {
+  // Do not draw if a slider is active
+  if (sliderActive) {
+    return;
+  }
+
   // grab + apply hydra textures
 
-  //	pgSel = 1
-
   background(backgroundSlider.value());
-
-  //	clear()
 
   pg[pgSel].clear();
   pg[pgSel].drawingContext.drawImage(
@@ -265,13 +265,11 @@ function draw() {
 
   if (mouseIsPressed) {
     if (pgSel == 7) {
-      // Activate erase mode for synth[7]
-      cleverlayer.erase();
-      cleverlayer.image(pg[pgSel], mouseX, mouseY);
-      cleverlayer.noErase();
+      console.log("hello pg 7");
     } else {
       cleverlayer.image(pg[pgSel], mouseX, mouseY);
     }
+    cleverlayer.image(pg[pgSel], mouseX, mouseY);
   }
   image(cleverlayer, width / 2, height / 2);
   image(pg[pgSel], mouseX, mouseY);
@@ -323,67 +321,87 @@ function buildGUI() {
     pgSel = sel.value();
   });
 
-  //	label('QZs HYDRA BRUSHES')
-  //	label('––––––––––––––––––––')
-
   label("background", sliderBackground);
   backgroundSlider = createSlider(0, 255, 255, 1)
     .parent(sliderBackground)
-    .class("slider");
+    .class("slider")
+    .input(() => (sliderActive = true))
+    .mousePressed(() => {
+      sliderClicked = true;
+      sliderActive = true;
+    })
+    .mouseReleased(() => {
+      sliderActive = false;
+      setTimeout(() => (sliderClicked = false), 100);
+    });
 
   label("hydra zoom", sliderHydraZoom);
   zoomSlider = createSlider(10, 255, 10, 0)
     .parent(sliderHydraZoom)
-    .class("slider");
+    .class("slider")
+    .input(() => (sliderActive = true))
+    .mousePressed(() => {
+      sliderClicked = true;
+      sliderActive = true;
+    })
+    .mouseReleased(() => {
+      sliderActive = false;
+      setTimeout(() => (sliderClicked = false), 100);
+    });
 
   label("brush size", sliderBrushSize);
   sizeSlider = createSlider(0.1, 1, 0.5, 0.001)
     .parent(sliderBrushSize)
-    .class("slider");
+    .class("slider")
+    .input(() => (sliderActive = true))
+    .mousePressed(() => {
+      sliderClicked = true;
+      sliderActive = true;
+    })
+    .mouseReleased(() => {
+      sliderActive = false;
+      setTimeout(() => (sliderClicked = false), 100);
+    });
 
   label("brush shape", sliderBrushShape);
   shapeSlider = createSlider(3, 12, 50, 0.001)
     .parent(sliderBrushShape)
-    .class("slider");
+    .class("slider")
+    .input(() => (sliderActive = true))
+    .mousePressed(() => {
+      sliderClicked = true;
+      sliderActive = true;
+    })
+    .mouseReleased(() => {
+      sliderActive = false;
+      setTimeout(() => (sliderClicked = false), 100);
+    });
 
   label("hyper active", sliderHyperActive);
   hyperSlider = createSlider(0.5, 10, 3, 0.05)
     .parent(sliderHyperActive)
-    .class("slider");
+    .class("slider")
+    .input(() => (sliderActive = true))
+    .mousePressed(() => {
+      sliderClicked = true;
+      sliderActive = true;
+    })
+    .mouseReleased(() => {
+      sliderActive = false;
+      setTimeout(() => (sliderClicked = false), 100);
+    });
 
   // Set the selected option to "brush1".
   sel.selected("title of brush0", 0);
-
-  // label("=======> <=======");
-  // let clearButton = createButton("trash me").parent(guiContent).class("slider");
-  // clearButton.mousePressed(clearCanvas);
 
   function clearCanvas() {
     cleverlayer.clear();
     background(0);
   }
 
-  // label("SAVE");
-  // let saveButton = createButton("save me").parent(guiContent).class("slider");
-  // saveButton.mousePressed(saveCanvas);
-
   function saveCanvas() {
     var filename = "qz-hydra-brush.png";
     cleverlayer.save(filename);
-  }
-
-  function saveFrame(toolName) {
-    // don't change:
-    let timestamp = new Date()
-      .toISOString()
-      .replace(/[^0-9]/g, "")
-      .slice(0, -3);
-    var filename = toolName + "_" + timestamp + ".png"; // with timestamp
-    //var filename = toolName + '.png'; // without timestamp
-
-    // adjust as needed, but leave 'filename':
-    // save(filename);  // use to save entire canvas
-    cleverlayer.save(filename); // use to save specific layer only
   }
 
   function label(txt, parent) {
