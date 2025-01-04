@@ -17,6 +17,7 @@ body {
   font-weight: 400;
   font-style: normal;
   font-size: 14px;
+  /* line-height: 14px; */
   user-select: none; /* Disable text selection for the entire page */
 }
 canvas {
@@ -105,7 +106,7 @@ canvas {
   cursor: pointer;
   background: #000000;
   border-radius: 5px;
-  border: 1px solid #707070;
+  border: 1px solid #5f5f5f;
 }
 
 .slider::-moz-range-track {
@@ -114,7 +115,7 @@ canvas {
   cursor: pointer;
   background: #000000;
   border-radius: 5px;
-  border: 1px solid #707070;
+  border: 1px solid #5f5f5f;
 }
 
 /* Thumb styles */
@@ -126,7 +127,7 @@ canvas {
   background: #ffffff;
   cursor: pointer;
   border-radius: 50%;
-  border: 2px solid #000000;
+  border: 2px solid #5f5f5f;
   margin-top: -12px; /* Adjust to align with track */
 }
 
@@ -136,7 +137,7 @@ canvas {
   background: #ffffff;
   cursor: pointer;
   border-radius: 50%;
-  border: 2px solid #000000;
+  border: 2px solid #5f5f5f;
 }
 
 /* Basic styling for the select element */
@@ -181,4 +182,16 @@ canvas {
 
 .light-text {
   color: white;
+}
+
+.infoText {
+  position: absolute; /* Necessary for custom positioning */
+  /* background: rgba(0, 0, 0, 0.8); Semi-transparent black background */
+  color: rgb(0, 0, 0);
+  /* padding: 10px; */
+  /* border-radius: 5px; */
+  font-size: 14px; /* Adjust size as needed */
+  max-width: 850px;
+  display: none; /* Initially hidden */
+  z-index: 10; /* Ensure it appears above other elements */
 }

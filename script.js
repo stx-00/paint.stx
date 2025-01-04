@@ -374,9 +374,34 @@ function buildGUI() {
   });
 
   let infoButton = createDiv("?").parent(guiInfo).class("infoButton button");
+
+  let infoText; // To store the reference to the text element
+
   infoButton.mousePressed(() => {
     buttonClicked = true;
-    // Info button functionality here
+
+    // Check if the infoText already exists
+    if (!infoText) {
+      infoText = createDiv(
+        'This tool lets you draw with brushes built using <a href="https://p5js.org/" target="_blank" style="color: #000000; text-decoration: underline;">p5.js</a> and <a href="https://hydra.ojack.xyz/" target="_blank" style="color: #000000; text-decoration: underline;">hydra</a>.<br><br>Pick a brush from the dropdown menu.<br>Start drawing by pressing down your mouse or swiping with your finger.<br>Adjust the sliders to change how it behaves.<br><br>Hate your sketch? Trash it.<br>Love your sketch? Save it (PNG).<br><br>Want to create more? Add your drawing to the print queue.<br>Keep drawing as many pages as you like, then hit print to compile them into a PDF.<br><br>This tool was designed and built by <a href="https://www.siiritaennler.ch/" target="_blank" style="color: #000000; text-decoration: underline;">Siiri Tännler</a> and mentored by <a href="https://teddavis.org/" target="_blank" style="color: #000000; text-decoration: underline;">Ted Davis</a>.<br><br>A first version of this tool was created in collaboration with Sarah Choi and Yevheniia Semenova during a class taught by Ted Davis at IDCE HGK/FHNW.<br><br>Source code'
+      )
+        .parent(guiWrapper)
+        .class("infoText");
+
+      // Position the text relative to the "?" button
+      const infoButtonPosition = infoButton.position(); // Get the position of the "?" button
+      const selectBrushPosition = selectBrush.position(); // Get the position of "select your brush"
+
+      infoText.style("position", "absolute");
+      infoText.style("top", `${infoButtonPosition.y}px`); // Align with "?" button
+      infoText.style("left", `${selectBrushPosition.x}px`); // Align left with "select your brush"
+    } else {
+      // Toggle visibility
+      infoText.style(
+        "display",
+        infoText.style("display") === "none" ? "block" : "none"
+      );
+    }
   });
 
   let column2 = createDiv("").parent(guiContent).class("column2");
