@@ -105,7 +105,7 @@ canvas {
   cursor: pointer;
   background: #000000;
   border-radius: 5px;
-  /* border: 1px solid #aaa; */
+  border: 1px solid #707070;
 }
 
 .slider::-moz-range-track {
@@ -114,7 +114,7 @@ canvas {
   cursor: pointer;
   background: #000000;
   border-radius: 5px;
-  border: 1px solid #aaa;
+  border: 1px solid #707070;
 }
 
 /* Thumb styles */
@@ -166,6 +166,12 @@ canvas {
 /* Remove the popup window border in Firefox */
 .select::-moz-focus-inner {
   border: 0;
+}
+
+.select:focus {
+  outline: none;
+  box-shadow: none;
+  border: none;
 }
 
 /* Container for the select element */
