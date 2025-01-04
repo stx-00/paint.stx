@@ -17,6 +17,7 @@ body {
   font-weight: 400;
   font-style: normal;
   font-size: 14px;
+  user-select: none; /* Disable text selection for the entire page */
 }
 canvas {
   position: fixed;
@@ -26,6 +27,7 @@ canvas {
   width: 100vw;
   height: 100vh;
   margin: 0;
+  user-select: none; /* Prevent selection on the canvas */
 }
 
 .guiWrapper {
@@ -34,6 +36,7 @@ canvas {
   display: flex;
   top: 0;
   left: 0;
+  user-select: none; /* Prevent selection on the canvas */
 }
 
 .guiContent {
@@ -43,6 +46,7 @@ canvas {
   padding-left: 15px;
   padding-right: 15px;
   gap: 80px;
+  user-select: none; /* Prevent selection on the canvas */
 }
 
 .guiInfo {
@@ -79,6 +83,7 @@ canvas {
 
 .button {
   cursor: pointer;
+  user-select: none; /* Prevent selection on the canvas */
 }
 
 /* General slider styles */

@@ -290,6 +290,11 @@ function setup() {
   imageMode(CENTER);
   cleverlayer.imageMode(CENTER);
 
+  // Prevent text selection while drawing
+  let canvasElement = document.querySelector("canvas");
+  canvasElement.addEventListener("mousedown", (e) => e.preventDefault());
+  canvasElement.addEventListener("mousemove", (e) => e.preventDefault());
+
   // prep synth layers
   for (let i = 0; i < synthCount; i++) {
     pg[i] = createGraphics(hc[i].width, hc[i].height);
