@@ -343,7 +343,7 @@ function buildGUI() {
   let guiContent = createDiv("").parent(guiWrapper).class("guiContent");
 
   let guiInfo = createDiv("").parent(guiContent).class("guiInfo");
-  createDiv("p5*hydra brushes").parent(guiInfo).class("title");
+  let title = createDiv("p5*hydra brushes").parent(guiInfo).class("title");
 
   let trashButton = createDiv("trash")
     .parent(guiInfo)
@@ -410,7 +410,10 @@ function buildGUI() {
   backgroundSlider = createSlider(0, 255, 255, 1)
     .parent(sliderBackground)
     .class("slider")
-    .input(() => (sliderActive = true))
+    .input(() => {
+      sliderActive = true;
+      adjustTextColor(); // Call this function to adjust text color
+    })
     .mousePressed(() => {
       sliderClicked = true;
       sliderActive = true;
@@ -491,5 +494,14 @@ function buildGUI() {
 
   function label(txt, parent) {
     createDiv(txt).parent(parent).class("label");
+  }
+
+  function adjustTextColor() {
+    const backgroundValue = backgroundSlider.value();
+    if (backgroundValue <= 35) {
+      guiWrapper.addClass("light-text");
+    } else {
+      guiWrapper.removeClass("light-text");
+    }
   }
 }
