@@ -498,7 +498,15 @@ function buildGUI() {
 
   function adjustTextColor() {
     const backgroundValue = backgroundSlider.value();
-    if (backgroundValue <= 35) {
+    const textColor = backgroundValue <= 45 ? "white" : "black"; // Adjust threshold as needed
+
+    // Update the dropdown text color
+    const selectElements = document.querySelectorAll(".select");
+    selectElements.forEach((select) => {
+      select.style.color = textColor;
+    });
+
+    if (backgroundValue <= 45) {
       guiWrapper.addClass("light-text");
     } else {
       guiWrapper.removeClass("light-text");
