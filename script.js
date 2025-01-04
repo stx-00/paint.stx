@@ -73,29 +73,27 @@ for (let i = 0; i < synthCount; i++) {
 // sandbox - start
 // access each instance via synth[index]
 
-// brush: losing my religion
 synth[0]
-  .osc(() => zoomSlider.value(), 0.25, 0.25)
+  .osc(() => zoomSlider.value() / 5, 1, 0.3)
+  .kaleid([3, 4, 5, 7, 8, 9, 10].fast(0.1))
+  .color(0.5, 0.3)
+  .colorama(0.4)
+  .rotate(0.009, () => Math.sin(time) * -0.001)
+  .modulateRotate(synth[0].src(synth[0].o0), () => Math.sin(time) * 0.003)
+  .modulate(synth[0].src(synth[0].o0), 0.9)
   .mask(
     synth[0]
       .shape(
         () => shapeSlider.value(),
         () => sizeSlider.value(),
-        0.1
+        0.01
       )
-      .modulate(synth[0].noise(4.6, () => hyperSlider.value()))
-      // .diff(synth[0].src(synth[0].o0))
-      .scale(0.72)
-      .color(0.5, 5, 1, 0, 1)
-      // .scale(0.99)
-      .luma(1)
-      .saturate(5)
-    // .color(1, 0, 3)
-    // .invert()
+      .scale(0.9)
+      .modulate(synth[0].noise(0.6, () => hyperSlider.value()))
   )
   .out();
+//
 
-// brush: smells like teen spirit
 synth[1]
   .voronoi(() => zoomSlider.value(), 0, 1)
   .mult(
@@ -124,44 +122,41 @@ synth[1]
   )
   .out();
 
-// brush: poison paradise
 synth[2]
+  .osc(() => zoomSlider.value(), 0.28, 0.3)
+  .rotate(0, 0.1)
+  .mask(
+    synth[2]
+      .shape(
+        () => shapeSlider.value(),
+        () => sizeSlider.value(),
+        0.01
+      )
+      .mult(synth[2].osc(10, 0.1))
+      .modulate(synth[2].osc(10).rotate(0, -0.1), 1)
+  )
+  .modulate(synth[2].noise(0.6, () => hyperSlider.value()))
+  .color(2.83, 0.91, () => hyperSlider.value() * 50)
+  .out();
+
+synth[3]
   .osc(() => zoomSlider.value(), 1, 2)
   .kaleid()
   .mult(
-    synth[2].osc(20, 0.001, 0).mask(
-      synth[2].shape(
+    synth[3].osc(20, 0.001, 0).mask(
+      synth[3].shape(
         () => shapeSlider.value(),
         () => sizeSlider.value(),
         0.01
       )
     )
   )
-  .modulateScale(synth[2].osc(10, 0), -0.03)
-  .modulate(synth[2].noise(0.6, () => hyperSlider.value()))
+  .modulateScale(synth[3].osc(10, 0), -0.03)
+  .modulate(synth[3].noise(0.6, () => hyperSlider.value()))
   .scale(0.8, () => 1.05 + 0.1 * Math.sin(0.05 * time))
   // .luma(0.1)
   .out();
 
-// brush: whenever wherever
-synth[3]
-  .osc(() => zoomSlider.value(), 0.28, 0.3)
-  .rotate(0, 0.1)
-  .mask(
-    synth[3]
-      .shape(
-        () => shapeSlider.value(),
-        () => sizeSlider.value(),
-        0.01
-      )
-      .mult(synth[3].osc(10, 0.1))
-      .modulate(synth[3].osc(10).rotate(0, -0.1), 1)
-  )
-  .modulate(synth[3].noise(0.6, () => hyperSlider.value()))
-  .color(2.83, 0.91, () => hyperSlider.value() * 50)
-  .out();
-
-// brush: to the left to the left
 synth[4]
   .osc(() => zoomSlider.value(), 2, 3)
   .modulateScale(synth[4].osc(40, 0, 1).kaleid(8))
@@ -177,31 +172,31 @@ synth[4]
   )
   .out();
 
-// brush: ground control to major tom
 synth[5]
-  .osc(() => zoomSlider.value() / 5, 1, 0.3)
-  .kaleid([3, 4, 5, 7, 8, 9, 10].fast(0.1))
-  .color(0.5, 0.3)
-  .colorama(0.4)
-  .rotate(0.009, () => Math.sin(time) * -0.001)
-  .modulateRotate(synth[1].src(synth[1].o0), () => Math.sin(time) * 0.003)
-  .modulate(synth[1].src(synth[1].o0), 0.9)
+  .osc(() => zoomSlider.value(), 0.25, 0.25)
+
   .mask(
     synth[5]
       .shape(
         () => shapeSlider.value(),
         () => sizeSlider.value(),
-        0.01
+        0.1
       )
-      .scale(0.9)
-      .modulate(synth[5].noise(0.6, () => hyperSlider.value()))
+      .modulate(synth[5].noise(4.6, () => hyperSlider.value()))
+      // .diff(synth[0].src(synth[0].o0))
+      .scale(0.72)
+      .color(0.5, 5, 1, 0, 1)
+      // .scale(0.99)
+      .luma(1)
+      .saturate(5)
+    // .color(1, 0, 3)
+    // .invert()
   )
   .out();
 
-// brush: it's too late to apologize
 synth[6].voronoi(2, 0.5, 0.3);
 synth[6]
-  .osc(() => zoomSlider.value(), 5, 1)
+  .osc(() => zoomSlider.value(), 2, 1)
   .mask(
     synth[6]
       .shape(
@@ -227,17 +222,53 @@ synth[6]
 
 //Ô	speed = 0.1
 
-// brush: erase (this does not work for some reason)
 synth[7]
-  .solid([1, 0, 0], [0, 1, 0], [0, 0, 1], 1)
+  .noise(() => zoomSlider.value(), 0.5, 1)
+  .color(
+    () => Math.sin(time * Math.random()) * 0.5 + 0.5,
+    () => Math.cos(time * Math.random()) * 0.5 + 0.5,
+    () => Math.sin(time * Math.random() * 1.5) * 0.5 + 0.5
+  )
+  .rotate(0.009, () => Math.sin(time) * 1)
+  .saturate(10)
   .mask(
-    synth[7].shape(
-      () => shapeSlider.value(),
-      () => sizeSlider.value(),
-      0.01
-    )
+    synth[7]
+      .shape(
+        () => shapeSlider.value(),
+        () => sizeSlider.value(),
+        0.01
+      )
+      .modulate(synth[7].src(synth[7].o0), 0.5)
+      .modulate(synth[7].noise(0.6, () => hyperSlider.value()))
+      .mult(
+        synth[7]
+          .voronoi(10, 0.1, () => Math.sin(time) * 3)
+          .saturate(3)
+          .shift(0.5)
+        // .kaleid(200)
+      )
+      .modulateRotate(synth[7].src(synth[7].o0), () => Math.sin(time) * 2)
+      .scrollX(10)
+      .scrollY(2)
+      .color(0.5, 0.8, 50)
+      .luma()
+      // .invert()
+
+      .repeatX(1)
+      .repeatY(1)
   )
   .out();
+
+// synth[7]
+//   .solid([1, 0, 0], [0, 1, 0], [0, 0, 1], 1)
+//   .mask(
+//     synth[7].shape(
+//       () => shapeSlider.value(),
+//       () => sizeSlider.value(),
+//       0.01
+//     )
+//   )
+//   .out();
 
 // sandbox - stop
 
@@ -324,14 +355,14 @@ function buildGUI() {
 
   label("select your brush", selectBrush);
   sel = createSelect().parent(selectBrush).class("select");
-  sel.option("losing my religion", 0);
-  sel.option("smells like teen spirit", 1);
-  sel.option("poison paradise", 2);
-  sel.option("whenever wherever", 3);
-  sel.option("to the left, to the left", 4);
-  sel.option("ground control to major tom", 5);
-  sel.option("it is too late to apologize", 6);
-  sel.option("she wants to erase me", 7);
+  sel.option("brush 0", 0);
+  sel.option("brush 1", 1);
+  sel.option("brush 2", 2);
+  sel.option("brush 3", 3);
+  sel.option("brush 4", 4);
+  sel.option("brush 5", 5);
+  sel.option("brush 6", 6);
+  sel.option("brush 7", 7);
 
   sel.changed(function () {
     pgSel = sel.value();
