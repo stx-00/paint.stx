@@ -6,6 +6,7 @@ let shapeSlider;
 let backgroundSlider;
 let sliderActive = false; // Flag to indicate slider activity
 let sliderClicked = false; // Flag to indicate if the slider was just clicked
+let buttonClicked = false; // Flag to indicate if a button is clicked
 
 // Eco-mode for rendering only if the window is focused
 window.onblur = function () {
@@ -29,6 +30,11 @@ function ease(iVal, oVal, eVal) {
 // processing compatibility
 function println(msg) {
   print(msg);
+}
+
+function mouseReleased() {
+  buttonClicked = false; // Reset the flag when the mouse is released
+  sliderActive = false; // Reset slider activity if needed
 }
 
 // var credits = {
@@ -292,7 +298,7 @@ function setup() {
 
 function draw() {
   // Do not draw if a slider is active
-  if (sliderActive) {
+  if (sliderActive || buttonClicked) {
     // Draw the background
     background(backgroundSlider.value());
 
@@ -337,14 +343,36 @@ function buildGUI() {
   let trashButton = createDiv("trash")
     .parent(guiInfo)
     .class("trashButton button");
-  trashButton.mousePressed(clearCanvas);
+  trashButton.mousePressed(() => {
+    buttonClicked = true;
+    clearCanvas();
+  });
 
   let saveButton = createDiv("save").parent(guiInfo).class("saveButton button");
-  saveButton.mousePressed(saveCanvas);
+  saveButton.mousePressed(() => {
+    buttonClicked = true;
+    saveCanvas();
+  });
 
-  createDiv("add").parent(guiInfo).class("addButton button");
-  createDiv("print").parent(guiInfo).class("printButton button");
-  createDiv("?").parent(guiInfo).class("infoButton button");
+  let addButton = createDiv("add").parent(guiInfo).class("addButton button");
+  addButton.mousePressed(() => {
+    buttonClicked = true;
+    // Add button functionality here
+  });
+
+  let printButton = createDiv("print")
+    .parent(guiInfo)
+    .class("printButton button");
+  printButton.mousePressed(() => {
+    buttonClicked = true;
+    // Print button functionality here
+  });
+
+  let infoButton = createDiv("?").parent(guiInfo).class("infoButton button");
+  infoButton.mousePressed(() => {
+    buttonClicked = true;
+    // Info button functionality here
+  });
 
   let column2 = createDiv("").parent(guiContent).class("column2");
 
