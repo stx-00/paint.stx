@@ -174,7 +174,6 @@ synth[4]
 
 synth[5]
   .osc(() => zoomSlider.value(), 0.25, 0.25)
-
   .mask(
     synth[5]
       .shape(
@@ -294,7 +293,12 @@ function setup() {
 function draw() {
   // Do not draw if a slider is active
   if (sliderActive) {
-    return;
+    // Draw the background
+    background(backgroundSlider.value());
+
+    // Redraw the persistent layer (cleverlayer) on top
+    image(cleverlayer, width / 2, height / 2);
+    return; // Skip the rest of the drawing logic
   }
 
   // grab + apply hydra textures
@@ -310,6 +314,7 @@ function draw() {
     pg[pgSel].height
   );
 
+  // Brush logic when the mouse is pressed
   if (mouseIsPressed) {
     if (pgSel == 7) {
       console.log("hello pg 7");
@@ -327,7 +332,7 @@ function buildGUI() {
   let guiContent = createDiv("").parent(guiWrapper).class("guiContent");
 
   let guiInfo = createDiv("").parent(guiContent).class("guiInfo");
-  createDiv("QZs p5*hydra brushes").parent(guiInfo).class("title");
+  createDiv("p5*hydra brushes").parent(guiInfo).class("title");
 
   let trashButton = createDiv("trash")
     .parent(guiInfo)
