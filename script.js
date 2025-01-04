@@ -72,21 +72,92 @@ for (let i = 0; i < synthCount; i++) {
 
 // sandbox - start
 // access each instance via synth[index]
+
+// brush: losing my religion
+// synth[0]
+//   .osc(() => zoomSlider.value(), 2, 1)
+//   .mask(
+//     synth[0]
+//       .shape(
+//         () => shapeSlider.value(),
+//         () => sizeSlider.value(),
+//         0.01
+//       )
+//       .modulate(synth[0].noise(0.6, () => hyperSlider.value()))
+//       .diff(synth[0].src(synth[0].o0))
+//       .scale(0.72)
+//       .color(188, 25, 50)
+//   )
+//   .out();
+
+// brush: losing my religion
 synth[0]
-  .osc(() => zoomSlider.value(), 2, 1)
+  .osc(() => zoomSlider.value(), 0.25, 0.25)
   .mask(
     synth[0]
       .shape(
         () => shapeSlider.value(),
         () => sizeSlider.value(),
-        0.01
+        0.1
       )
-      .modulate(synth[0].noise(0.6, () => hyperSlider.value()))
-      .diff(synth[0].src(synth[0].o0))
+      .modulate(synth[0].noise(4.6, () => hyperSlider.value()))
+      // .diff(synth[0].src(synth[0].o0))
       .scale(0.72)
-      .color(188, 25, 50)
+      .color(0.5, 5, 1, 0, 1)
+      // .scale(0.99)
+      .luma(1)
+      .saturate(5)
+    // .color(1, 0, 3)
+    // .invert()
   )
   .out();
+
+// synth[0]
+//   .osc(() => zoomSlider.value(), 2, 1)
+//   .mask(
+//     synth[0]
+//       .shape(
+//         () => shapeSlider.value(),
+//         () => sizeSlider.value(),
+//         0.01
+//       )
+//       .modulate(synth[0].noise(0.2, () => hyperSlider.value()))
+//       .diff(synth[0].src(synth[0].o0))
+//       .scale(0.32)
+//       .color(188, 25, 50)
+//       .luma(0.5, 0.1)
+//       .thresh(0.5, 0.04)
+//       .scale(0.99)
+//   )
+//   .out();
+
+// brush: smells like teen spirit
+// synth[1]
+//   .voronoi(() => zoomSlider.value(), 0, 1)
+//   .mult(
+//     synth[1]
+//       .osc(10, 0.1, () => hyperSlider.value() * 3)
+//       .saturate(3)
+//       .kaleid(200)
+//   )
+//   .mask(
+//     synth[1]
+//       .shape(
+//         () => shapeSlider.value(),
+//         () => sizeSlider.value(),
+//         0.01
+//       )
+//       .modulate(synth[1].src(synth[1].o0), 0.5)
+//       .add(synth[1].src(synth[1].o0), 0.8)
+//       .scrollY(-0.01)
+//       .scale(0.99)
+//       .modulate(
+//         synth[1].voronoi(() => hyperSlider.value(), 1),
+//         0.008
+//       )
+//       .luma(0.3)
+//   )
+//   .out();
 
 synth[1]
   .voronoi(() => zoomSlider.value(), 0, 1)
@@ -112,9 +183,11 @@ synth[1]
         0.008
       )
       .luma(0.3)
+      .color(15, 25, 1)
   )
   .out();
 
+// brush: poison paradise
 synth[2]
   .osc(() => zoomSlider.value(), 1, 2)
   .kaleid()
@@ -130,8 +203,10 @@ synth[2]
   .modulateScale(synth[2].osc(10, 0), -0.03)
   .modulate(synth[2].noise(0.6, () => hyperSlider.value()))
   .scale(0.8, () => 1.05 + 0.1 * Math.sin(0.05 * time))
+  // .luma(0.1)
   .out();
 
+// brush: whenever wherever
 synth[3]
   .osc(() => zoomSlider.value(), 0.28, 0.3)
   .rotate(0, 0.1)
@@ -149,8 +224,26 @@ synth[3]
   .color(2.83, 0.91, () => hyperSlider.value() * 50)
   .out();
 
+// brush: to the left to the left
+
+// below is the original brush
+// synth[4]
+//   .osc(() => zoomSlider.value(), 0.28, 0.3)
+//   .modulateScale(synth[4].osc(40, 0, 1).kaleid(8))
+//   .mask(
+//     synth[4]
+//       .shape(
+//         () => shapeSlider.value(),
+//         () => sizeSlider.value(),
+//         0.01
+//       )
+//       .repeat(2, 4)
+//       .modulate(synth[4].noise(0.6, () => hyperSlider.value()))
+//   )
+//   .out();
+
 synth[4]
-  .osc(() => zoomSlider.value(), 0.28, 0.3)
+  .osc(() => zoomSlider.value(), 2, 3)
   .modulateScale(synth[4].osc(40, 0, 1).kaleid(8))
   .mask(
     synth[4]
@@ -164,6 +257,7 @@ synth[4]
   )
   .out();
 
+// brush: ground control to major tom
 synth[5]
   .osc(() => zoomSlider.value() / 5, 1, 0.3)
   .kaleid([3, 4, 5, 7, 8, 9, 10].fast(0.1))
@@ -184,9 +278,36 @@ synth[5]
   )
   .out();
 
-synth[6].voronoi(8, 1);
+// brush: it's too late to apologize
+// synth[6].voronoi(8, 1);
+// synth[6]
+//   .osc(() => zoomSlider.value(), 2, 1)
+//   .mask(
+//     synth[6]
+//       .shape(
+//         () => shapeSlider.value(),
+//         () => sizeSlider.value(),
+//         0.01
+//       )
+//       .mult(
+//         synth[6]
+//           .osc(10, 0.1, () => Math.sin(time) * 3)
+//           .saturate(3)
+//           .kaleid(200)
+//       )
+//       .modulate(synth[6].src(synth[6].o0), 0.5)
+//       .modulate(synth[6].noise(0.6, () => hyperSlider.value()))
+//       .add(synth[6].src(synth[6].o0), 0.8)
+//       .scrollY(-0.01)
+//       .scale(0.99)
+//       .modulate(synth[6].voronoi(8, 1), 0.008)
+//       .luma(0.3)
+//   )
+//   .out();
+
+synth[6].voronoi(2, 0.5, 0.3);
 synth[6]
-  .osc(() => zoomSlider.value(), 2, 1)
+  .osc(() => zoomSlider.value(), 5, 1)
   .mask(
     synth[6]
       .shape(
@@ -212,6 +333,7 @@ synth[6]
 
 //Ô	speed = 0.1
 
+// brush: erase (this does not work for some reason)
 synth[7]
   .solid([1, 0, 0], [0, 1, 0], [0, 0, 1], 1)
   .mask(
