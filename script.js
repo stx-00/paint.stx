@@ -31,15 +31,15 @@ function println(msg) {
   print(msg);
 }
 
-var credits = {
-  names: [
-    "Sarah.Choi", // feel free to link yourself <a href="URL" target="_blank">first.lastname</a>
-    "Yevheniia.Semenova",
-    "Siiri.Tännler",
-  ],
-  class: "IDCE HGK – MA – Digital Cultures",
-  description: "Hydra Brush Tool",
-};
+// var credits = {
+//   names: [
+//     "Sarah.Choi", // feel free to link yourself <a href="URL" target="_blank">first.lastname</a>
+//     "Yevheniia.Semenova",
+//     "Siiri.Tännler",
+//   ],
+//   class: "IDCE HGK – MA – Digital Cultures",
+//   description: "Hydra Brush Tool",
+// };
 
 /*	
 	_hydra_multi // cc teddavis.org 2021	
@@ -74,23 +74,6 @@ for (let i = 0; i < synthCount; i++) {
 // access each instance via synth[index]
 
 // brush: losing my religion
-// synth[0]
-//   .osc(() => zoomSlider.value(), 2, 1)
-//   .mask(
-//     synth[0]
-//       .shape(
-//         () => shapeSlider.value(),
-//         () => sizeSlider.value(),
-//         0.01
-//       )
-//       .modulate(synth[0].noise(0.6, () => hyperSlider.value()))
-//       .diff(synth[0].src(synth[0].o0))
-//       .scale(0.72)
-//       .color(188, 25, 50)
-//   )
-//   .out();
-
-// brush: losing my religion
 synth[0]
   .osc(() => zoomSlider.value(), 0.25, 0.25)
   .mask(
@@ -112,53 +95,7 @@ synth[0]
   )
   .out();
 
-// synth[0]
-//   .osc(() => zoomSlider.value(), 2, 1)
-//   .mask(
-//     synth[0]
-//       .shape(
-//         () => shapeSlider.value(),
-//         () => sizeSlider.value(),
-//         0.01
-//       )
-//       .modulate(synth[0].noise(0.2, () => hyperSlider.value()))
-//       .diff(synth[0].src(synth[0].o0))
-//       .scale(0.32)
-//       .color(188, 25, 50)
-//       .luma(0.5, 0.1)
-//       .thresh(0.5, 0.04)
-//       .scale(0.99)
-//   )
-//   .out();
-
 // brush: smells like teen spirit
-// synth[1]
-//   .voronoi(() => zoomSlider.value(), 0, 1)
-//   .mult(
-//     synth[1]
-//       .osc(10, 0.1, () => hyperSlider.value() * 3)
-//       .saturate(3)
-//       .kaleid(200)
-//   )
-//   .mask(
-//     synth[1]
-//       .shape(
-//         () => shapeSlider.value(),
-//         () => sizeSlider.value(),
-//         0.01
-//       )
-//       .modulate(synth[1].src(synth[1].o0), 0.5)
-//       .add(synth[1].src(synth[1].o0), 0.8)
-//       .scrollY(-0.01)
-//       .scale(0.99)
-//       .modulate(
-//         synth[1].voronoi(() => hyperSlider.value(), 1),
-//         0.008
-//       )
-//       .luma(0.3)
-//   )
-//   .out();
-
 synth[1]
   .voronoi(() => zoomSlider.value(), 0, 1)
   .mult(
@@ -225,23 +162,6 @@ synth[3]
   .out();
 
 // brush: to the left to the left
-
-// below is the original brush
-// synth[4]
-//   .osc(() => zoomSlider.value(), 0.28, 0.3)
-//   .modulateScale(synth[4].osc(40, 0, 1).kaleid(8))
-//   .mask(
-//     synth[4]
-//       .shape(
-//         () => shapeSlider.value(),
-//         () => sizeSlider.value(),
-//         0.01
-//       )
-//       .repeat(2, 4)
-//       .modulate(synth[4].noise(0.6, () => hyperSlider.value()))
-//   )
-//   .out();
-
 synth[4]
   .osc(() => zoomSlider.value(), 2, 3)
   .modulateScale(synth[4].osc(40, 0, 1).kaleid(8))
@@ -279,32 +199,6 @@ synth[5]
   .out();
 
 // brush: it's too late to apologize
-// synth[6].voronoi(8, 1);
-// synth[6]
-//   .osc(() => zoomSlider.value(), 2, 1)
-//   .mask(
-//     synth[6]
-//       .shape(
-//         () => shapeSlider.value(),
-//         () => sizeSlider.value(),
-//         0.01
-//       )
-//       .mult(
-//         synth[6]
-//           .osc(10, 0.1, () => Math.sin(time) * 3)
-//           .saturate(3)
-//           .kaleid(200)
-//       )
-//       .modulate(synth[6].src(synth[6].o0), 0.5)
-//       .modulate(synth[6].noise(0.6, () => hyperSlider.value()))
-//       .add(synth[6].src(synth[6].o0), 0.8)
-//       .scrollY(-0.01)
-//       .scale(0.99)
-//       .modulate(synth[6].voronoi(8, 1), 0.008)
-//       .luma(0.3)
-//   )
-//   .out();
-
 synth[6].voronoi(2, 0.5, 0.3);
 synth[6]
   .osc(() => zoomSlider.value(), 5, 1)
