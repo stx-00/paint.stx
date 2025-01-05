@@ -302,20 +302,13 @@ function setup() {
 }
 
 function draw() {
-  // Do not draw if a slider is active
-  if (sliderActive || buttonClicked) {
-    // Draw the background
-    background(backgroundSlider.value());
-
-    // Redraw the persistent layer (cleverlayer) on top
-    image(cleverlayer, width / 2, height / 2);
-    return; // Skip the rest of the drawing logic
-  }
-
-  // grab + apply hydra textures
-
+  // Draw the background
   background(backgroundSlider.value());
 
+  // Always draw the persistent layer (cleverlayer)
+  image(cleverlayer, width / 2, height / 2);
+
+  // Grab + apply hydra textures
   pg[pgSel].clear();
   pg[pgSel].drawingContext.drawImage(
     hc[pgSel],
@@ -325,21 +318,18 @@ function draw() {
     pg[pgSel].height
   );
 
-  // Brush logic when the mouse is pressed
-  if (mouseIsPressed) {
-    if (pgSel == 7) {
-      console.log("hello pg 7");
-    } else {
+  // Skip drawing on the canvas if a slider is active
+  if (!sliderActive && !buttonClicked) {
+    // Brush logic when the mouse is pressed
+    if (mouseIsPressed) {
       cleverlayer.image(pg[pgSel], mouseX, mouseY);
     }
-    cleverlayer.image(pg[pgSel], mouseX, mouseY);
   }
-  image(cleverlayer, width / 2, height / 2);
-  image(pg[pgSel], mouseX, mouseY);
 
-  // Only show the brush preview when not idle
+  // Render the brush preview
+  // Show the brush preview even when sliders are active
   if (!idle) {
-    image(pg[pgSel], mouseX, mouseY); // Show brush preview at the mouse position
+    image(pg[pgSel], mouseX, mouseY);
   }
 }
 
