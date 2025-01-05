@@ -513,7 +513,7 @@ function buildGUI() {
   }
 
   function saveCanvas() {
-    var filename = "qz-hydra-brush.png";
+    var filename = "p5-hydra-brush-sketch.png";
     cleverlayer.save(filename);
   }
 
