@@ -535,12 +535,14 @@ function buildGUI() {
 }
 
 // screen saver
-let idleTimer; // Timer for idle state
+let idleTimer; // Timer for detecting inactivity
+let idleDrawingTimer; // Timer for limiting auto-drawing duration
 let idle = false; // Flag to track if user is idle
 let idlePos = { x: 0, y: 0 }; // Current position for idle drawing
 let idleVelocity = { x: 0, y: 0 }; // Velocity vector for smooth movement
 let angle = 0; // Angle for creating curved movement
-let speed = 3; // Base speed of movement (reduced for slower movement)
+let speed = 3; // Base speed of movement
+let idleDuration = 60000; // Auto-drawing duration (1 minute)
 
 function startIdleDrawing() {
   idle = true;
@@ -548,7 +550,7 @@ function startIdleDrawing() {
   // Hide the cursor
   noCursor();
 
-  // Initialize starting position at the current cursor location
+  // Initialize random starting position for idle drawing
   idlePos.x = mouseX || random(width); // Fallback to random if cursor is outside canvas
   idlePos.y = mouseY || random(height);
 
@@ -556,17 +558,24 @@ function startIdleDrawing() {
   idleVelocity.x = random(-speed, speed);
   idleVelocity.y = random(-speed, speed);
 
+  // Set a timer to stop auto-drawing after a minute
+  idleDrawingTimer = setTimeout(stopIdleDrawing, idleDuration);
+
   drawCurvedPath(); // Start the continuous curved drawing
 }
 
+function stopIdleDrawing() {
+  idle = false; // Stop idle mode
+  cursor(); // Restore the cursor
+  clearTimeout(idleDrawingTimer); // Clear the auto-drawing timer
+}
+
 function resetIdleTimer() {
-  clearTimeout(idleTimer); // Clear existing timer
+  clearTimeout(idleTimer); // Clear existing inactivity timer
   if (idle) {
-    // If coming out of idle mode, show the cursor again
-    cursor();
+    stopIdleDrawing(); // Stop idle drawing if it’s running
   }
-  idle = false; // Reset idle state
-  idleTimer = setTimeout(startIdleDrawing, 8000); // adjust time here for when screensaver kicks in
+  idleTimer = setTimeout(startIdleDrawing, 8000); // Adjust time here for when screensaver kicks in
 }
 
 function drawCurvedPath() {
@@ -576,20 +585,26 @@ function drawCurvedPath() {
   idlePos.x += idleVelocity.x;
   idlePos.y += idleVelocity.y;
 
-  // Add a slight curve to the velocity using trigonometry
-  idleVelocity.x += 0.2 * cos(angle); // Reduced factor for gentler curves
-  idleVelocity.y += 0.2 * sin(angle); // Reduced factor for gentler curves
-  angle += random(0.03, 0.07); // Slower angle adjustments for smoother motion
+  // Add a slight curve to the velocity using trigonometry for spirals and circles
+  idleVelocity.x += 0.1 * cos(angle) + random(-0.05, 0.05); // Add randomness for organic motion
+  idleVelocity.y += 0.1 * sin(angle) + random(-0.05, 0.05);
+  angle += random(0.02, 0.05); // Gradual angle change for smooth curves
 
-  // Check canvas boundaries and reverse direction if necessary
-  if (idlePos.x <= 0 || idlePos.x >= width) idleVelocity.x *= -1;
-  if (idlePos.y <= 0 || idlePos.y >= height) idleVelocity.y *= -1;
+  // Check canvas boundaries and bounce off if necessary
+  if (idlePos.x <= 0 || idlePos.x >= width) {
+    idleVelocity.x *= -1; // Reverse direction on x-axis
+    angle += PI / 2; // Add a sharp turn for bouncing effect
+  }
+  if (idlePos.y <= 0 || idlePos.y >= height) {
+    idleVelocity.y *= -1; // Reverse direction on y-axis
+    angle += PI / 2; // Add a sharp turn for bouncing effect
+  }
 
   // Use the currently selected brush to draw
   cleverlayer.image(pg[pgSel], idlePos.x, idlePos.y);
 
-  // Continue drawing after a slightly longer delay
-  setTimeout(drawCurvedPath, 50); // Increased delay for smoother movement
+  // Continue drawing after a short delay
+  setTimeout(drawCurvedPath, 50); // Adjust delay for smoother or faster movement
 }
 
 // Attach event listeners for user activity
