@@ -222,7 +222,7 @@ canvas {
   }
 
   .guiInfo {
-    gap: 5px; /* Reduce the gap between the title and buttons */
+    gap: 10px; /* Reduce the gap between the title and buttons */
   }
 
   .column3 {
