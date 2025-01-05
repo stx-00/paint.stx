@@ -336,6 +336,11 @@ function draw() {
   }
   image(cleverlayer, width / 2, height / 2);
   image(pg[pgSel], mouseX, mouseY);
+
+  // Only show the brush preview when not idle
+  if (!idle) {
+    image(pg[pgSel], mouseX, mouseY); // Show brush preview at the mouse position
+  }
 }
 
 function buildGUI() {
@@ -538,3 +543,70 @@ function buildGUI() {
     }
   }
 }
+
+// screen saver
+let idleTimer; // Timer for idle state
+let idle = false; // Flag to track if user is idle
+let idlePos = { x: 0, y: 0 }; // Current position for idle drawing
+let idleVelocity = { x: 0, y: 0 }; // Velocity vector for smooth movement
+let angle = 0; // Angle for creating curved movement
+let speed = 3; // Base speed of movement (reduced for slower movement)
+
+function startIdleDrawing() {
+  idle = true;
+
+  // Hide the cursor
+  noCursor();
+
+  // Initialize starting position at the current cursor location
+  idlePos.x = mouseX || random(width); // Fallback to random if cursor is outside canvas
+  idlePos.y = mouseY || random(height);
+
+  // Set a random initial velocity
+  idleVelocity.x = random(-speed, speed);
+  idleVelocity.y = random(-speed, speed);
+
+  drawCurvedPath(); // Start the continuous curved drawing
+}
+
+function resetIdleTimer() {
+  clearTimeout(idleTimer); // Clear existing timer
+  if (idle) {
+    // If coming out of idle mode, show the cursor again
+    cursor();
+  }
+  idle = false; // Reset idle state
+  idleTimer = setTimeout(startIdleDrawing, 5000); // Set a new timer for 5 seconds
+}
+
+function drawCurvedPath() {
+  if (!idle) return; // Stop drawing if not idle
+
+  // Update position based on velocity
+  idlePos.x += idleVelocity.x;
+  idlePos.y += idleVelocity.y;
+
+  // Add a slight curve to the velocity using trigonometry
+  idleVelocity.x += 0.2 * cos(angle); // Reduced factor for gentler curves
+  idleVelocity.y += 0.2 * sin(angle); // Reduced factor for gentler curves
+  angle += random(0.03, 0.07); // Slower angle adjustments for smoother motion
+
+  // Check canvas boundaries and reverse direction if necessary
+  if (idlePos.x <= 0 || idlePos.x >= width) idleVelocity.x *= -1;
+  if (idlePos.y <= 0 || idlePos.y >= height) idleVelocity.y *= -1;
+
+  // Use the currently selected brush to draw
+  cleverlayer.image(pg[pgSel], idlePos.x, idlePos.y);
+
+  // Continue drawing after a slightly longer delay
+  setTimeout(drawCurvedPath, 50); // Increased delay for smoother movement
+}
+
+// Attach event listeners for user activity
+window.addEventListener("mousemove", resetIdleTimer);
+window.addEventListener("mousedown", resetIdleTimer);
+window.addEventListener("keydown", resetIdleTimer);
+window.addEventListener("touchstart", resetIdleTimer);
+
+// Initialize idle timer
+resetIdleTimer();
