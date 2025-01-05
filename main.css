@@ -13,13 +13,15 @@
 body {
   margin: 0;
   overflow: hidden;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
   font-family: "Fragment Mono", serif;
   font-weight: 400;
   font-style: normal;
-  font-size: 12px;
+  font-size: 13px;
   /* line-height: 14px; */
   user-select: none; /* Disable text selection for the entire page */
 }
+
 canvas {
   position: fixed;
   top: 0;
@@ -32,6 +34,8 @@ canvas {
 }
 
 .guiWrapper {
+  max-width: 100vw; /* Prevent the container from overflowing the viewport */
+  box-sizing: border-box; /* Include padding in the width */
   width: 100%;
   position: fixed;
   display: flex;
@@ -48,6 +52,7 @@ canvas {
   padding-right: 15px;
   gap: 80px;
   user-select: none; /* Prevent selection on the canvas */
+  overflow: hidden; /* Prevent child elements from exceeding boundaries */
 }
 
 .guiInfo {
@@ -79,7 +84,8 @@ canvas {
 .column3 {
   display: flex;
   width: 100%;
-  gap: 80px;
+  gap: 40px;
+  overflow: hidden; /* Prevent child elements from exceeding boundaries */
 }
 
 .button {
@@ -143,7 +149,7 @@ canvas {
 /* Basic styling for the select element */
 .select {
   width: 100%;
-  font-size: 12px;
+  font-size: 13px;
   font-family: "Fragment Mono", serif; /* Apply your desired font */
   appearance: none; /* Removes default styling */
   -webkit-appearance: none;
@@ -157,7 +163,7 @@ canvas {
 /* Remove border and styles from the options dropdown */
 .select option {
   font-family: "Fragment Mono", serif; /* Ensure the font is applied to options */
-  font-size: 12px; /* Adjust size if needed */
+  font-size: 13px; /* Adjust size if needed */
   color: black;
   padding: 10px;
   margin: 0;
@@ -187,8 +193,73 @@ canvas {
 .infoText {
   position: absolute; /* Necessary for custom positioning */
   color: rgb(0, 0, 0);
-  font-size: 142x;
-  max-width: 850px;
+  font-size: 13x;
+  max-width: 750px;
   display: none; /* Initially hidden */
   z-index: 10; /* Ensure it appears above other elements */
+}
+
+@media (max-width: 1360px) {
+  .guiContent {
+    gap: 40px; /* Reduce the gap between GUI elements */
+  }
+
+  .column3 {
+    gap: 40px; /* Adjust the gap for elements inside .column3 */
+  }
+
+  .sliderWrapper,
+  .selectWrapper {
+    margin-bottom: 10px; /* Optional: Adjust margins for tighter spacing */
+  }
+}
+
+@media (max-width: 1110px) {
+  .guiContent {
+    gap: 20px; /* Reduce the gap between main columns */
+  }
+
+  .guiInfo {
+    gap: 5px; /* Reduce the gap between the title and buttons */
+  }
+
+  .column3 {
+    gap: 20px; /* Reduce the gap between sliders */
+  }
+
+  .selectWrapper,
+  .sliderWrapper {
+    margin-bottom: 5px; /* Optional: Fine-tune vertical spacing */
+  }
+}
+
+@media (max-width: 985px) {
+  .column3 {
+    flex-direction: column; /* Stack sliders vertically */
+    gap: 10px; /* Adjust gap between sliders */
+    align-items: flex-end; /* Align all sliders to the right */
+  }
+
+  .sliderWrapper {
+    width: 150px; /* Set maximum width for sliders */
+  }
+
+  .infoText {
+    max-width: 550px;
+
+}
+
+@media (max-width: 623px) {
+  .guiContent {
+    gap: 20px; /* Reduce gaps between main columns */
+  }
+
+  .column3 {
+    gap: 10px; /* Reduce vertical spacing between sliders */
+    align-items: flex-end; /* Keep sliders aligned to the right */
+  }
+
+  .sliderWrapper {
+    width: 150px; /* Restrict sliders to a specific width */
+  }
 }

@@ -37,16 +37,6 @@ function mouseReleased() {
   sliderActive = false; // Reset slider activity if needed
 }
 
-// var credits = {
-//   names: [
-//     "Sarah.Choi", // feel free to link yourself <a href="URL" target="_blank">first.lastname</a>
-//     "Yevheniia.Semenova",
-//     "Siiri.Tännler",
-//   ],
-//   class: "IDCE HGK – MA – Digital Cultures",
-//   description: "Hydra Brush Tool",
-// };
-
 /*	
 	_hydra_multi // cc teddavis.org 2021	
 	extends _hydra_scope for multiple instances
