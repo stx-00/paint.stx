@@ -77,10 +77,12 @@ canvas {
   margin-bottom: 10px;
 }
 
+/* column is select brush */
 .column2 {
   width: 350px;
 }
 
+/* column 3 are the sliders */
 .column3 {
   display: flex;
   width: 100%;
