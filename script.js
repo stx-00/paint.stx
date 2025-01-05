@@ -406,9 +406,9 @@ function buildGUI() {
   let column3 = createDiv("").parent(guiContent).class("column3");
 
   let sliderBackground = createDiv("").parent(column3).class("sliderWrapper"); //for backgroundSlider
-  let sliderHydraZoom = createDiv("").parent(column3).class("sliderWrapper"); //for
   let sliderBrushSize = createDiv("").parent(column3).class("sliderWrapper");
   let sliderBrushShape = createDiv("").parent(column3).class("sliderWrapper");
+  let sliderHydraZoom = createDiv("").parent(column3).class("sliderWrapper"); //for
   let sliderHyperActive = createDiv("").parent(column3).class("sliderWrapper");
 
   label("select your brush", selectBrush);
@@ -443,20 +443,6 @@ function buildGUI() {
       setTimeout(() => (sliderClicked = false), 100);
     });
 
-  label("hydra zoom", sliderHydraZoom);
-  zoomSlider = createSlider(10, 255, 10, 0)
-    .parent(sliderHydraZoom)
-    .class("slider")
-    .input(() => (sliderActive = true))
-    .mousePressed(() => {
-      sliderClicked = true;
-      sliderActive = true;
-    })
-    .mouseReleased(() => {
-      sliderActive = false;
-      setTimeout(() => (sliderClicked = false), 100);
-    });
-
   label("brush size", sliderBrushSize);
   sizeSlider = createSlider(0.1, 1, 0.5, 0.001)
     .parent(sliderBrushSize)
@@ -474,6 +460,20 @@ function buildGUI() {
   label("brush shape", sliderBrushShape);
   shapeSlider = createSlider(3, 12, 50, 0.001)
     .parent(sliderBrushShape)
+    .class("slider")
+    .input(() => (sliderActive = true))
+    .mousePressed(() => {
+      sliderClicked = true;
+      sliderActive = true;
+    })
+    .mouseReleased(() => {
+      sliderActive = false;
+      setTimeout(() => (sliderClicked = false), 100);
+    });
+
+  label("hydra zoom", sliderHydraZoom);
+  zoomSlider = createSlider(10, 255, 10, 0)
+    .parent(sliderHydraZoom)
     .class("slider")
     .input(() => (sliderActive = true))
     .mousePressed(() => {
