@@ -566,7 +566,7 @@ function resetIdleTimer() {
     cursor();
   }
   idle = false; // Reset idle state
-  idleTimer = setTimeout(startIdleDrawing, 8000); // Set a new timer for 5 seconds
+  idleTimer = setTimeout(startIdleDrawing, 8000); // adjust time here for when screensaver kicks in
 }
 
 function drawCurvedPath() {
