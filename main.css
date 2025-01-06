@@ -248,7 +248,19 @@ canvas {
 
   .infoText {
     max-width: 550px;
+  }
+}
 
+@media (max-width: 900px) {
+  .infoText {
+    max-width: 400px;
+  }
+}
+
+@media (max-width: 740px) {
+  .infoText {
+    max-width: 300px;
+  }
 }
 
 @media (max-width: 623px) {
@@ -263,5 +275,9 @@ canvas {
 
   .sliderWrapper {
     width: 150px; /* Restrict sliders to a specific width */
+  }
+
+  .infoText {
+    max-width: 200px;
   }
 }
