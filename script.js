@@ -310,8 +310,18 @@ function draw() {
 
   // Skip drawing on the canvas if a slider is active
   if (!sliderActive && !buttonClicked) {
-    // Brush logic when the mouse is pressed
     if (mouseIsPressed) {
+      const target = document.elementFromPoint(mouseX, mouseY);
+      if (
+        target &&
+        (target.tagName === "A" ||
+          target.tagName === "BUTTON" ||
+          target.closest(".sliderWrapper"))
+      ) {
+        return; // Skip drawing if clicking on these elements
+      }
+
+      // Brush logic when the mouse is pressed
       cleverlayer.image(pg[pgSel], mouseX, mouseY);
     }
   }
