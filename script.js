@@ -395,6 +395,10 @@ function buildGUI() {
 
     // Automatically trigger the print dialog
     printWindow.print();
+
+    // Clear the print queue
+    printQueue = [];
+    updatePrintCounter(printButton); // Update the counter after clearing
   });
 
   let infoButton = createDiv("?").parent(guiInfo).class("infoButton button");
