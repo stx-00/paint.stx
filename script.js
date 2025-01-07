@@ -7,6 +7,8 @@ let backgroundSlider;
 let sliderActive = false; // Flag to indicate slider activity
 let sliderClicked = false; // Flag to indicate if the slider was just clicked
 let buttonClicked = false; // Flag to indicate if a button is clicked
+let printQueue = []; // Array to store the queued drawings
+let queueCounter; // Counter display
 
 // Eco-mode for rendering only if the window is focused
 window.onblur = function () {
@@ -330,18 +332,69 @@ function buildGUI() {
     saveCanvas();
   });
 
-  let addButton = createDiv("add").parent(guiInfo).class("addButton button");
+  let addButton = createDiv("Add").parent(guiInfo).class("button");
   addButton.mousePressed(() => {
     buttonClicked = true;
-    // Add button functionality here
+    const canvasData = cleverlayer.canvas.toDataURL(); // Convert canvas to image data
+    printQueue.push(canvasData); // Add the image to the print queue
+    updatePrintCounter(printButton); // Update the counter
+    clearCanvas(); // Clear the canvas after adding
   });
 
-  let printButton = createDiv("print")
-    .parent(guiInfo)
-    .class("printButton button");
+  let printButton = createDiv("Print").parent(guiInfo).class("button");
   printButton.mousePressed(() => {
-    buttonClicked = true;
-    // Print button functionality here
+    if (printQueue.length === 0) {
+      alert("The print queue is empty.");
+      return;
+    }
+
+    // Open a new window for printing
+    const printWindow = window.open("", "_blank", "width=800,height=600");
+    const printDocument = printWindow.document;
+
+    // Write the basic HTML structure into the print window
+    printDocument.write(`
+      <html>
+        <head>
+          <title>Print Queue</title>
+          <style>
+            @media print {
+              body {
+                margin: 0;
+                padding: 0;
+              }
+  
+              img {
+                display: block;
+                width: 100%; /* Full width to fit the page */
+                height: auto; /* Maintain aspect ratio */
+                page-break-after: always; /* Ensure each image starts on a new page */
+              }
+  
+              @page {
+                size: A4 landscape; /* Set the page size to A4 in landscape orientation */
+                margin: 0; /* Remove margins for full-page content */
+              }
+            }
+          </style>
+        </head>
+        <body>
+      `);
+
+    // Add each drawing from the queue as an image
+    printQueue.forEach((item) => {
+      printDocument.write(`<img src="${item}" alt="Queued Drawing">`);
+    });
+
+    // Close the HTML structure and print
+    printDocument.write(`
+        </body>
+      </html>
+    `);
+    printDocument.close();
+
+    // Automatically trigger the print dialog
+    printWindow.print();
   });
 
   let infoButton = createDiv("?").parent(guiInfo).class("infoButton button");
@@ -511,6 +564,14 @@ function buildGUI() {
     } else {
       guiWrapper.removeClass("light-text");
     }
+  }
+}
+
+function updatePrintCounter(printButton) {
+  if (printQueue.length > 0) {
+    printButton.html(`Print (${printQueue.length})`); // Show the counter if there are drawings
+  } else {
+    printButton.html("Print"); // Remove the counter when the queue is empty
   }
 }
 
