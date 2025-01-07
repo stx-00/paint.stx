@@ -77,7 +77,7 @@ canvas {
   margin-bottom: 10px;
 }
 
-/* column is select brush */
+/* column 2 is select brush */
 .column2 {
   width: 350px;
 }
@@ -177,6 +177,7 @@ canvas {
   border: 0;
 }
 
+/* to avoid select box appearing as active */
 .select:focus {
   outline: none;
   box-shadow: none;
@@ -188,10 +189,12 @@ canvas {
   position: relative;
 }
 
+/* changing text color to white when background is too dark */
 .light-text {
   color: white;
 }
 
+/* text that appears in "?" infoButton */
 .infoText {
   position: absolute; /* Necessary for custom positioning */
   color: rgb(0, 0, 0);
@@ -200,6 +203,8 @@ canvas {
   display: none; /* Initially hidden */
   z-index: 10; /* Ensure it appears above other elements */
 }
+
+/* responsiveness */
 
 @media (max-width: 1360px) {
   .guiContent {
