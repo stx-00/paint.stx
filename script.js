@@ -68,6 +68,7 @@ for (let i = 0; i < synthCount; i++) {
 
 // sandbox - start
 // access each instance via synth[index]
+// each synth is a brush
 
 synth[0]
   .osc(() => zoomSlider.value() / 5, 1, 0.3)
@@ -88,7 +89,6 @@ synth[0]
       .modulate(synth[0].noise(0.6, () => hyperSlider.value()))
   )
   .out();
-//
 
 synth[1]
   .voronoi(() => zoomSlider.value(), 0, 1)
@@ -215,8 +215,6 @@ synth[6]
   )
   .out();
 
-//Ô	speed = 0.1
-
 synth[7]
   .noise(() => zoomSlider.value(), 0.5, 1)
   .color(
@@ -254,17 +252,6 @@ synth[7]
   )
   .out();
 
-// synth[7]
-//   .solid([1, 0, 0], [0, 1, 0], [0, 0, 1], 1)
-//   .mask(
-//     synth[7].shape(
-//       () => shapeSlider.value(),
-//       () => sizeSlider.value(),
-//       0.01
-//     )
-//   )
-//   .out();
-
 // sandbox - stop
 
 function setup() {
@@ -292,7 +279,6 @@ function setup() {
 }
 
 function draw() {
-  // Draw the background
   background(backgroundSlider.value());
 
   // Always draw the persistent layer (cleverlayer)
@@ -321,7 +307,7 @@ function draw() {
         return; // Skip drawing if clicking on these elements
       }
 
-      // Brush logic when the mouse is pressed
+      // drawing brushes when the mouse is pressed
       cleverlayer.image(pg[pgSel], mouseX, mouseY);
     }
   }
@@ -338,7 +324,7 @@ function buildGUI() {
   let guiContent = createDiv("").parent(guiWrapper).class("guiContent");
 
   let guiInfo = createDiv("").parent(guiContent).class("guiInfo");
-  let title = createDiv("p5*hydra brushes").parent(guiInfo).class("title");
+  let title = createDiv("p5*hydra paint").parent(guiInfo).class("title");
 
   let trashButton = createDiv("trash")
     .parent(guiInfo)
@@ -369,13 +355,12 @@ function buildGUI() {
   });
 
   let infoButton = createDiv("?").parent(guiInfo).class("infoButton button");
-
   let infoText; // To store the reference to the text element
 
   infoButton.mousePressed(() => {
     buttonClicked = true;
 
-    // Check if the infoText already exists
+    // Enter info text here
     if (!infoText) {
       infoText = createDiv(
         'This tool lets you draw with brushes built using <a href="https://p5js.org/" target="_blank" style="color: #000000; text-decoration: underline;">p5.js</a> and <a href="https://hydra.ojack.xyz/" target="_blank" style="color: #000000; text-decoration: underline;">hydra</a>.<br><br>Pick a brush from the dropdown menu.<br>Start drawing by pressing down your mouse or swiping with your finger.<br>Adjust the sliders to change how it behaves.<br><br>Hate your sketch? Trash it.<br>Love your sketch? Save it (PNG).<br><br>Want to create more? Add your drawing to the print queue.<br>Keep drawing as many pages as you like, then hit print to compile them into a PDF.<br><br>This tool was designed and built by <a href="https://www.siiritaennler.ch/" target="_blank" style="color: #000000; text-decoration: underline;">Siiri Tännler</a> and mentored by <a href="https://teddavis.org/" target="_blank" style="color: #000000; text-decoration: underline;">Ted Davis</a>.<br><br>A first version of this tool was created in collaboration with Sarah Choi and Yevheniia Semenova during a class taught by Ted Davis at IDCE HGK/FHNW.<br><br>Source code'
@@ -383,7 +368,7 @@ function buildGUI() {
         .parent(guiWrapper)
         .class("infoText");
 
-      // Position the text relative to the "?" button
+      // Position the text relative to the "?" button and "select brush"
       const infoButtonPosition = infoButton.position(); // Get the position of the "?" button
       const selectBrushPosition = selectBrush.position(); // Get the position of "select your brush"
 
@@ -399,17 +384,19 @@ function buildGUI() {
     }
   });
 
+  // column2 is select brush
   let column2 = createDiv("").parent(guiContent).class("column2");
 
   let selectBrush = createDiv("").parent(column2).class("selectWrapper"); //for select brush
 
+  // column 3 are the sliders
   let column3 = createDiv("").parent(guiContent).class("column3");
 
-  let sliderBackground = createDiv("").parent(column3).class("sliderWrapper"); //for backgroundSlider
-  let sliderBrushSize = createDiv("").parent(column3).class("sliderWrapper");
-  let sliderBrushShape = createDiv("").parent(column3).class("sliderWrapper");
-  let sliderHydraZoom = createDiv("").parent(column3).class("sliderWrapper"); //for
-  let sliderHyperActive = createDiv("").parent(column3).class("sliderWrapper");
+  let sliderBackground = createDiv("").parent(column3).class("sliderWrapper"); //for background color
+  let sliderBrushSize = createDiv("").parent(column3).class("sliderWrapper"); // for brush size
+  let sliderBrushShape = createDiv("").parent(column3).class("sliderWrapper"); // for brush shape
+  let sliderHydraZoom = createDiv("").parent(column3).class("sliderWrapper"); // for hydra zoom
+  let sliderHyperActive = createDiv("").parent(column3).class("sliderWrapper"); // for hyper activity of brush
 
   label("select your brush", selectBrush);
   sel = createSelect().parent(selectBrush).class("select");
@@ -499,14 +486,16 @@ function buildGUI() {
       setTimeout(() => (sliderClicked = false), 100);
     });
 
-  // Set the selected option to "brush1".
+  // Set the selected option to "brush1" —— not sure this is wokrin
   sel.selected("title of brush0", 0);
 
+  // for trashing drawing
   function clearCanvas() {
     cleverlayer.clear();
     background(0);
   }
 
+  // for saving drawing
   function saveCanvas() {
     var filename = "p5-hydra-brush-sketch.png";
     cleverlayer.save(filename);
@@ -516,6 +505,7 @@ function buildGUI() {
     createDiv(txt).parent(parent).class("label");
   }
 
+  // making sure text color moves to white when background too dark
   function adjustTextColor() {
     const backgroundValue = backgroundSlider.value();
     const textColor = backgroundValue <= 45 ? "white" : "black"; // Adjust threshold as needed
@@ -534,7 +524,7 @@ function buildGUI() {
   }
 }
 
-// screen saver
+// screen saver, auto drawing!
 let idleTimer; // Timer for detecting inactivity
 let idleDrawingTimer; // Timer for limiting auto-drawing duration
 let idle = false; // Flag to track if user is idle
