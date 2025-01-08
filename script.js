@@ -373,7 +373,7 @@ function buildGUI() {
   
               @page {
                 size: A4 landscape; /* Set the page size to A4 in landscape orientation */
-                margin: 0; /* Remove margins for full-page content */
+                margin: 8mm; /* Remove margins for full-page content */
               }
             }
           </style>
