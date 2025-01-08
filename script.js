@@ -344,7 +344,7 @@ function buildGUI() {
   let printButton = createDiv("Print").parent(guiInfo).class("button");
   printButton.mousePressed(() => {
     if (printQueue.length === 0) {
-      alert("The print queue is empty.");
+      alert("add drawings to the print queue!");
       return;
     }
 
@@ -386,11 +386,23 @@ function buildGUI() {
       printDocument.write(`<img src="${item}" alt="Queued Drawing">`);
     });
 
-    // Close the HTML structure and print
+    // Add script to handle print window closing
     printDocument.write(`
-        </body>
-      </html>
-    `);
+    </body>
+    <script>
+      window.addEventListener('afterprint', function() {
+        window.close();
+      });
+      
+      // Also close if user cancels the print dialog
+      setTimeout(() => {
+        if (!document.hidden) {
+          window.close();
+        }
+      }, 500);
+    </script>
+  </html>
+`);
     printDocument.close();
 
     // Automatically trigger the print dialog
