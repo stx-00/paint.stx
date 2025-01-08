@@ -204,6 +204,7 @@ canvas {
   z-index: 10; /* Ensure it appears above other elements */
 }
 
+/* for mobile drawing */
 .guiWrapper,
 .button,
 .slider,

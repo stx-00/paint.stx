@@ -68,6 +68,8 @@ for (let i = 0; i < synthCount; i++) {
   }).synth; // scoped hydra
 }
 
+//////////////////////////////////////////////
+
 // sandbox - start
 // access each instance via synth[index]
 // each synth is a brush
@@ -254,7 +256,7 @@ synth[7]
   )
   .out();
 
-// sandbox - stop
+////////////////////////////////////////////// sandbox - stop
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -273,6 +275,14 @@ function setup() {
   let canvasElement = document.querySelector("canvas");
   canvasElement.addEventListener("mousedown", (e) => e.preventDefault());
   canvasElement.addEventListener("mousemove", (e) => e.preventDefault());
+  canvasElement.addEventListener("touchstart", (e) => e.preventDefault()); // For touch
+  canvasElement.addEventListener("touchmove", (e) => e.preventDefault()); // For touch
+
+  // Ensure GUI elements are interactive
+  document.querySelectorAll(".guiWrapper").forEach((el) => {
+    el.addEventListener("touchstart", (e) => e.stopPropagation());
+    el.addEventListener("touchmove", (e) => e.stopPropagation());
+  });
 
   // prep synth layers
   for (let i = 0; i < synthCount; i++) {
@@ -280,29 +290,69 @@ function setup() {
   }
 }
 
-// Handle touch start
-function touchStarted() {
-  // Prevent default touch behavior (e.g. scrolling)
-  if (touches.length > 0) {
+//////// for mobile
+
+function touchStarted(e) {
+  // Prevent drawing if interacting with GUI elements
+  if (
+    e.target.closest(".guiWrapper") ||
+    e.target.tagName === "BUTTON" ||
+    e.target.tagName === "INPUT" ||
+    e.target.tagName === "SELECT"
+  ) {
+    return true; // Allow default interaction for GUI elements
+  }
+
+  // Drawing logic for canvas
+  if (touches.length > 0 && !sliderActive && !buttonClicked) {
     const touch = touches[0];
-    if (!sliderActive && !buttonClicked) {
-      cleverlayer.image(pg[pgSel], touch.x, touch.y);
-    }
-    return false;
+    cleverlayer.image(pg[pgSel], touch.x, touch.y);
+  }
+  return false; // Prevent default for drawing
+}
+
+function touchMoved(e) {
+  // Prevent drawing if interacting with GUI elements
+  if (
+    e.target.closest(".guiWrapper") ||
+    e.target.tagName === "BUTTON" ||
+    e.target.tagName === "INPUT" ||
+    e.target.tagName === "SELECT"
+  ) {
+    return true; // Allow default interaction for GUI elements
+  }
+
+  // Drawing logic for canvas
+  if (touches.length > 0 && !sliderActive && !buttonClicked) {
+    const touch = touches[0];
+    cleverlayer.image(pg[pgSel], touch.x, touch.y);
+  }
+  return false; // Prevent default for drawing
+}
+
+function mousePressed(e) {
+  // Prevent drawing if interacting with GUI elements
+  if (
+    e.target.closest(".guiWrapper") ||
+    e.target.tagName === "BUTTON" ||
+    e.target.tagName === "INPUT" ||
+    e.target.tagName === "SELECT"
+  ) {
+    return true; // Allow default interaction for GUI elements
+  }
+
+  // Allow drawing on the canvas
+  if (!sliderActive && !buttonClicked) {
+    cleverlayer.image(pg[pgSel], mouseX, mouseY);
   }
 }
 
-// Handle touch movement
-function touchMoved() {
-  // Prevent default touch behavior
-  if (touches.length > 0) {
-    const touch = touches[0];
-    if (!sliderActive && !buttonClicked) {
-      cleverlayer.image(pg[pgSel], touch.x, touch.y);
-    }
-    return false;
-  }
+function touchEnded() {
+  buttonClicked = false; // Reset button interaction
+  sliderActive = false; // Reset slider interaction
 }
+
+////////
 
 function draw() {
   background(backgroundSlider.value());
