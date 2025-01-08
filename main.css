@@ -204,6 +204,13 @@ canvas {
   z-index: 10; /* Ensure it appears above other elements */
 }
 
+.guiWrapper,
+.button,
+.slider,
+.select {
+  pointer-events: auto;
+}
+
 /* responsiveness */
 
 @media (max-width: 1360px) {
