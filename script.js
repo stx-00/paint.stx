@@ -364,16 +364,19 @@ function buildGUI() {
                 padding: 0;
               }
   
-              img {
-                display: block;
-                width: 100%; /* Full width to fit the page */
-                height: auto; /* Maintain aspect ratio */
-                page-break-after: always; /* Ensure each image starts on a new page */
-              }
+               img {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 100%;
+            max-height: 100vh;
+            page-break-after: always;
+          }
   
               @page {
                 size: A4 landscape; /* Set the page size to A4 in landscape orientation */
-                margin: 8mm; /* Remove margins for full-page content */
+                margin: 0; /* Remove margins for full-page content */
               }
             }
           </style>
