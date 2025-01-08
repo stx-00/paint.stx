@@ -422,6 +422,9 @@ function buildGUI() {
       return;
     }
 
+    // Detect device orientation
+    const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+
     // Open a new window for printing
     const printWindow = window.open("", "_blank", "width=800,height=600");
     const printDocument = printWindow.document;
@@ -452,7 +455,9 @@ function buildGUI() {
               }
   
               @page {
-                size: A4 landscape; /* Adjust to A4 portrait or landscape as needed */
+                size: A4 ${
+                  isPortrait ? "portrait" : "landscape"
+                }; /* Dynamic page size */
                 margin: 3mm; /* Remove margins for full-page centering */
               }
             }
