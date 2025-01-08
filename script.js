@@ -293,41 +293,39 @@ function setup() {
 //////// for mobile
 
 function touchStarted(e) {
-  // Prevent drawing if interacting with GUI elements
+  // Check if the touch is on a GUI element
   if (
     e.target.closest(".guiWrapper") ||
-    e.target.tagName === "BUTTON" ||
-    e.target.tagName === "INPUT" ||
-    e.target.tagName === "SELECT"
+    ["BUTTON", "INPUT", "SELECT"].includes(e.target.tagName)
   ) {
     return true; // Allow default interaction for GUI elements
   }
 
-  // Drawing logic for canvas
+  // Prevent default interaction only on canvas
   if (touches.length > 0 && !sliderActive && !buttonClicked) {
     const touch = touches[0];
     cleverlayer.image(pg[pgSel], touch.x, touch.y);
   }
-  return false; // Prevent default for drawing
+
+  return false; // Prevent default interaction on the canvas
 }
 
 function touchMoved(e) {
-  // Prevent drawing if interacting with GUI elements
+  // Check if the touch is on a GUI element
   if (
     e.target.closest(".guiWrapper") ||
-    e.target.tagName === "BUTTON" ||
-    e.target.tagName === "INPUT" ||
-    e.target.tagName === "SELECT"
+    ["BUTTON", "INPUT", "SELECT"].includes(e.target.tagName)
   ) {
     return true; // Allow default interaction for GUI elements
   }
 
-  // Drawing logic for canvas
+  // Prevent default interaction only on canvas
   if (touches.length > 0 && !sliderActive && !buttonClicked) {
     const touch = touches[0];
     cleverlayer.image(pg[pgSel], touch.x, touch.y);
   }
-  return false; // Prevent default for drawing
+
+  return false; // Prevent default interaction on the canvas
 }
 
 function mousePressed(e) {
@@ -530,6 +528,16 @@ function buildGUI() {
       );
     }
   });
+
+  // mobile
+  let toggleSlidersButton = createDiv("Adjust Sliders")
+    .parent(guiWrapper)
+    .class("button")
+    .mousePressed(() => {
+      const sliders = document.querySelector(".column3");
+      sliders.style.display =
+        sliders.style.display === "none" ? "flex" : "none";
+    });
 
   // column2 is select brush
   let column2 = createDiv("").parent(guiContent).class("column2");

@@ -276,21 +276,15 @@ canvas {
   }
 }
 
-@media (max-width: 623px) {
-  .guiContent {
-    gap: 20px; /* Reduce gaps between main columns */
+@media (max-width: 768px) {
+  .column2 {
+    width: 100%; /* Make column2 full width on small screens */
   }
 
   .column3 {
-    gap: 10px; /* Reduce vertical spacing between sliders */
-    align-items: flex-end; /* Keep sliders aligned to the right */
-  }
-
-  .sliderWrapper {
-    width: 150px; /* Restrict sliders to a specific width */
-  }
-
-  .infoText {
-    max-width: 200px;
+    display: none; /* Hide sliders on mobile initially */
+    flex-direction: column; /* Stack sliders vertically */
+    width: 100%; /* Full width on small screens */
+    gap: 10px; /* Optional: Adjust spacing */
   }
 }
