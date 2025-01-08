@@ -720,7 +720,7 @@ function resetIdleTimer() {
   if (idle) {
     stopIdleDrawing(); // Stop idle drawing if it’s running
   }
-  idleTimer = setTimeout(startIdleDrawing, 12000); // Adjust time here for when screensaver kicks in
+  idleTimer = setTimeout(startIdleDrawing, 20000); // Adjust time here for when screensaver kicks in
 }
 
 function drawCurvedPath() {
