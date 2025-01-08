@@ -687,7 +687,7 @@ let idlePos = { x: 0, y: 0 }; // Current position for idle drawing
 let idleVelocity = { x: 0, y: 0 }; // Velocity vector for smooth movement
 let angle = 0; // Angle for creating curved movement
 let speed = 3; // Base speed of movement
-let idleDuration = 60000; // Auto-drawing duration (1 minute)
+let idleDuration = 40000; // Auto-drawing duration
 
 function startIdleDrawing() {
   idle = true;
