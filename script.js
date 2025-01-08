@@ -418,7 +418,7 @@ function buildGUI() {
   let printButton = createDiv("Print").parent(guiInfo).class("button");
   printButton.mousePressed(() => {
     if (printQueue.length === 0) {
-      alert("add drawings to the print queue!");
+      alert("Add drawings to the print queue!");
       return;
     }
 
@@ -438,54 +438,60 @@ function buildGUI() {
                 padding: 0;
               }
   
-               img {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            max-width: 100%;
-            max-height: 100vh;
-            page-break-after: always;
-          }
+              .page {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh; /* Full viewport height for centering */
+                page-break-after: always; /* Ensure each drawing is on its own page */
+              }
+  
+              img {
+                max-width: 100%;
+                max-height: 100%; /* Prevent images from overflowing the page */
+              }
   
               @page {
-                size: A4 landscape; /* Set the page size to A4 in landscape orientation */
-                margin: 0; /* Remove margins for full-page content */
+                size: A4 landscape; /* Adjust to A4 portrait or landscape as needed */
+                margin: 3mm; /* Remove margins for full-page centering */
               }
             }
           </style>
         </head>
         <body>
-      `);
+    `);
 
-    // Add each drawing from the queue as an image
+    // Add each drawing wrapped in a centered container
     printQueue.forEach((item) => {
-      printDocument.write(`<img src="${item}" alt="Queued Drawing">`);
+      printDocument.write(`
+        <div class="page">
+          <img src="${item}" alt="Queued Drawing">
+        </div>
+      `);
     });
 
-    // Add script to handle print window closing
+    // Close the HTML structure
     printDocument.write(`
-    </body>
-    <script>
-      window.addEventListener('afterprint', function() {
-        window.close();
-      });
-      
-      // Also close if user cancels the print dialog
-      setTimeout(() => {
-        if (!document.hidden) {
-          window.close();
-        }
-      }, 500);
-    </script>
-  </html>
-`);
+        </body>
+        <script>
+          window.addEventListener('afterprint', function() {
+            window.close();
+          });
+  
+          setTimeout(() => {
+            if (!document.hidden) {
+              window.close();
+            }
+          }, 500);
+        </script>
+      </html>
+    `);
     printDocument.close();
 
     // Automatically trigger the print dialog
     printWindow.print();
 
-    // Clear the print queue
+    // Clear the print queue after printing
     printQueue = [];
     updatePrintCounter(printButton); // Update the counter after clearing
   });
