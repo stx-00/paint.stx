@@ -280,6 +280,30 @@ function setup() {
   }
 }
 
+// Handle touch start
+function touchStarted() {
+  // Prevent default touch behavior (e.g. scrolling)
+  if (touches.length > 0) {
+    const touch = touches[0];
+    if (!sliderActive && !buttonClicked) {
+      cleverlayer.image(pg[pgSel], touch.x, touch.y);
+    }
+    return false;
+  }
+}
+
+// Handle touch movement
+function touchMoved() {
+  // Prevent default touch behavior
+  if (touches.length > 0) {
+    const touch = touches[0];
+    if (!sliderActive && !buttonClicked) {
+      cleverlayer.image(pg[pgSel], touch.x, touch.y);
+    }
+    return false;
+  }
+}
+
 function draw() {
   background(backgroundSlider.value());
 
@@ -296,18 +320,18 @@ function draw() {
     pg[pgSel].height
   );
 
-  // Skip drawing on the canvas if a slider is active
   if (!sliderActive && !buttonClicked) {
-    // Brush logic when the mouse is pressed
-    if (mouseIsPressed) {
-      cleverlayer.image(pg[pgSel], mouseX, mouseY);
+    if (mouseIsPressed || (touches.length > 0 && !idle)) {
+      const x = touches.length > 0 ? touches[0].x : mouseX;
+      const y = touches.length > 0 ? touches[0].y : mouseY;
+      cleverlayer.image(pg[pgSel], x, y);
     }
   }
 
-  // Render the brush preview
-  // Show the brush preview even when sliders are active
   if (!idle) {
-    image(pg[pgSel], mouseX, mouseY);
+    const x = touches.length > 0 ? touches[0].x : mouseX;
+    const y = touches.length > 0 ? touches[0].y : mouseY;
+    image(pg[pgSel], x, y);
   }
 }
 
