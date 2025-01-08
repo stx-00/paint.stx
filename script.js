@@ -263,6 +263,11 @@ function setup() {
 
   buildGUI();
 
+  // Disable sliders if on mobile
+  if (window.innerWidth <= 768) {
+    document.querySelector(".column3").style.display = "none";
+  }
+
   background(0);
   noStroke();
 
@@ -529,29 +534,10 @@ function buildGUI() {
     }
   });
 
-  // mobile
-  let toggleSlidersButton = createDiv("Adjust Sliders")
-    .parent(guiWrapper)
-    .class("button")
-    .mousePressed(() => {
-      const sliders = document.querySelector(".column3");
-      sliders.style.display =
-        sliders.style.display === "none" ? "flex" : "none";
-    });
-
   // column2 is select brush
   let column2 = createDiv("").parent(guiContent).class("column2");
 
   let selectBrush = createDiv("").parent(column2).class("selectWrapper"); //for select brush
-
-  // column 3 are the sliders
-  let column3 = createDiv("").parent(guiContent).class("column3");
-
-  let sliderBackground = createDiv("").parent(column3).class("sliderWrapper"); //for background color
-  let sliderBrushSize = createDiv("").parent(column3).class("sliderWrapper"); // for brush size
-  let sliderBrushShape = createDiv("").parent(column3).class("sliderWrapper"); // for brush shape
-  let sliderHydraZoom = createDiv("").parent(column3).class("sliderWrapper"); // for hydra zoom
-  let sliderHyperActive = createDiv("").parent(column3).class("sliderWrapper"); // for hyper activity of brush
 
   label("select your brush", selectBrush);
   sel = createSelect().parent(selectBrush).class("select");
@@ -567,6 +553,15 @@ function buildGUI() {
   sel.changed(function () {
     pgSel = sel.value();
   });
+
+  // column 3 are the sliders
+  let column3 = createDiv("").parent(guiContent).class("column3");
+
+  let sliderBackground = createDiv("").parent(column3).class("sliderWrapper"); //for background color
+  let sliderBrushSize = createDiv("").parent(column3).class("sliderWrapper"); // for brush size
+  let sliderBrushShape = createDiv("").parent(column3).class("sliderWrapper"); // for brush shape
+  let sliderHydraZoom = createDiv("").parent(column3).class("sliderWrapper"); // for hydra zoom
+  let sliderHyperActive = createDiv("").parent(column3).class("sliderWrapper"); // for hyper activity of brush
 
   label("background", sliderBackground);
   backgroundSlider = createSlider(0, 255, 255, 1)

@@ -214,6 +214,12 @@ canvas {
 
 /* responsiveness */
 
+@media (min-width: 769px) {
+  .adjust-sliders-button {
+    display: none; /* Hide on desktop */
+  }
+}
+
 @media (max-width: 1360px) {
   .guiContent {
     gap: 40px; /* Reduce the gap between GUI elements */
@@ -270,21 +276,25 @@ canvas {
   }
 }
 
-@media (max-width: 740px) {
-  .infoText {
-    max-width: 300px;
-  }
-}
-
 @media (max-width: 768px) {
+  .guiContent {
+    flex-direction: row; /* Maintain side-by-side layout */
+    gap: 20px; /* Adjust spacing between the two columns */
+  }
+
+  .guiInfo {
+    width: 50%; /* Allocate half of the space to the left column */
+    flex-shrink: 0; /* Prevent shrinking */
+  }
+
   .column2 {
-    width: 100%; /* Make column2 full width on small screens */
+    display: flex; /* Keep column2 in the second column */
+    flex-direction: column; /* Stack select brush and sliders vertically */
+    gap: 20px; /* Adjust spacing */
+    width: 50%; /* Allocate half of the space to the second column */
   }
 
   .column3 {
-    display: none; /* Hide sliders on mobile initially */
-    flex-direction: column; /* Stack sliders vertically */
-    width: 100%; /* Full width on small screens */
-    gap: 10px; /* Optional: Adjust spacing */
+    display: none !important; /* Completely hide sliders on mobile */
   }
 }
