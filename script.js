@@ -432,72 +432,75 @@ function buildGUI() {
     // Detect device orientation
     const isPortrait = window.matchMedia("(orientation: portrait)").matches;
 
+    // Get viewport dimensions to adjust page size dynamically
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+
     // Open a new window for printing
     const printWindow = window.open("", "_blank", "width=800,height=600");
     const printDocument = printWindow.document;
 
     // Write the basic HTML structure into the print window
     printDocument.write(`
-      <html>
-        <head>
-          <title>Print Queue</title>
-          <style>
-            @media print {
-              body {
-                margin: 0;
-                padding: 0;
-              }
-  
-              .page {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh; /* Full viewport height for centering */
-                page-break-after: always; /* Ensure each drawing is on its own page */
-              }
-  
-              img {
-                max-width: 100%;
-                max-height: 100%; /* Prevent images from overflowing the page */
-              }
-  
-              @page {
-                size: A4 ${
-                  isPortrait ? "portrait" : "landscape"
-                }; /* Dynamic page size */
-                margin: 3mm; /* Remove margins for full-page centering */
-              }
+    <html>
+      <head>
+        <title>Print Queue</title>
+        <style>
+          @media print {
+            body {
+              margin: 0;
+              padding: 0;
             }
-          </style>
-        </head>
-        <body>
-    `);
+
+            .page {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 100vh; /* Full viewport height for centering */
+              width: 100vw; /* Full viewport width for centering */
+              page-break-after: always; /* Ensure each drawing is on its own page */
+            }
+
+            img {
+              max-width: 100%;
+              max-height: 100%; /* Prevent images from overflowing the page */
+            }
+
+            @page {
+              size: ${viewportWidth}px ${viewportHeight}px; /* Dynamic page size */
+              margin: 3mm; /* Remove margins for full-page centering */
+            }
+          }
+        </style>
+      </head>
+      <body>
+  `);
 
     // Add each drawing wrapped in a centered container
     printQueue.forEach((item) => {
       printDocument.write(`
-        <div class="page">
-          <img src="${item}" alt="Queued Drawing">
-        </div>
-      `);
+      <div class="page">
+        <img src="${item}" alt="Queued Drawing">
+      </div>
+    `);
     });
 
     // Close the HTML structure
     printDocument.write(`
-        </body>
-        <script>
-          window.addEventListener('afterprint', function() {
+      </body>
+      <script>
+        window.addEventListener('afterprint', function() {
+          window.close();
+        });
+
+        setTimeout(() => {
+          if (!document.hidden) {
             window.close();
-          });
-  
-          setTimeout(() => {
-            if (!document.hidden) {
-              window.close();
-            }
-          }, 500);
-        </script>
-      </html>
-    `);
+          }
+        }, 500);
+      </script>
+    </html>
+  `);
     printDocument.close();
 
     // Automatically trigger the print dialog
