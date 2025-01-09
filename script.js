@@ -320,6 +320,9 @@ function touchStarted(e) {
 }
 
 function touchMoved(e) {
+  // Reset idle timer whenever touch interaction occurs
+  resetIdleTimer();
+
   // Check if the touch is on a GUI element
   if (
     e.target.closest(".guiWrapper") ||
@@ -328,7 +331,7 @@ function touchMoved(e) {
     return true; // Allow default interaction for GUI elements
   }
 
-  // Prevent default interaction only on canvas
+  // Prevent default interaction only on the canvas
   if (touches.length > 0 && !sliderActive && !buttonClicked) {
     const touch = touches[0];
     cleverlayer.image(pg[pgSel], touch.x, touch.y);
@@ -390,7 +393,12 @@ function draw() {
     resetIdleTimer();
   }
 
-  if (!idle) {
+  // Handle idle behavior (auto-drawing/screensaver mode)
+  if (idle) {
+    // Preserve whatever logic you already have here
+    drawCurvedPath(); // Or any other auto-drawing logic you have
+  } else {
+    // Display brush preview while not idle
     const x = touches.length > 0 ? touches[0].x : mouseX;
     const y = touches.length > 0 ? touches[0].y : mouseY;
     image(pg[pgSel], x, y);
@@ -705,18 +713,18 @@ let idleDuration = 40000; // Auto-drawing duration
 function startIdleDrawing() {
   idle = true;
 
-  // Hide the cursor
+  // Hide the cursor (on desktop)
   noCursor();
 
   // Initialize random starting position for idle drawing
-  idlePos.x = mouseX || random(width); // Fallback to random if cursor is outside canvas
-  idlePos.y = mouseY || random(height);
+  idlePos.x = touches.length > 0 ? touches[0].x : random(width);
+  idlePos.y = touches.length > 0 ? touches[0].y : random(height);
 
   // Set a random initial velocity
   idleVelocity.x = random(-speed, speed);
   idleVelocity.y = random(-speed, speed);
 
-  // Set a timer to stop auto-drawing after a minute
+  // Set a timer to stop auto-drawing after a certain duration
   idleDrawingTimer = setTimeout(stopIdleDrawing, idleDuration);
 
   drawCurvedPath(); // Start the continuous curved drawing
@@ -729,15 +737,14 @@ function stopIdleDrawing() {
 }
 
 function resetIdleTimer() {
-  clearTimeout(idleTimer); // Clear existing inactivity timer
+  clearTimeout(idleTimer); // Clear the existing inactivity timer
+
   if (idle) {
-    stopIdleDrawing(); // Stop idle drawing if it’s running
+    stopIdleDrawing(); // Stop idle drawing if already in progress
   }
 
-  // Reset idle timer only if there are no ongoing touch interactions
-  if (touches.length === 0) {
-    idleTimer = setTimeout(startIdleDrawing, 20000); // Adjust time here for when screensaver kicks in
-  }
+  // Always reset the timer to start screensaver after inactivity
+  idleTimer = setTimeout(startIdleDrawing, 20000); // 20 seconds of inactivity
 }
 
 function drawCurvedPath() {
@@ -774,6 +781,7 @@ window.addEventListener("mousemove", resetIdleTimer);
 window.addEventListener("mousedown", resetIdleTimer);
 window.addEventListener("keydown", resetIdleTimer);
 window.addEventListener("touchstart", resetIdleTimer);
+window.addEventListener("touchmove", resetIdleTimer);
 
 // Initialize idle timer
 resetIdleTimer();
