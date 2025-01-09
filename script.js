@@ -263,10 +263,6 @@ function setup() {
 
   buildGUI();
 
-  // Initialize the cursor position in the center of the canvas
-  mouseX = width / 2;
-  mouseY = height / 2;
-
   // Disable sliders if on mobile
   if (window.innerWidth <= 768) {
     document.querySelector(".column3").style.display = "none";
@@ -287,7 +283,7 @@ function setup() {
   canvasElement.addEventListener("touchstart", (e) => e.preventDefault()); // For touch
   canvasElement.addEventListener("touchmove", (e) => e.preventDefault()); // For touch
 
-  // Ensure GUI elements are interactive on mobile
+  // Ensure GUI elements are interactive
   document.querySelectorAll(".guiWrapper").forEach((el) => {
     el.addEventListener("touchstart", (e) => e.stopPropagation());
     el.addEventListener("touchmove", (e) => e.stopPropagation());
