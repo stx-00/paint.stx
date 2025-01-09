@@ -277,6 +277,8 @@ canvas {
   }
 }
 
+/* MOBILE */
+
 @media (max-width: 768px) {
   body {
     font-size: 11px;
@@ -295,8 +297,8 @@ canvas {
   /* column 2 is select brush */
   .column2 {
     display: flex; /* Keep column2 in the second column */
-    flex-direction: column; /* Stack select brush and sliders vertically */
-    gap: 20px; /* Adjust spacing */
+    flex-direction: column;
+    gap: 20px;
     width: 70%;
   }
 
@@ -309,6 +311,7 @@ canvas {
 
   .select {
     -webkit-appearance: none; /* Remove Safari's default styles */
+    -webkit-tap-highlight-color: transparent; /* Disable gray overlay */
     -moz-appearance: none;
     appearance: none;
     font-size: 11px;
@@ -345,6 +348,7 @@ canvas {
     box-shadow: none;
     border: none;
     background: transparent; /* Optional: Ensure no background is applied */
+    -webkit-tap-highlight-color: transparent; /* Disable gray overlay */
   }
 
   /* Remove box shadow/highlight on focus or active states */
