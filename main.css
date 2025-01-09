@@ -213,6 +213,53 @@ canvas {
   pointer-events: auto;
 }
 
+.dark-mode {
+  color: white;
+}
+
+.dark-mode .label,
+.dark-mode .button,
+.dark-mode .selectWrapper,
+.dark-mode .infoText {
+  color: white !important; /* Force white text for all GUI elements */
+}
+
+.dark-mode .slider::-webkit-slider-thumb {
+  background: white; /* Adjust slider thumb color */
+}
+
+.dark-mode .slider::-moz-range-thumb {
+  background: white; /* Adjust slider thumb color */
+}
+
+.dark-mode .select {
+  color: white; /* Ensure dropdown text is white */
+}
+
+.darkModeText {
+  font-size: 11px; /* Match other GUI text */
+  font-family: "Fragment Mono", serif; /* Match GUI font */
+  color: inherit; /* Inherit color from dark/light mode */
+  cursor: pointer;
+  border: none; /* Remove button appearance */
+  background: none;
+  text-decoration: none; /* Remove underline */
+  padding: 0;
+  margin: 0;
+}
+
+/* Ensure links in infoText follow dark mode styles */
+.dark-mode .infoText a,
+.dark-mode .infoText * a {
+  color: white !important; /* Ensure all nested links turn white */
+}
+
+@media (min-width: 769px) {
+  .darkModeButton {
+    display: none; /* Hide on desktop (width > 768px) */
+  }
+}
+
 /* responsiveness */
 
 @media (min-width: 769px) {

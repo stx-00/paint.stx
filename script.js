@@ -9,6 +9,7 @@ let sliderClicked = false; // Flag to indicate if the slider was just clicked
 let buttonClicked = false; // Flag to indicate if a button is clicked
 let printQueue = []; // Array to store the queued drawings
 let queueCounter; // Counter display
+let isDarkMode = false;
 
 // Eco-mode for rendering only if the window is focused
 window.onblur = function () {
@@ -646,7 +647,11 @@ function buildGUI() {
   // for trashing drawing
   function clearCanvas() {
     cleverlayer.clear();
-    background(0);
+    if (isDarkMode) {
+      cleverlayer.background(0); // Set to black in dark mode
+    } else {
+      background(backgroundSlider.value()); // Use slider value otherwise
+    }
   }
 
   // for saving drawing
@@ -676,6 +681,41 @@ function buildGUI() {
       guiWrapper.removeClass("light-text");
     }
   }
+
+  // dark mode for mobile
+
+  let isDarkMode = false; // State to track dark mode
+
+  // Dark Mode Button
+  function toggleDarkMode() {
+    const guiWrapper = document.querySelector(".guiWrapper");
+    const infoText = document.querySelectorAll(".infoText");
+
+    if (isDarkMode) {
+      // Disable dark mode
+      isDarkMode = false;
+      document.body.style.backgroundColor = ""; // Reset to default
+      cleverlayer.clear(); // Clear cleverlayer
+      background(backgroundSlider.value()); // Restore background from slider
+      guiWrapper.classList.remove("dark-mode");
+      infoText.forEach((text) => text.classList.remove("dark-mode"));
+      darkModeButton.html("dark mode"); // Update button text
+    } else {
+      // Enable dark mode
+      isDarkMode = true;
+      document.body.style.backgroundColor = "black";
+      cleverlayer.background(0);
+      guiWrapper.classList.add("dark-mode");
+      infoText.forEach((text) => text.classList.add("dark-mode"));
+      darkModeButton.html("light mode"); // Update button text
+    }
+  }
+
+  // Create the dark mode button (keep it minimal)
+  let darkModeButton = createDiv("dark mode")
+    .parent(guiInfo)
+    .class("darkModeText");
+  darkModeButton.mousePressed(toggleDarkMode);
 }
 
 // print counter
