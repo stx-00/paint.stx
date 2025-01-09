@@ -97,6 +97,7 @@ canvas {
 
 /* General slider styles */
 .slider {
+  appearance: none;
   -webkit-appearance: none;
   width: 100%;
   height: 2px;
@@ -287,7 +288,7 @@ canvas {
   }
 
   .guiInfo {
-    width: 30%; /* Allocate half of the space to the left column */
+    width: 30%;
     flex-shrink: 0; /* Prevent shrinking */
   }
 
@@ -296,11 +297,27 @@ canvas {
     display: flex; /* Keep column2 in the second column */
     flex-direction: column; /* Stack select brush and sliders vertically */
     gap: 20px; /* Adjust spacing */
-    width: 70%; /* Allocate half of the space to the second column */
+    width: 70%;
+  }
+
+  .selectWrapper,
+  .label {
+    margin: 0;
+    padding: 0;
+    text-align: left;
   }
 
   .select {
+    -webkit-appearance: none; /* Remove Safari's default styles */
+    -moz-appearance: none;
+    appearance: none;
     font-size: 11px;
+    margin: 0;
+    padding: 0;
+    text-indent: 0; /* Remove any unexpected indentation */
+    text-align: left;
+    display: block; /* Ensure block-level alignment */
+    color: black;
   }
 
   .select option {
