@@ -426,7 +426,7 @@ function buildGUI() {
   let printButton = createDiv("print").parent(guiInfo).class("button");
   printButton.mousePressed(() => {
     if (printQueue.length === 0) {
-      alert("Add drawings to the print queue!");
+      alert("add drawings to the print queue!");
       return;
     }
 
@@ -441,7 +441,7 @@ function buildGUI() {
     printDocument.write(`
       <html>
         <head>
-          <title>Print Queue</title>
+          <title>p5*hydra paint print queue</title>
           <style>
             @media print {
               body {
@@ -478,7 +478,7 @@ function buildGUI() {
     printQueue.forEach((item) => {
       printDocument.write(`
         <div class="page">
-          <img src="${item}" alt="Queued Drawing">
+          <img src="${item}" alt="p5*hydra painting">
         </div>
       `);
     });
