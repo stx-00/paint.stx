@@ -384,12 +384,8 @@ function draw() {
     }
   }
 
-  // Handle idle behavior (auto-drawing/screensaver mode)
-  if (idle) {
-    // Preserve whatever logic you already have here
-    drawCurvedPath(); // Or any other auto-drawing logic you have
-  } else {
-    // Display brush preview while not idle
+  if (!idle) {
+>>>>>>> parent of 0d67daa (fixed screensaver idle on mobile)
     const x = touches.length > 0 ? touches[0].x : mouseX;
     const y = touches.length > 0 ? touches[0].y : mouseY;
     image(pg[pgSel], x, y);
@@ -733,11 +729,7 @@ function resetIdleTimer() {
   if (idle) {
     stopIdleDrawing(); // Stop idle drawing if already in progress
   }
-
-  // Reset idle timer only if there are no ongoing touch interactions
-  if (touches.length === 0) {
-    idleTimer = setTimeout(startIdleDrawing, 20000); // Adjust time here for when screensaver kicks in
-  }
+  idleTimer = setTimeout(startIdleDrawing, 20000); // Adjust time here for when screensaver kicks in
 }
 
 function drawCurvedPath() {
