@@ -665,7 +665,7 @@ function buildGUI() {
 
   // for saving drawing
   function saveCanvas() {
-    var filename = "p5-hydra-brush-sketch.png";
+    var filename = "p5-hydra-paint-sketch.png";
     cleverlayer.save(filename);
   }
 
