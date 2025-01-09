@@ -1,4 +1,3 @@
-
 let time = new Date();
 let zoomSlider;
 let sizeSlider;
@@ -264,6 +263,10 @@ function setup() {
 
   buildGUI();
 
+  // Initialize the cursor position in the center of the canvas
+  mouseX = width / 2;
+  mouseY = height / 2;
+
   // Disable sliders if on mobile
   if (window.innerWidth <= 768) {
     document.querySelector(".column3").style.display = "none";
@@ -284,7 +287,7 @@ function setup() {
   canvasElement.addEventListener("touchstart", (e) => e.preventDefault()); // For touch
   canvasElement.addEventListener("touchmove", (e) => e.preventDefault()); // For touch
 
-  // Ensure GUI elements are interactive
+  // Ensure GUI elements are interactive on mobile
   document.querySelectorAll(".guiWrapper").forEach((el) => {
     el.addEventListener("touchstart", (e) => e.stopPropagation());
     el.addEventListener("touchmove", (e) => e.stopPropagation());
@@ -434,7 +437,7 @@ function buildGUI() {
     const printDocument = printWindow.document;
 
     // Write the basic HTML structure into the print window
-    printDocument.write(
+    printDocument.write(`
       <html>
         <head>
           <title>Print Queue</title>
@@ -468,19 +471,19 @@ function buildGUI() {
           </style>
         </head>
         <body>
-    );
+    `);
 
     // Add each drawing wrapped in a centered container
     printQueue.forEach((item) => {
-      printDocument.write(
+      printDocument.write(`
         <div class="page">
           <img src="${item}" alt="Queued Drawing">
         </div>
-      );
+      `);
     });
 
     // Close the HTML structure
-    printDocument.write(
+    printDocument.write(`
         </body>
         <script>
           window.addEventListener('afterprint', function() {
@@ -494,7 +497,7 @@ function buildGUI() {
           }, 500);
         </script>
       </html>
-    );
+    `);
     printDocument.close();
 
     // Automatically trigger the print dialog
@@ -524,8 +527,8 @@ function buildGUI() {
       const selectBrushPosition = selectBrush.position(); // Get the position of "select your brush"
 
       infoText.style("position", "absolute");
-      infoText.style("top", ${infoButtonPosition.y}px); // Align with "?" button
-      infoText.style("left", ${selectBrushPosition.x}px); // Align left with "select your brush"
+      infoText.style("top", `${infoButtonPosition.y}px`); // Align with "?" button
+      infoText.style("left", `${selectBrushPosition.x}px`); // Align left with "select your brush"
     } else {
       // Toggle visibility
       infoText.style(
@@ -678,7 +681,7 @@ function buildGUI() {
 // print counter
 function updatePrintCounter(printButton) {
   if (printQueue.length > 0) {
-    printButton.html(print (${printQueue.length})); // Show the counter if there are drawings
+    printButton.html(`print (${printQueue.length})`); // Show the counter if there are drawings
   } else {
     printButton.html("print"); // Remove the counter when the queue is empty
   }
