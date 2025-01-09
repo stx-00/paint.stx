@@ -305,10 +305,11 @@ canvas {
 
   .select option {
     font-size: 11px;
+    color: black;
   }
 
   .selected-brush {
-    color: black;
+    color: black !important; /* Use !important to override any inherited styles */
   }
 
   .selected-brush,
@@ -324,6 +325,9 @@ canvas {
   button,
   select {
     outline: none;
+    box-shadow: none;
+    border: none;
+    background: transparent; /* Optional: Ensure no background is applied */
   }
 
   /* Remove box shadow/highlight on focus or active states */
@@ -331,15 +335,16 @@ canvas {
   button:active,
   select:focus,
   select:active {
+    outline: none;
     box-shadow: none;
-    outline: none; /* Optional: Ensures no browser default outlines */
+    background: transparent; /* Removes any background effect on click */
   }
 
-  /* General reset for buttons and select elements */
-  button,
-  select {
-    background: none;
-    border: none; /* Optional: If you want to remove borders too */
+  /* Provide alternative focus styles for accessibility */
+  button:focus-visible,
+  select:focus-visible {
+    outline: 2px solid #000; /* Custom focus outline (optional for accessibility) */
+    outline-offset: 2px;
   }
 
   /* column 3 is sliders */
