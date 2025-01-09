@@ -284,6 +284,10 @@ canvas {
     font-size: 11px;
   }
 
+  * {
+    -webkit-tap-highlight-color: transparent; /* Disable gray overlay for all elements */
+  }
+
   .guiContent {
     flex-direction: row; /* Maintain side-by-side layout */
     gap: 10px; /* Adjust spacing between the two columns */
@@ -311,7 +315,6 @@ canvas {
 
   .select {
     -webkit-appearance: none; /* Remove Safari's default styles */
-    -webkit-tap-highlight-color: transparent; /* Disable gray overlay */
     -moz-appearance: none;
     appearance: none;
     font-size: 11px;
@@ -321,6 +324,7 @@ canvas {
     text-align: left;
     display: block; /* Ensure block-level alignment */
     color: black;
+    background: none; /* Ensure no background is set */
   }
 
   .select option {
@@ -351,7 +355,6 @@ canvas {
     -webkit-tap-highlight-color: transparent; /* Disable gray overlay */
   }
 
-  /* Remove box shadow/highlight on focus or active states */
   button:focus,
   button:active,
   select:focus,
