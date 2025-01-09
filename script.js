@@ -533,12 +533,18 @@ function buildGUI() {
 
       // Ensure visibility
       infoText.style("display", "block");
+
+      // Adjust the text color immediately
+      adjustTextColor();
     } else {
       // Toggle visibility
       infoText.style(
         "display",
         infoText.style("display") === "none" ? "block" : "none"
       );
+
+      // Adjust the text color each time the info button is toggled
+      adjustTextColor();
     }
   });
 
