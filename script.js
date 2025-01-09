@@ -765,6 +765,7 @@ window.addEventListener("mousemove", resetIdleTimer);
 window.addEventListener("mousedown", resetIdleTimer);
 window.addEventListener("keydown", resetIdleTimer);
 window.addEventListener("touchstart", resetIdleTimer);
+window.addEventListener("touchmove", resetIdleTimer);
 
 // Initialize idle timer
 resetIdleTimer();
