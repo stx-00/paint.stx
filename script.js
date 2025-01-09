@@ -674,11 +674,12 @@ function buildGUI() {
   }
 }
 
+// print counter
 function updatePrintCounter(printButton) {
   if (printQueue.length > 0) {
-    printButton.html(`Print (${printQueue.length})`); // Show the counter if there are drawings
+    printButton.html(`print (${printQueue.length})`); // Show the counter if there are drawings
   } else {
-    printButton.html("Print"); // Remove the counter when the queue is empty
+    printButton.html("print"); // Remove the counter when the queue is empty
   }
 }
 
