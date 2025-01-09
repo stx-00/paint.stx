@@ -409,7 +409,7 @@ function buildGUI() {
     saveCanvas();
   });
 
-  let addButton = createDiv("Add").parent(guiInfo).class("button");
+  let addButton = createDiv("add").parent(guiInfo).class("button");
   addButton.mousePressed(() => {
     buttonClicked = true;
     const canvasData = cleverlayer.canvas.toDataURL(); // Convert canvas to image data
@@ -418,7 +418,7 @@ function buildGUI() {
     clearCanvas(); // Clear the canvas after adding
   });
 
-  let printButton = createDiv("Print").parent(guiInfo).class("button");
+  let printButton = createDiv("print").parent(guiInfo).class("button");
   printButton.mousePressed(() => {
     if (printQueue.length === 0) {
       alert("Add drawings to the print queue!");
