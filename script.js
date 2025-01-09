@@ -384,11 +384,6 @@ function draw() {
     }
   }
 
-  // Reset idle timer if user is actively interacting via touch
-  if (touches.length > 0) {
-    resetIdleTimer();
-  }
-
   // Handle idle behavior (auto-drawing/screensaver mode)
   if (idle) {
     // Preserve whatever logic you already have here
@@ -739,8 +734,10 @@ function resetIdleTimer() {
     stopIdleDrawing(); // Stop idle drawing if already in progress
   }
 
-  // Always reset the timer to start screensaver after inactivity
-  idleTimer = setTimeout(startIdleDrawing, 20000); // 20 seconds of inactivity
+  // Reset idle timer only if there are no ongoing touch interactions
+  if (touches.length === 0) {
+    idleTimer = setTimeout(startIdleDrawing, 20000); // Adjust time here for when screensaver kicks in
+  }
 }
 
 function drawCurvedPath() {
