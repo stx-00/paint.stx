@@ -1,3 +1,4 @@
+
 let time = new Date();
 let zoomSlider;
 let sizeSlider;
@@ -316,9 +317,6 @@ function touchStarted(e) {
 }
 
 function touchMoved(e) {
-  // Reset idle timer whenever touch interaction occurs
-  resetIdleTimer();
-
   // Check if the touch is on a GUI element
   if (
     e.target.closest(".guiWrapper") ||
@@ -327,7 +325,7 @@ function touchMoved(e) {
     return true; // Allow default interaction for GUI elements
   }
 
-  // Prevent default interaction only on the canvas
+  // Prevent default interaction only on canvas
   if (touches.length > 0 && !sliderActive && !buttonClicked) {
     const touch = touches[0];
     cleverlayer.image(pg[pgSel], touch.x, touch.y);
@@ -385,7 +383,6 @@ function draw() {
   }
 
   if (!idle) {
->>>>>>> parent of 0d67daa (fixed screensaver idle on mobile)
     const x = touches.length > 0 ? touches[0].x : mouseX;
     const y = touches.length > 0 ? touches[0].y : mouseY;
     image(pg[pgSel], x, y);
@@ -437,7 +434,7 @@ function buildGUI() {
     const printDocument = printWindow.document;
 
     // Write the basic HTML structure into the print window
-    printDocument.write(`
+    printDocument.write(
       <html>
         <head>
           <title>Print Queue</title>
@@ -471,19 +468,19 @@ function buildGUI() {
           </style>
         </head>
         <body>
-    `);
+    );
 
     // Add each drawing wrapped in a centered container
     printQueue.forEach((item) => {
-      printDocument.write(`
+      printDocument.write(
         <div class="page">
           <img src="${item}" alt="Queued Drawing">
         </div>
-      `);
+      );
     });
 
     // Close the HTML structure
-    printDocument.write(`
+    printDocument.write(
         </body>
         <script>
           window.addEventListener('afterprint', function() {
@@ -497,7 +494,7 @@ function buildGUI() {
           }, 500);
         </script>
       </html>
-    `);
+    );
     printDocument.close();
 
     // Automatically trigger the print dialog
@@ -527,8 +524,8 @@ function buildGUI() {
       const selectBrushPosition = selectBrush.position(); // Get the position of "select your brush"
 
       infoText.style("position", "absolute");
-      infoText.style("top", `${infoButtonPosition.y}px`); // Align with "?" button
-      infoText.style("left", `${selectBrushPosition.x}px`); // Align left with "select your brush"
+      infoText.style("top", ${infoButtonPosition.y}px); // Align with "?" button
+      infoText.style("left", ${selectBrushPosition.x}px); // Align left with "select your brush"
     } else {
       // Toggle visibility
       infoText.style(
@@ -681,7 +678,7 @@ function buildGUI() {
 // print counter
 function updatePrintCounter(printButton) {
   if (printQueue.length > 0) {
-    printButton.html(`print (${printQueue.length})`); // Show the counter if there are drawings
+    printButton.html(print (${printQueue.length})); // Show the counter if there are drawings
   } else {
     printButton.html("print"); // Remove the counter when the queue is empty
   }
@@ -700,18 +697,18 @@ let idleDuration = 40000; // Auto-drawing duration
 function startIdleDrawing() {
   idle = true;
 
-  // Hide the cursor (on desktop)
+  // Hide the cursor
   noCursor();
 
   // Initialize random starting position for idle drawing
-  idlePos.x = touches.length > 0 ? touches[0].x : random(width);
-  idlePos.y = touches.length > 0 ? touches[0].y : random(height);
+  idlePos.x = mouseX || random(width); // Fallback to random if cursor is outside canvas
+  idlePos.y = mouseY || random(height);
 
   // Set a random initial velocity
   idleVelocity.x = random(-speed, speed);
   idleVelocity.y = random(-speed, speed);
 
-  // Set a timer to stop auto-drawing after a certain duration
+  // Set a timer to stop auto-drawing after a minute
   idleDrawingTimer = setTimeout(stopIdleDrawing, idleDuration);
 
   drawCurvedPath(); // Start the continuous curved drawing
@@ -724,10 +721,9 @@ function stopIdleDrawing() {
 }
 
 function resetIdleTimer() {
-  clearTimeout(idleTimer); // Clear the existing inactivity timer
-
+  clearTimeout(idleTimer); // Clear existing inactivity timer
   if (idle) {
-    stopIdleDrawing(); // Stop idle drawing if already in progress
+    stopIdleDrawing(); // Stop idle drawing if it’s running
   }
   idleTimer = setTimeout(startIdleDrawing, 20000); // Adjust time here for when screensaver kicks in
 }
@@ -766,7 +762,6 @@ window.addEventListener("mousemove", resetIdleTimer);
 window.addEventListener("mousedown", resetIdleTimer);
 window.addEventListener("keydown", resetIdleTimer);
 window.addEventListener("touchstart", resetIdleTimer);
-window.addEventListener("touchmove", resetIdleTimer);
 
 // Initialize idle timer
 resetIdleTimer();
