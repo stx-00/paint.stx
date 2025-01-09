@@ -429,87 +429,84 @@ function buildGUI() {
       return;
     }
 
+    // Detect device orientation and viewport dimensions
+    const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+
     // Open a new window for printing
     const printWindow = window.open("", "_blank", "width=800,height=600");
     const printDocument = printWindow.document;
 
-    // Detect device orientation
-    const isPortrait = window.matchMedia("(orientation: portrait)").matches;
-
     // Write the basic HTML structure into the print window
     printDocument.write(`
-      <html>
-        <head>
-          <title>Print Queue</title>
-          <style>
-            body {
-              margin: 0;
-              padding: 0;
+    <html>
+      <head>
+        <title>Print Queue</title>
+        <style>
+          body {
+            margin: 0;
+            padding: 0;
+          }
+
+          @media print {
+            .page {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: ${viewportHeight}px; /* Match viewport height */
+              width: ${viewportWidth}px; /* Match viewport width */
+              page-break-after: always; /* Ensure each drawing is on its own page */
             }
-  
-            @media print {
+
+            img {
+              max-width: 100%; /* Scale image to fit the container */
+              max-height: 100%; /* Prevent overflow */
+              object-fit: contain; /* Maintain aspect ratio */
+            }
+
+            @page {
+              size: ${viewportWidth}px ${viewportHeight}px; /* Match viewport size */
+              margin: 3mm;
+            }
+
+            @supports (-webkit-touch-callout: none) {
               .page {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-                width: 100vw;
-                page-break-after: always;
-              }
-  
-              img {
-                max-width: 100%;
-                max-height: 100%;
-                object-fit: contain;
-              }
-  
-              @supports (-webkit-touch-callout: none) {
-                @page {
-                  size: auto;
-                  margin: 0;
-                }
-  
-                .page {
-                  height: 100vh;
-                  width: 100vw;
-                }
-              }
-  
-              @page {
-                size: ${isPortrait ? "portrait" : "landscape"};
-                margin: 0;
+                height: ${viewportHeight}px;
+                width: ${viewportWidth}px;
               }
             }
-          </style>
-        </head>
-        <body>
-    `);
+          }
+        </style>
+      </head>
+      <body>
+  `);
 
     // Add each drawing wrapped in a centered container
     printQueue.forEach((item) => {
       printDocument.write(`
-        <div class="page">
-          <img src="${item}" alt="Queued Drawing">
-        </div>
-      `);
+      <div class="page">
+        <img src="${item}" alt="Queued Drawing">
+      </div>
+    `);
     });
 
     // Close the HTML structure
     printDocument.write(`
-        </body>
-        <script>
-          window.addEventListener('afterprint', function() {
+      </body>
+      <script>
+        window.addEventListener('afterprint', function() {
+          window.close();
+        });
+
+        setTimeout(() => {
+          if (!document.hidden) {
             window.close();
-          });
-  
-          setTimeout(() => {
-            if (!document.hidden) {
-              window.close();
-            }
-          }, 500);
-        </script>
-      </html>
-    `);
+          }
+        }, 500);
+      </script>
+    </html>
+  `);
     printDocument.close();
 
     // Automatically trigger the print dialog
