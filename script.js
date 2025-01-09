@@ -675,11 +675,25 @@ function buildGUI() {
       select.style.color = textColor;
     });
 
+    // Update the GUI wrapper class
     if (backgroundValue <= 45) {
       guiWrapper.addClass("light-text");
     } else {
       guiWrapper.removeClass("light-text");
     }
+
+    // Update the infoText elements
+    const infoTextElements = document.querySelectorAll(".infoText");
+    infoTextElements.forEach((infoText) => {
+      infoText.style.color = textColor;
+
+      // Apply the light-text class to infoText when the background is dark
+      if (backgroundValue <= 45) {
+        infoText.classList.add("light-text"); // Add light-text class when the background is dark
+      } else {
+        infoText.classList.remove("light-text"); // Remove light-text class when the background is light
+      }
+    });
   }
 
   // dark mode for mobile

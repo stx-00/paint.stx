@@ -205,6 +205,25 @@ canvas {
   z-index: 10; /* Ensure it appears above other elements */
 }
 
+.infoText.light-text {
+  color: white !important; /* Ensure the text turns white */
+}
+
+.infoText {
+  color: black; /* Default color */
+}
+
+/* Default link styling for infoText */
+.infoText a {
+  color: inherit; /* Inherit the color from the parent */
+  text-decoration: underline; /* Retain underline for links */
+}
+
+.infoText.light-text a,
+.infoText.light-text * a {
+  color: white !important; /* Ensure all nested links turn white */
+}
+
 /* for mobile drawing */
 .guiWrapper,
 .button,
@@ -237,6 +256,7 @@ canvas {
 }
 
 .darkModeText {
+  display: block; /* Visible by default */
   font-size: 11px; /* Match other GUI text */
   font-family: "Fragment Mono", serif; /* Match GUI font */
   color: inherit; /* Inherit color from dark/light mode */
@@ -255,8 +275,8 @@ canvas {
 }
 
 @media (min-width: 769px) {
-  .darkModeButton {
-    display: none; /* Hide on desktop (width > 768px) */
+  .darkModeText {
+    display: none;
   }
 }
 
