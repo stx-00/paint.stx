@@ -278,15 +278,7 @@ canvas {
 
 @media (max-width: 768px) {
   body {
-    font-size: 10px;
-  }
-
-  .select {
-    font-size: 10px;
-  }
-
-  .select option {
-    font-size: 10px;
+    font-size: 11px;
   }
 
   .guiContent {
@@ -299,6 +291,7 @@ canvas {
     flex-shrink: 0; /* Prevent shrinking */
   }
 
+  /* column 2 is select brush */
   .column2 {
     display: flex; /* Keep column2 in the second column */
     flex-direction: column; /* Stack select brush and sliders vertically */
@@ -306,7 +299,58 @@ canvas {
     width: 70%; /* Allocate half of the space to the second column */
   }
 
+  .select {
+    font-size: 11px;
+  }
+
+  .select option {
+    font-size: 11px;
+  }
+
+  .selected-brush {
+    color: black;
+  }
+
+  .selected-brush,
+  .brush-label {
+    /* Adjust the class name to match your markup */
+    margin-left: 0;
+    padding-left: 0;
+    text-indent: 0;
+    text-align: left; /* Ensures proper alignment */
+  }
+
+  /* Remove the focus outline for buttons and select elements */
+  button,
+  select {
+    outline: none;
+  }
+
+  /* Remove box shadow/highlight on focus or active states */
+  button:focus,
+  button:active,
+  select:focus,
+  select:active {
+    box-shadow: none;
+    outline: none; /* Optional: Ensures no browser default outlines */
+  }
+
+  /* General reset for buttons and select elements */
+  button,
+  select {
+    background: none;
+    border: none; /* Optional: If you want to remove borders too */
+  }
+
+  /* column 3 is sliders */
   .column3 {
     display: none !important; /* Completely hide sliders on mobile */
+  }
+
+  .infoText {
+    position: absolute; /* Necessary for custom positioning */
+    margin-right: 15px;
+    color: rgb(0, 0, 0);
+    font-size: 11px;
   }
 }
