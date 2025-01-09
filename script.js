@@ -385,6 +385,11 @@ function draw() {
     }
   }
 
+  // Reset idle timer if user is actively interacting via touch
+  if (touches.length > 0) {
+    resetIdleTimer();
+  }
+
   if (!idle) {
     const x = touches.length > 0 ? touches[0].x : mouseX;
     const y = touches.length > 0 ? touches[0].y : mouseY;
@@ -728,7 +733,11 @@ function resetIdleTimer() {
   if (idle) {
     stopIdleDrawing(); // Stop idle drawing if it’s running
   }
-  idleTimer = setTimeout(startIdleDrawing, 20000); // Adjust time here for when screensaver kicks in
+
+  // Reset idle timer only if there are no ongoing touch interactions
+  if (touches.length === 0) {
+    idleTimer = setTimeout(startIdleDrawing, 20000); // Adjust time here for when screensaver kicks in
+  }
 }
 
 function drawCurvedPath() {
