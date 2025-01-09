@@ -515,8 +515,8 @@ function buildGUI() {
   infoButton.mousePressed(() => {
     buttonClicked = true;
 
-    // Enter info text here
     if (!infoText) {
+      // Create the info text
       infoText = createDiv(
         'p5*hydra paint lets you draw with brushes built using <a href="https://p5js.org/" target="_blank" style="color: #000000; text-decoration: underline;">p5.js</a> and <a href="https://hydra.ojack.xyz/" target="_blank" style="color: #000000; text-decoration: underline;">hydra</a>.<br><br>Hate your sketch? Trash it.<br>Love your sketch? Save it to download as an image.<br><br>Want to fill a sketchbook? Add your drawing to the print queue.<br>Keep drawing as many pages as you like, then hit print.<br><br>This tool was designed and built by <a href="https://www.siiritaennler.ch/" target="_blank" style="color: #000000; text-decoration: underline;">Siiri Tännler</a> and mentored by <a href="https://teddavis.org/" target="_blank" style="color: #000000; text-decoration: underline;">Ted Davis</a>.<br><br>A first version of this tool was created in collaboration with Sarah Choi and Yevheniia Semenova during a class taught by Ted Davis at IDCE HGK/FHNW.<br><br>Source code'
       )
@@ -524,12 +524,15 @@ function buildGUI() {
         .class("infoText");
 
       // Position the text relative to the "?" button and "select brush"
-      const infoButtonPosition = infoButton.position(); // Get the position of the "?" button
-      const selectBrushPosition = selectBrush.position(); // Get the position of "select your brush"
+      const infoButtonPosition = infoButton.position();
+      const selectBrushPosition = selectBrush.position();
 
       infoText.style("position", "absolute");
-      infoText.style("top", `${infoButtonPosition.y}px`); // Align with "?" button
-      infoText.style("left", `${selectBrushPosition.x}px`); // Align left with "select your brush"
+      infoText.style("top", `${infoButtonPosition.y}px`);
+      infoText.style("left", `${selectBrushPosition.x}px`);
+
+      // Ensure visibility
+      infoText.style("display", "block");
     } else {
       // Toggle visibility
       infoText.style(
