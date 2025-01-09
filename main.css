@@ -277,13 +277,25 @@ canvas {
 }
 
 @media (max-width: 768px) {
+  body {
+    font-size: 10px;
+  }
+
+  .select {
+    font-size: 10px;
+  }
+
+  .select option {
+    font-size: 10px;
+  }
+
   .guiContent {
     flex-direction: row; /* Maintain side-by-side layout */
-    gap: 20px; /* Adjust spacing between the two columns */
+    gap: 10px; /* Adjust spacing between the two columns */
   }
 
   .guiInfo {
-    width: 50%; /* Allocate half of the space to the left column */
+    width: 30%; /* Allocate half of the space to the left column */
     flex-shrink: 0; /* Prevent shrinking */
   }
 
@@ -291,7 +303,7 @@ canvas {
     display: flex; /* Keep column2 in the second column */
     flex-direction: column; /* Stack select brush and sliders vertically */
     gap: 20px; /* Adjust spacing */
-    width: 50%; /* Allocate half of the space to the second column */
+    width: 70%; /* Allocate half of the space to the second column */
   }
 
   .column3 {
