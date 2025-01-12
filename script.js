@@ -4,12 +4,12 @@ let sizeSlider;
 let hyperSlider;
 let shapeSlider;
 let backgroundSlider;
-let sliderActive = false; // Flag to indicate slider activity
-let sliderClicked = false; // Flag to indicate if the slider was just clicked
-let buttonClicked = false; // Flag to indicate if a button is clicked
-let printQueue = []; // Array to store the queued drawings
-let queueCounter; // Counter display
-let isDarkMode = false;
+let sliderActive = false; // to indicate slider activity for drawing
+let sliderClicked = false; // to indicate if the slider was just clicked
+let buttonClicked = false; // to indicate if a button is clicked
+let printQueue = []; // array to store the queued drawings
+let queueCounter; // counter for amount of drawings in print queue
+let isDarkMode = false; // for mobile dark mode
 
 // Eco-mode for rendering only if the window is focused
 window.onblur = function () {
@@ -264,11 +264,11 @@ function setup() {
 
   buildGUI();
 
-  // Initialize the cursor position in the center of the canvas
+  // initialize the cursor position in the center of the canvas
   mouseX = width / 2;
   mouseY = height / 2;
 
-  // Disable sliders if on mobile
+  // disable sliders if on mobile
   if (window.innerWidth <= 768) {
     document.querySelector(".column3").style.display = "none";
   }
@@ -281,14 +281,14 @@ function setup() {
   imageMode(CENTER);
   cleverlayer.imageMode(CENTER);
 
-  // Prevent text selection while drawing
+  // prevent text selection while drawing
   let canvasElement = document.querySelector("canvas");
   canvasElement.addEventListener("mousedown", (e) => e.preventDefault());
   canvasElement.addEventListener("mousemove", (e) => e.preventDefault());
   canvasElement.addEventListener("touchstart", (e) => e.preventDefault()); // For touch
   canvasElement.addEventListener("touchmove", (e) => e.preventDefault()); // For touch
 
-  // Ensure GUI elements are interactive on mobile
+  // ensure GUI elements are interactive on mobile
   document.querySelectorAll(".guiWrapper").forEach((el) => {
     el.addEventListener("touchstart", (e) => e.stopPropagation());
     el.addEventListener("touchmove", (e) => e.stopPropagation());
