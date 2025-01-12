@@ -75,6 +75,7 @@ for (let i = 0; i < synthCount; i++) {
 // access each instance via synth[index]
 // each synth is a brush
 
+// prismatic pulse
 synth[0]
   .osc(() => zoomSlider.value() / 5, 1, 0.3)
   .kaleid([3, 4, 5, 7, 8, 9, 10].fast(0.1))
@@ -95,6 +96,7 @@ synth[0]
   )
   .out();
 
+// acid loop
 synth[1]
   .voronoi(() => zoomSlider.value(), 0, 1)
   .mult(
@@ -123,6 +125,7 @@ synth[1]
   )
   .out();
 
+// cotton candy cascade
 synth[2]
   .osc(() => zoomSlider.value(), 0.28, 0.3)
   .rotate(0, 0.1)
@@ -140,6 +143,7 @@ synth[2]
   .color(2.83, 0.91, () => hyperSlider.value() * 50)
   .out();
 
+// spectrum serpent
 synth[3]
   .osc(() => zoomSlider.value(), 1, 2)
   .kaleid()
@@ -158,6 +162,7 @@ synth[3]
   // .luma(0.1)
   .out();
 
+// electric fern
 synth[4]
   .osc(() => zoomSlider.value(), 2, 3)
   .modulateScale(synth[4].osc(40, 0, 1).kaleid(8))
@@ -173,6 +178,7 @@ synth[4]
   )
   .out();
 
+// canyon breeze
 synth[5]
   .osc(() => zoomSlider.value(), 0.25, 0.25)
   .mask(
@@ -194,6 +200,7 @@ synth[5]
   )
   .out();
 
+// ocean flame
 synth[6].voronoi(2, 0.5, 0.3);
 synth[6]
   .osc(() => zoomSlider.value(), 2, 1)
@@ -220,6 +227,7 @@ synth[6]
   )
   .out();
 
+// technicolor bloom
 synth[7]
   .noise(() => zoomSlider.value(), 0.5, 1)
   .color(
@@ -555,14 +563,14 @@ function buildGUI() {
 
   label("select your brush", selectBrush);
   sel = createSelect().parent(selectBrush).class("select");
-  sel.option("brush 0", 0);
-  sel.option("brush 1", 1);
-  sel.option("brush 2", 2);
-  sel.option("brush 3", 3);
-  sel.option("brush 4", 4);
-  sel.option("brush 5", 5);
-  sel.option("brush 6", 6);
-  sel.option("brush 7", 7);
+  sel.option("prismatic pulse", 0);
+  sel.option("acid loop", 1);
+  sel.option("cotton candy cascade", 2);
+  sel.option("spectrum serpent", 3);
+  sel.option("electric fern", 4);
+  sel.option("canyon breeze", 5);
+  sel.option("ocean flame", 6);
+  sel.option("technicolor bloom", 7);
 
   sel.changed(function () {
     pgSel = sel.value();
