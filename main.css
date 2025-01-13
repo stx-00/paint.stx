@@ -357,7 +357,7 @@ canvas {
 
   .guiContent {
     flex-direction: row; /* Maintain side-by-side layout */
-    gap: 10px; /* Adjust spacing between the two columns */
+    gap: 50px; /* Adjust spacing between the two columns */
   }
 
   .guiInfo {
