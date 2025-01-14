@@ -59,8 +59,8 @@ let pg = [synthCount],
 
 for (let i = 0; i < synthCount; i++) {
   hc[i] = document.createElement("canvas"); // hydra canvas + custom size
-  hc[i].width = 200; // set resolution width
-  hc[i].height = 200; // set resolution height
+  hc[i].width = 500; // set resolution width
+  hc[i].height = 500; // set resolution height
 
   synth[i] = new Hydra({
     detectAudio: false, // no mic
@@ -88,7 +88,7 @@ synth[0]
     synth[0]
       .shape(
         () => shapeSlider.value(),
-        () => sizeSlider.value(),
+        () => 0.5, //sizeSlider.value(),
         0.01
       )
       .scale(0.9)
@@ -109,7 +109,7 @@ synth[1]
     synth[1]
       .shape(
         () => shapeSlider.value(),
-        () => sizeSlider.value(),
+        () => 0.5, //sizeSlider.value(),
         0.01
       )
       .modulate(synth[1].src(synth[1].o0), 0.5)
@@ -133,7 +133,7 @@ synth[2]
     synth[2]
       .shape(
         () => shapeSlider.value(),
-        () => sizeSlider.value(),
+        () => 0.5, //sizeSlider.value(),
         0.01
       )
       .mult(synth[2].osc(10, 0.1))
@@ -151,7 +151,7 @@ synth[3]
     synth[3].osc(20, 0.001, 0).mask(
       synth[3].shape(
         () => shapeSlider.value(),
-        () => sizeSlider.value(),
+        () => 0.5, //sizeSlider.value(),
         0.01
       )
     )
@@ -170,7 +170,7 @@ synth[4]
     synth[4]
       .shape(
         () => shapeSlider.value(),
-        () => sizeSlider.value(),
+        () => 0.5, //sizeSlider.value(),
         0.01
       )
       .repeat(2, 4)
@@ -185,7 +185,7 @@ synth[5]
     synth[5]
       .shape(
         () => shapeSlider.value(),
-        () => sizeSlider.value(),
+        () => 0.5, //sizeSlider.value(),
         0.1
       )
       .modulate(synth[5].noise(4.6, () => hyperSlider.value()))
@@ -208,7 +208,7 @@ synth[6]
     synth[6]
       .shape(
         () => shapeSlider.value(),
-        () => sizeSlider.value(),
+        () => 0.5, //sizeSlider.value(),
         0.01
       )
       .mult(
@@ -241,7 +241,7 @@ synth[7]
     synth[7]
       .shape(
         () => shapeSlider.value(),
-        () => sizeSlider.value(),
+        () => 0.5, //sizeSlider.value(),
         0.01
       )
       .modulate(synth[7].src(synth[7].o0), 0.5)
@@ -283,6 +283,7 @@ function setup() {
 
   background(0);
   noStroke();
+  noSmooth();
 
   cleverlayer = createGraphics(width, height);
 
@@ -359,7 +360,7 @@ function mousePressed(e) {
 
   // Allow drawing on the canvas
   if (!sliderActive && !buttonClicked) {
-    cleverlayer.image(pg[pgSel], mouseX, mouseY);
+    //cleverlayer.image(pg[pgSel], mouseX, mouseY);
   }
 }
 
@@ -386,18 +387,26 @@ function draw() {
     pg[pgSel].height
   );
 
+  scl = sizeSlider.value();
+
   if (!sliderActive && !buttonClicked) {
     if (mouseIsPressed || (touches.length > 0 && !idle)) {
       const x = touches.length > 0 ? touches[0].x : mouseX;
       const y = touches.length > 0 ? touches[0].y : mouseY;
-      cleverlayer.image(pg[pgSel], x, y);
+      cleverlayer.image(
+        pg[pgSel],
+        x,
+        y,
+        pg[pgSel].width * scl,
+        pg[pgSel].height * scl
+      );
     }
   }
 
   if (!idle) {
     const x = touches.length > 0 ? touches[0].x : mouseX;
     const y = touches.length > 0 ? touches[0].y : mouseY;
-    image(pg[pgSel], x, y);
+    image(pg[pgSel], x, y, pg[pgSel].width * scl, pg[pgSel].height * scl);
   }
 }
 
