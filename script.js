@@ -83,6 +83,8 @@ let myBrushes = [
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
+  buildGUI();
+
   pg = createGraphics(hc.width, hc.height);
   cleverlayer = createGraphics(width, height); // Initialize cleverlayer
   imageMode(CENTER);
@@ -91,8 +93,6 @@ function setup() {
   background(0);
   noStroke();
   noSmooth();
-
-  buildGUI();
 }
 
 function draw() {
@@ -114,14 +114,10 @@ function draw() {
 }
 
 function buildGUI() {
-  // Create GUI Wrapper
   let guiWrapper = createDiv("").class("guiWrapper");
-  guiWrapper.style("z-index", "10"); // Ensure higher z-index programmatically
-
-  // Create GUI Content
   let guiContent = createDiv("").parent(guiWrapper).class("guiContent");
 
-  // Column 1: Title
+  // Column 1: title and buttons
   let column1 = createDiv("").parent(guiContent).class("column1");
   createDiv("p5*hydra paint").parent(column1).class("title");
 
