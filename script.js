@@ -1,4 +1,4 @@
-// Eco-mode: only render if window is focused
+// eco-mode = only render if window focused
 window.onblur = function () {
   noLoop();
 };
@@ -7,23 +7,24 @@ window.onfocus = function () {
 };
 
 /* CUSTOM FUNCTIONS FOR P5LIVE */
-// Keep fullscreen if window resized
+// keep fullscreen if window resized
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
 
-// Custom ease function
+// custom ease function
 function ease(iVal, oVal, eVal) {
   return (oVal += (iVal - oVal) * eVal);
 }
 
-// Processing compatibility
+// processing compatibility
 function println(msg) {
   print(msg);
 }
 
 /*
 _hydra_texture // cc ojack.xyz + teddavis.org 2021
+
 cheatsheets: https://ojack.xyz/hydra-functions/ + https://hydrabook.naotohieda.com/
 */
 
@@ -85,6 +86,7 @@ function setup() {
 
   pg = createGraphics(hc.width, hc.height);
   cleverlayer = createGraphics(width, height); // Initialize cleverlayer
+
   imageMode(CENTER);
   cleverlayer.imageMode(CENTER);
 
@@ -93,11 +95,19 @@ function setup() {
   noSmooth();
 
   buildGUI();
+
+  // initialize the cursor position in the center of the canvas
+  mouseX = width / 2;
+  mouseY = height / 2;
 }
 
 function draw() {
-  // clear();
-  background(255);
+  // background(0);
+  clear();
+
+  // Display layers
+  image(cleverlayer, width / 2, height / 2);
+  image(pg, mouseX, mouseY);
 
   // Update Hydra texture
   pg.clear();
@@ -107,53 +117,30 @@ function draw() {
   if (mouseIsPressed) {
     cleverlayer.image(pg, mouseX, mouseY);
   }
-
-  // Display layers
-  image(cleverlayer, width / 2, height / 2);
-  image(pg, mouseX, mouseY);
 }
 
 function buildGUI() {
-  // Create GUI Wrapper
-  let guiWrapper = createDiv("").class("guiWrapper");
-  guiWrapper.style("z-index", "10"); // Ensure higher z-index programmatically
-
-  // Create GUI Content
-  let guiContent = createDiv("").parent(guiWrapper).class("guiContent");
-
-  // Column 1: Title
-  let column1 = createDiv("").parent(guiContent).class("column1");
-  createDiv("p5*hydra paint").parent(column1).class("title");
-
-  // Column 2: Brush selection and editor
-  let column2 = createDiv("").parent(guiContent).class("column2");
-
   // Brush selection dropdown
-  let select = createSelect().parent(column2).class("select");
+  mySelect = createSelect();
+  mySelect.position(5, 5);
   for (let i = 0; i < myBrushes.length; i++) {
-    select.option(myBrushes[i].name, i);
+    mySelect.option(myBrushes[i].name, i);
   }
 
-  select.changed(() => {
-    let index = select.value();
-    editor.value(myBrushes[index].code);
-    eval(editor.value());
+  mySelect.changed(() => {
+    let index = mySelect.value();
+    myEditor.value(myBrushes[index].code);
+    eval(myEditor.value());
   });
 
-  // Text editor
-  let editor = createElement("textarea")
-    .parent(column2)
-    .class("editor")
-    .size(300, 300);
-  editor.value(myBrushes[0].code);
-  editor.input(updateEditor);
+  // Text editor for custom brush code
+  myEditor = createElement("textarea").position(5, 35).size(300, 300);
+  myEditor.value(myBrushes[0].code);
+  myEditor.input(updateEditor);
 
-  eval(editor.value()); // Run initial code
-
-  // Append GUI to the body (after the canvas)
-  guiWrapper.parent(document.body);
+  eval(myEditor.value()); // Run text in editor as JS
 }
 
 function updateEditor() {
-  eval(editor.value());
+  eval(myEditor.value());
 }
