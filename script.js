@@ -1,8 +1,8 @@
 let time = new Date();
-let zoomSlider;
-let sizeSlider;
-let hyperSlider;
-let shapeSlider;
+let zoom;
+let size;
+let hyper;
+let shape;
 let backgroundSlider;
 let sliderActive = false; // to indicate slider activity for drawing
 let sliderClicked = false; // to indicate if the slider was just clicked
@@ -77,7 +77,7 @@ for (let i = 0; i < synthCount; i++) {
 
 // prismatic pulse
 synth[0]
-  .osc(() => zoomSlider.value() / 5, 1, 0.3)
+  .osc(() => zoom.value() / 5, 1, 0.3)
   .kaleid([3, 4, 5, 7, 8, 9, 10].fast(0.1))
   .color(0.5, 0.3)
   .colorama(0.4)
@@ -87,29 +87,29 @@ synth[0]
   .mask(
     synth[0]
       .shape(
-        () => shapeSlider.value(),
-        () => 0.5, //sizeSlider.value(),
+        () => shape.value(),
+        () => 0.5,
         0.01
       )
       .scale(0.9)
-      .modulate(synth[0].noise(0.6, () => hyperSlider.value()))
+      .modulate(synth[0].noise(0.6, () => hyper.value()))
   )
   .out();
 
 // acid loop
 synth[1]
-  .voronoi(() => zoomSlider.value(), 0, 1)
+  .voronoi(() => zoom.value(), 0, 1)
   .mult(
     synth[1]
-      .osc(10, 0.1, () => hyperSlider.value() * 3)
+      .osc(10, 0.1, () => hyper.value() * 3)
       .saturate(3)
       .kaleid(200)
   )
   .mask(
     synth[1]
       .shape(
-        () => shapeSlider.value(),
-        () => 0.5, //sizeSlider.value(),
+        () => shape.value(),
+        () => 0.5,
         0.01
       )
       .modulate(synth[1].src(synth[1].o0), 0.5)
@@ -117,7 +117,7 @@ synth[1]
       .scrollY(-0.01)
       .scale(0.99)
       .modulate(
-        synth[1].voronoi(() => hyperSlider.value(), 1),
+        synth[1].voronoi(() => hyper.value(), 1),
         0.008
       )
       .luma(0.3)
@@ -127,68 +127,68 @@ synth[1]
 
 // cotton candy cascade
 synth[2]
-  .osc(() => zoomSlider.value(), 0.28, 0.3)
+  .osc(() => zoom.value(), 0.28, 0.3)
   .rotate(0, 0.1)
   .mask(
     synth[2]
       .shape(
-        () => shapeSlider.value(),
-        () => 0.5, //sizeSlider.value(),
+        () => shape.value(),
+        () => 0.5,
         0.01
       )
       .mult(synth[2].osc(10, 0.1))
       .modulate(synth[2].osc(10).rotate(0, -0.1), 1)
   )
-  .modulate(synth[2].noise(0.6, () => hyperSlider.value()))
-  .color(2.83, 0.91, () => hyperSlider.value() * 50)
+  .modulate(synth[2].noise(0.6, () => hyper.value()))
+  .color(2.83, 0.91, () => hyper.value() * 50)
   .out();
 
 // spectrum serpent
 synth[3]
-  .osc(() => zoomSlider.value(), 1, 2)
+  .osc(() => zoom.value(), 1, 2)
   .kaleid()
   .mult(
     synth[3].osc(20, 0.001, 0).mask(
       synth[3].shape(
-        () => shapeSlider.value(),
-        () => 0.5, //sizeSlider.value(),
+        () => shape.value(),
+        () => 0.5,
         0.01
       )
     )
   )
   .modulateScale(synth[3].osc(10, 0), -0.03)
-  .modulate(synth[3].noise(0.6, () => hyperSlider.value()))
+  .modulate(synth[3].noise(0.6, () => hyper.value()))
   .scale(0.8, () => 1.05 + 0.1 * Math.sin(0.05 * time))
   // .luma(0.1)
   .out();
 
 // electric fern
 synth[4]
-  .osc(() => zoomSlider.value(), 2, 3)
+  .osc(() => zoom.value(), 2, 3)
   .modulateScale(synth[4].osc(40, 0, 1).kaleid(8))
   .mask(
     synth[4]
       .shape(
-        () => shapeSlider.value(),
-        () => 0.5, //sizeSlider.value(),
+        () => shape.value(),
+        () => 0.5,
         0.01
       )
       .repeat(2, 4)
-      .modulate(synth[4].noise(0.6, () => hyperSlider.value()))
+      .modulate(synth[4].noise(0.6, () => hyper.value()))
   )
   .out();
 
 // canyon breeze
 synth[5]
-  .osc(() => zoomSlider.value(), 0.25, 0.25)
+  .osc(() => zoom.value(), 0.25, 0.25)
   .mask(
     synth[5]
       .shape(
-        () => shapeSlider.value(),
-        () => 0.5, //sizeSlider.value(),
+        () => shape.value(),
+        () => 0.5,
         0.1
       )
-      .modulate(synth[5].noise(4.6, () => hyperSlider.value()))
+      .modulate(synth[5].noise(4.6, () => hyper.value()))
       // .diff(synth[0].src(synth[0].o0))
       .scale(0.72)
       .color(0.5, 5, 1, 0, 1)
@@ -203,12 +203,12 @@ synth[5]
 // ocean flame
 synth[6].voronoi(2, 0.5, 0.3);
 synth[6]
-  .osc(() => zoomSlider.value(), 2, 1)
+  .osc(() => zoom.value(), 2, 1)
   .mask(
     synth[6]
       .shape(
-        () => shapeSlider.value(),
-        () => 0.5, //sizeSlider.value(),
+        () => shape.value(),
+        () => 0.5,
         0.01
       )
       .mult(
@@ -218,7 +218,7 @@ synth[6]
           .kaleid(200)
       )
       .modulate(synth[6].src(synth[6].o0), 0.5)
-      .modulate(synth[6].noise(0.6, () => hyperSlider.value()))
+      .modulate(synth[6].noise(0.6, () => hyper.value()))
       .add(synth[6].src(synth[6].o0), 0.8)
       .scrollY(-0.01)
       .scale(0.99)
@@ -229,7 +229,7 @@ synth[6]
 
 // technicolor bloom
 synth[7]
-  .noise(() => zoomSlider.value(), 0.5, 1)
+  .noise(() => zoom.value(), 0.5, 1)
   .color(
     () => Math.sin(time * Math.random()) * 0.5 + 0.5,
     () => Math.cos(time * Math.random()) * 0.5 + 0.5,
@@ -240,12 +240,12 @@ synth[7]
   .mask(
     synth[7]
       .shape(
-        () => shapeSlider.value(),
-        () => 0.5, //sizeSlider.value(),
+        () => shape.value(),
+        () => 0.5,
         0.01
       )
       .modulate(synth[7].src(synth[7].o0), 0.5)
-      .modulate(synth[7].noise(0.6, () => hyperSlider.value()))
+      .modulate(synth[7].noise(0.6, () => hyper.value()))
       .mult(
         synth[7]
           .voronoi(10, 0.1, () => Math.sin(time) * 3)
@@ -387,7 +387,7 @@ function draw() {
     pg[pgSel].height
   );
 
-  scl = sizeSlider.value();
+  scl = size.value();
 
   if (!sliderActive && !buttonClicked) {
     if (mouseIsPressed || (touches.length > 0 && !idle)) {
@@ -611,8 +611,8 @@ function buildGUI() {
       setTimeout(() => (sliderClicked = false), 100);
     });
 
-  label("brush size", sliderBrushSize);
-  sizeSlider = createSlider(0.1, 1, 0.5, 0.001)
+  label("size", sliderBrushSize);
+  size = createSlider(0.1, 1, 0.5, 0.001)
     .parent(sliderBrushSize)
     .class("slider")
     .input(() => (sliderActive = true))
@@ -625,8 +625,8 @@ function buildGUI() {
       setTimeout(() => (sliderClicked = false), 100);
     });
 
-  label("brush shape", sliderBrushShape);
-  shapeSlider = createSlider(3, 12, 50, 0.001)
+  label("shape", sliderBrushShape);
+  shape = createSlider(3, 40, 30, 0)
     .parent(sliderBrushShape)
     .class("slider")
     .input(() => (sliderActive = true))
@@ -639,8 +639,8 @@ function buildGUI() {
       setTimeout(() => (sliderClicked = false), 100);
     });
 
-  label("hydra zoom", sliderHydraZoom);
-  zoomSlider = createSlider(10, 255, 10, 0)
+  label("zoom", sliderHydraZoom);
+  zoom = createSlider(5, 70, 15, 0)
     .parent(sliderHydraZoom)
     .class("slider")
     .input(() => (sliderActive = true))
@@ -653,8 +653,8 @@ function buildGUI() {
       setTimeout(() => (sliderClicked = false), 100);
     });
 
-  label("hyper active", sliderHyperActive);
-  hyperSlider = createSlider(0.5, 10, 3, 0.05)
+  label("hyper", sliderHyperActive);
+  hyper = createSlider(0.5, 10, 3, 0.05)
     .parent(sliderHyperActive)
     .class("slider")
     .input(() => (sliderActive = true))
