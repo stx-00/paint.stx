@@ -84,6 +84,8 @@ let myBrushes = [
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
+  buildGUI();
+
   pg = createGraphics(hc.width, hc.height);
   cleverlayer = createGraphics(width, height); // Initialize cleverlayer
 
@@ -93,8 +95,6 @@ function setup() {
   background(0);
   noStroke();
   noSmooth();
-
-  buildGUI();
 
   // initialize the cursor position in the center of the canvas
   mouseX = width / 2;
