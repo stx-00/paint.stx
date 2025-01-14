@@ -1,6 +1,28 @@
+.fragment-mono-regular {
+  font-family: "Fragment Mono", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.fragment-mono-regular-italic {
+  font-family: "Fragment Mono", serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+html,
 body {
   margin: 0;
-  overflow: hidden;
+  padding: 0;
+  overflow: hidden; /* Prevent scrolling */
+  height: 100%; /* Ensure the body takes up the full viewport */
+}
+
+body {
+  font-family: "Fragment Mono", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 13px;
 }
 
 canvas {
@@ -11,4 +33,41 @@ canvas {
   width: 100vw;
   height: 100vh;
   margin: 0;
+}
+
+.guiWrapper {
+  position: absolute; /* Place it on top of the canvas */
+  top: 10px;
+  left: 10px;
+  z-index: 10; /* Higher than the canvas */
+  background: rgba(
+    255,
+    255,
+    255,
+    0.8
+  ); /* Optional: Add a semi-transparent background */
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.guiContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns for now */
+  gap: 20px;
+}
+
+.column1,
+.column2 {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.column2 .mySelect {
+  margin-bottom: 10px;
+}
+
+textarea.myEditor {
+  resize: none; /* Prevent resizing */
+  z-index: 11; /* Ensure it also stays above the canvas */
 }
