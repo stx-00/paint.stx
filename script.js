@@ -476,10 +476,6 @@ function buildGUI() {
     buttonClicked = true;
     saveCanvas();
   });
-  saveButton.touchStarted(() => {
-    buttonClicked = true;
-    saveCanvas();
-  });
 
   let addButton = createDiv("add").parent(guiInfo).class("button");
   addButton.mousePressed(() => {
