@@ -96,7 +96,7 @@ synth[0]
       .modulate(synth[0].noise(0.6, () => hyper.value()))
       .rotate(
         () => rotate.value(),
-        () => rotate.value()
+        () => rotate.value() / 5
       )
   )
   .out();
@@ -636,28 +636,11 @@ function buildGUI() {
   // column 3 are the sliders
   let column3 = createDiv("").parent(guiContent).class("column3");
 
-  let sliderRotate = createDiv("").parent(column3).class("sliderWrapper"); //for rotate
   let sliderBrushSize = createDiv("").parent(column3).class("sliderWrapper"); // for brush size
   let sliderBrushShape = createDiv("").parent(column3).class("sliderWrapper"); // for brush shape
+  let sliderRotate = createDiv("").parent(column3).class("sliderWrapper"); //for rotate
   let sliderHydraZoom = createDiv("").parent(column3).class("sliderWrapper"); // for hydra zoom
   let sliderHyperActive = createDiv("").parent(column3).class("sliderWrapper"); // for hyper activity of brush
-
-  label("rotate", sliderRotate);
-  rotate = createSlider(0, 10, 0, 0)
-    .parent(sliderRotate)
-    .class("slider")
-    .input(() => {
-      sliderActive = true;
-      adjustTextColor(); // Call this function to adjust text color
-    })
-    .mousePressed(() => {
-      sliderClicked = true; // to not draw when sliders are active
-      sliderActive = true;
-    })
-    .mouseReleased(() => {
-      sliderActive = false;
-      setTimeout(() => (sliderClicked = false), 100);
-    });
 
   label("size", sliderBrushSize);
   size = createSlider(0.1, 1, 0.5, 0.001)
@@ -680,6 +663,23 @@ function buildGUI() {
     .input(() => (sliderActive = true))
     .mousePressed(() => {
       sliderClicked = true;
+      sliderActive = true;
+    })
+    .mouseReleased(() => {
+      sliderActive = false;
+      setTimeout(() => (sliderClicked = false), 100);
+    });
+
+  label("rotate", sliderRotate);
+  rotate = createSlider(0, 10, 0, 0)
+    .parent(sliderRotate)
+    .class("slider")
+    .input(() => {
+      sliderActive = true;
+      adjustTextColor(); // Call this function to adjust text color
+    })
+    .mousePressed(() => {
+      sliderClicked = true; // to not draw when sliders are active
       sliderActive = true;
     })
     .mouseReleased(() => {
