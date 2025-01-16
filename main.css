@@ -216,6 +216,7 @@ canvas {
   cursor: pointer;
   border-radius: 50%;
   border: 2px solid #5f5f5f;
+  box-shadow: none;
   margin-top: -12px; /* Adjust to align with track */
 }
 
@@ -226,6 +227,7 @@ canvas {
   cursor: pointer;
   border-radius: 50%;
   border: 2px solid #5f5f5f;
+  box-shadow: none;
 }
 
 /* ————————————————————————————————————— CSS ANIMATION FOR HOVER ————————————————————————————————————— */
