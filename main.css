@@ -343,7 +343,7 @@ canvas {
 
   .guiContent {
     flex-direction: row; /* Maintain side-by-side layout */
-    gap: 20px; /* Adjust spacing between the columns */
+    gap: 10px; /* Adjust spacing between the columns */
   }
 
   .guiInfo {
@@ -355,7 +355,7 @@ canvas {
   .column2 {
     display: flex; /* Keep column2 in the second column */
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
     width: 45%;
   }
 
@@ -426,7 +426,29 @@ canvas {
 
   /* column 3 is sliders */
   .column3 {
-    display: none !important; /* Completely hide sliders on mobile */
+    flex-direction: column; /* Stack sliders vertically */
+    gap: 5px; /* Adjust gap between sliders */
+    align-items: flex-end; /* Align all sliders to the right */
+  }
+
+  .sliderWrapper {
+    width: 100%;
+  }
+
+  .slider {
+    margin: 15px 0;
+  }
+
+  /* Thumb styles */
+  .slider::-webkit-slider-thumb {
+    width: 15px;
+    height: 15px;
+    margin-top: -8px; /* Adjust to align with track */
+  }
+
+  .slider::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
   }
 
   .infoText {
