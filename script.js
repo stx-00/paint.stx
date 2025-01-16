@@ -4,6 +4,7 @@ let size;
 let hyper;
 let shape;
 let backgroundSlider;
+let rotate;
 let sliderActive = false; // for not drawing while using sliders
 let sliderClicked = false; //
 let buttonClicked = false; //
@@ -93,6 +94,10 @@ synth[0]
       )
       .scale(0.9)
       .modulate(synth[0].noise(0.6, () => hyper.value()))
+      .rotate(
+        () => rotate.value(),
+        () => rotate.value()
+      )
   )
   .out();
 
@@ -122,13 +127,17 @@ synth[1]
       )
       .luma(0.3)
       .color(15, 25, 1)
+      .rotate(
+        () => rotate.value(),
+        () => rotate.value() / 5
+      )
   )
   .out();
 
 // cotton candy cascade
 synth[2]
   .osc(() => zoom.value(), 0.28, 0.3)
-  .rotate(0, 0.1)
+  // .rotate(0, 0.1)
   .mask(
     synth[2]
       .shape(
@@ -136,8 +145,12 @@ synth[2]
         () => 0.5,
         0.01
       )
-      .mult(synth[2].osc(10, 0.1))
+      // .mult(synth[2].osc(10, 0.1))
       .modulate(synth[2].osc(10).rotate(0, -0.1), 1)
+      .rotate(
+        () => rotate.value(),
+        () => rotate.value() / 15
+      )
   )
   .modulate(synth[2].noise(0.6, () => hyper.value()))
   .color(2.83, 0.91, () => hyper.value() * 50)
@@ -148,13 +161,19 @@ synth[3]
   .osc(() => zoom.value(), 1, 2)
   .kaleid()
   .mult(
-    synth[3].osc(20, 0.001, 0).mask(
-      synth[3].shape(
-        () => shape.value(),
-        () => 0.5,
-        0.01
+    synth[3]
+      .osc(20, 0.001, 0)
+      .mask(
+        synth[3].shape(
+          () => shape.value(),
+          () => 0.5,
+          0.01
+        )
       )
-    )
+      .rotate(
+        () => rotate.value(),
+        () => rotate.value()
+      )
   )
   .modulateScale(synth[3].osc(10, 0), -0.03)
   .modulate(synth[3].noise(0.6, () => hyper.value()))
@@ -174,16 +193,22 @@ synth[4]
       )
       .repeat(2, 4)
       .modulate(synth[4].noise(0.6, () => hyper.value()))
+      .rotate(
+        () => rotate.value() / 50,
+        () => rotate.value() / 50
+      )
   )
   .out();
 
 // canyon breeze
 synth[5]
   .osc(() => zoom.value(), 0.25, 0.25)
+  .rotate(0, 0.1)
+  .rotate(() => rotate.value())
   .mask(
     synth[5]
       .shape(
-        () => shape.value(),
+        () => shape.value() * 10,
         () => 0.5,
         0.1
       )
@@ -192,6 +217,10 @@ synth[5]
       .color(0.5, 5, 1, 0, 1)
       .luma(1)
       .saturate(5)
+      .rotate(
+        () => rotate.value(),
+        () => rotate.value()
+      )
   )
   .out();
 
@@ -219,6 +248,10 @@ synth[6]
       .scale(0.99)
       .modulate(synth[6].voronoi(8, 1), 0.008)
       .luma(0.3)
+      .rotate(
+        () => rotate.value(),
+        () => rotate.value() / 2
+      )
   )
   .out();
 
@@ -255,6 +288,10 @@ synth[7]
 
       .repeatX(1)
       .repeatY(1)
+      .rotate(
+        () => rotate.value(),
+        () => rotate.value()
+      )
   )
   .out();
 
@@ -383,7 +420,7 @@ function touchEnded() {
 ////////
 
 function draw() {
-  background(backgroundSlider.value());
+  background(255);
 
   // Always draw the persistent layer (cleverlayer)
   image(cleverlayer, width / 2, height / 2);
@@ -599,15 +636,15 @@ function buildGUI() {
   // column 3 are the sliders
   let column3 = createDiv("").parent(guiContent).class("column3");
 
-  let sliderBackground = createDiv("").parent(column3).class("sliderWrapper"); //for background color
+  let sliderRotate = createDiv("").parent(column3).class("sliderWrapper"); //for rotate
   let sliderBrushSize = createDiv("").parent(column3).class("sliderWrapper"); // for brush size
   let sliderBrushShape = createDiv("").parent(column3).class("sliderWrapper"); // for brush shape
   let sliderHydraZoom = createDiv("").parent(column3).class("sliderWrapper"); // for hydra zoom
   let sliderHyperActive = createDiv("").parent(column3).class("sliderWrapper"); // for hyper activity of brush
 
-  label("background", sliderBackground);
-  backgroundSlider = createSlider(0, 255, 255, 1)
-    .parent(sliderBackground)
+  label("rotate", sliderRotate);
+  rotate = createSlider(0, 10, 0, 0)
+    .parent(sliderRotate)
     .class("slider")
     .input(() => {
       sliderActive = true;
@@ -637,7 +674,7 @@ function buildGUI() {
     });
 
   label("shape", sliderBrushShape);
-  shape = createSlider(3, 40, 30, 0)
+  shape = createSlider(5, 40, 30, 0)
     .parent(sliderBrushShape)
     .class("slider")
     .input(() => (sliderActive = true))
