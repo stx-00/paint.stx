@@ -3,14 +3,12 @@ let zoom;
 let size;
 let hyper;
 let shape;
-let backgroundSlider;
 let rotate;
 let sliderActive = false; // for not drawing while using sliders
 let sliderClicked = false; //
 let buttonClicked = false; //
 let printQueue = []; //
 let queueCounter; //
-let isDarkMode = false; // for mobile dark mode
 
 // Eco-mode for rendering only if the window is focused
 window.onblur = function () {
@@ -721,11 +719,6 @@ function buildGUI() {
   // for trashing drawing
   function clearCanvas() {
     cleverlayer.clear();
-    if (isDarkMode) {
-      cleverlayer.background(0); // Set to black in dark mode
-    } else {
-      background(backgroundSlider.value()); // Use slider value otherwise
-    }
   }
 
   // for saving drawing
@@ -737,73 +730,6 @@ function buildGUI() {
   function label(txt, parent) {
     createDiv(txt).parent(parent).class("label");
   }
-
-  // making sure text color moves to white when background too dark
-  function adjustTextColor() {
-    const backgroundValue = backgroundSlider.value();
-    const textColor = backgroundValue <= 45 ? "white" : "black"; // Adjust threshold as needed
-
-    // Update the dropdown text color
-    const selectElements = document.querySelectorAll(".select");
-    selectElements.forEach((select) => {
-      select.style.color = textColor;
-    });
-
-    // Update the GUI wrapper class
-    if (backgroundValue <= 45) {
-      guiWrapper.addClass("light-text");
-    } else {
-      guiWrapper.removeClass("light-text");
-    }
-
-    // Update the infoText elements
-    const infoTextElements = document.querySelectorAll(".infoText");
-    infoTextElements.forEach((infoText) => {
-      infoText.style.color = textColor;
-
-      // Apply the light-text class to infoText when the background is dark
-      if (backgroundValue <= 45) {
-        infoText.classList.add("light-text"); // Add light-text class when the background is dark
-      } else {
-        infoText.classList.remove("light-text"); // Remove light-text class when the background is light
-      }
-    });
-  }
-
-  // dark mode for mobile
-
-  let isDarkMode = false; // State to track dark mode
-
-  // Dark Mode Button
-  function toggleDarkMode() {
-    const guiWrapper = document.querySelector(".guiWrapper");
-    const infoText = document.querySelectorAll(".infoText");
-
-    if (isDarkMode) {
-      // Disable dark mode
-      isDarkMode = false;
-      document.body.style.backgroundColor = ""; // Reset to default
-      cleverlayer.clear(); // Clear cleverlayer
-      background(backgroundSlider.value()); // Restore background from slider
-      guiWrapper.classList.remove("dark-mode");
-      infoText.forEach((text) => text.classList.remove("dark-mode"));
-      darkModeButton.html("dark mode"); // Update button text
-    } else {
-      // Enable dark mode
-      isDarkMode = true;
-      document.body.style.backgroundColor = "black";
-      cleverlayer.background(0);
-      guiWrapper.classList.add("dark-mode");
-      infoText.forEach((text) => text.classList.add("dark-mode"));
-      darkModeButton.html("light mode"); // Update button text
-    }
-  }
-
-  // Create the dark mode button (keep it minimal)
-  let darkModeButton = createDiv("dark mode")
-    .parent(guiInfo)
-    .class("darkModeText");
-  darkModeButton.mousePressed(toggleDarkMode);
 }
 
 // print counter
