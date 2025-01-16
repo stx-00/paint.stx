@@ -348,6 +348,7 @@ canvas {
 
   .guiInfo {
     width: 30%;
+    gap: 15px;
     flex-shrink: 0; /* Prevent shrinking */
   }
 
