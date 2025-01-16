@@ -263,6 +263,62 @@ canvas {
   animation: shake 0.5s ease;
 }
 
+/* ———————————————————————————————————————— DARK MODE ————————————————————————————————————————————————— */
+
+body.dark-mode {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.dark-mode .guiWrapper {
+  color: #ffffff;
+}
+
+.dark-mode .button {
+  color: #ffffff;
+}
+
+.dark-mode .select {
+  color: #ffffff;
+}
+
+.dark-mode .select option {
+  color: #ffffff;
+  background-color: #000000;
+}
+
+.dark-mode .infoText {
+  color: #ffffff;
+}
+
+.dark-mode .infoText a {
+  color: #ffffff;
+}
+
+.dark-mode .infoText a {
+  color: #ffffff !important;
+  text-decoration-color: #ffffff !important;
+}
+
+/* Dark mode slider styles */
+.dark-mode .slider::-webkit-slider-runnable-track {
+  background: #ffffff;
+}
+
+.dark-mode .slider::-moz-range-track {
+  background: #ffffff;
+}
+
+.dark-mode .slider::-webkit-slider-thumb {
+  background: #000000;
+  border: 1px solid #ffffff;
+}
+
+.dark-mode .slider::-moz-range-thumb {
+  background: #000000;
+  border: 1px solid #ffffff;
+}
+
 /* ———————————————————————————————————————— FOR MOBILE DRAWING ———————————————————————————————————————— */
 
 /* for mobile drawing */
@@ -477,5 +533,14 @@ canvas {
     margin-right: 15px;
     color: rgb(0, 0, 0);
     font-size: 11px;
+  }
+
+  .dark-mode .select option {
+    color: #ffffff;
+    background-color: #000000;
+  }
+
+  .dark-mode .infoText {
+    color: #ffffff;
   }
 }

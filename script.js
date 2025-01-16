@@ -418,7 +418,8 @@ function touchEnded() {
 ////////
 
 function draw() {
-  background(255);
+  const isDarkMode = document.body.classList.contains("dark-mode");
+  background(isDarkMode ? 0 : 255);
 
   // Always draw the persistent layer (cleverlayer)
   image(cleverlayer, width / 2, height / 2);
@@ -605,6 +606,14 @@ function buildGUI() {
     }
   });
 
+  let darkModeButton = createDiv("dark")
+    .parent(guiInfo)
+    .class("darkModeButton button");
+  darkModeButton.mousePressed(() => {
+    buttonClicked = true;
+    toggleDarkMode();
+  });
+
   // column2 is select brush
   let column2 = createDiv("").parent(guiContent).class("column2");
 
@@ -761,6 +770,24 @@ function updatePrintCounter(printButton) {
     printButton.html(`print (${printQueue.length})`); // Show the counter if there are drawings
   } else {
     printButton.html("print"); // Remove the counter when the queue is empty
+  }
+}
+
+function toggleDarkMode() {
+  const body = document.body;
+  const isDarkMode = body.classList.toggle("dark-mode");
+
+  // Update button text
+  const darkModeButton = document.querySelector(".darkModeButton");
+  if (darkModeButton) {
+    darkModeButton.textContent = isDarkMode ? "light" : "dark";
+  }
+
+  // Update background color in p5.js
+  if (isDarkMode) {
+    background(0);
+  } else {
+    background(255);
   }
 }
 
