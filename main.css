@@ -335,7 +335,7 @@ canvas {
 
   .guiContent {
     flex-direction: row; /* Maintain side-by-side layout */
-    gap: 50px; /* Adjust spacing between the two columns */
+    gap: 20px; /* Adjust spacing between the columns */
   }
 
   .guiInfo {
@@ -348,7 +348,7 @@ canvas {
     display: flex; /* Keep column2 in the second column */
     flex-direction: column;
     gap: 20px;
-    width: 70%;
+    width: 45%;
   }
 
   .selectWrapper,
