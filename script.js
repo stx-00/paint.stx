@@ -10,6 +10,8 @@ let buttonClicked = false; //
 let printQueue = []; //
 let queueCounter; //
 
+//////////////////////////////////////////////////////////////// from P5LIVE
+
 // Eco-mode for rendering only if the window is focused
 window.onblur = function () {
   noLoop();
@@ -33,6 +35,10 @@ function ease(iVal, oVal, eVal) {
 function println(msg) {
   print(msg);
 }
+
+////////////////////////////////////////////////////////////////
+
+// this is important for not drawing while clicking buttons or using sliders
 
 function mouseReleased() {
   buttonClicked = false; //
@@ -68,7 +74,7 @@ for (let i = 0; i < synthCount; i++) {
   }).synth; // scoped hydra
 }
 
-//////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
 
 // sandbox - start
 // access each instance via synth[index]
@@ -293,7 +299,7 @@ synth[7]
   )
   .out();
 
-////////////////////////////////////////////// sandbox - stop
+////////////////////////////////////////////////////////////////////// sandbox - stop
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -337,7 +343,7 @@ function setup() {
   }
 }
 
-//////// for mobile
+////////////////////////////////////////////////////////////////////// for mobile
 
 function touchStarted(e) {
   // Check if the touch is on a GUI element
@@ -415,7 +421,7 @@ function touchEnded() {
   sliderActive = false; // Reset slider interaction
 }
 
-////////
+//////////////////////////////////////////////////////////////////////
 
 function draw() {
   const isDarkMode = document.body.classList.contains("dark-mode");
@@ -461,6 +467,9 @@ function buildGUI() {
   let guiWrapper = createDiv("").class("guiWrapper");
   let guiContent = createDiv("").parent(guiWrapper).class("guiContent");
 
+  ///////////////////////////////////////////////////////////////////////////
+  //guiInfo is the 1st column with the button
+
   let guiInfo = createDiv("").parent(guiContent).class("guiInfo");
   let title = createDiv("p5*hydra paint").parent(guiInfo).class("title");
 
@@ -472,11 +481,22 @@ function buildGUI() {
     clearCanvas();
   });
 
+  // for trashing drawing
+  function clearCanvas() {
+    cleverlayer.clear();
+  }
+
   let saveButton = createDiv("save").parent(guiInfo).class("saveButton button");
   saveButton.mousePressed(() => {
     buttonClicked = true;
     saveCanvas();
   });
+
+  // for saving drawing
+  function saveCanvas() {
+    var filename = "p5-hydra-paint-sketch.png";
+    cleverlayer.save(filename);
+  }
 
   let addButton = createDiv("add").parent(guiInfo).class("button");
   addButton.mousePressed(() => {
@@ -614,6 +634,8 @@ function buildGUI() {
     toggleDarkMode();
   });
 
+  ///////////////////////////////////////////////////////////////////////////
+
   // column2 is select brush
   let column2 = createDiv("").parent(guiContent).class("column2");
 
@@ -633,6 +655,8 @@ function buildGUI() {
   sel.changed(function () {
     pgSel = sel.value();
   });
+
+  ///////////////////////////////////////////////////////////////////////////
 
   // column 3 are the sliders
   let column3 = createDiv("").parent(guiContent).class("column3");
@@ -740,16 +764,7 @@ function buildGUI() {
   // Set the selected option to "brush1" —— not sure this is wokrin
   sel.selected("title of brush0", 0);
 
-  // for trashing drawing
-  function clearCanvas() {
-    cleverlayer.clear();
-  }
-
-  // for saving drawing
-  function saveCanvas() {
-    var filename = "p5-hydra-paint-sketch.png";
-    cleverlayer.save(filename);
-  }
+  ///////////////////////////////////////////////////////////////////////////
 
   function label(txt, parent) {
     createDiv(txt).parent(parent).class("label");
@@ -783,13 +798,15 @@ function toggleDarkMode() {
     darkModeButton.textContent = isDarkMode ? "light" : "dark";
   }
 
-  // Update background color in p5.js
+  // Update background color
   if (isDarkMode) {
     background(0);
   } else {
     background(255);
   }
 }
+
+////////////////////////////////////////////////////////////////////////////////////////
 
 // screen saver, auto drawing!
 let idleTimer; // Timer for detecting inactivity
