@@ -618,14 +618,14 @@ function buildGUI() {
 
   label("select your brush", selectBrush);
   sel = createSelect().parent(selectBrush).class("select");
-  sel.option("prismatic pulse", 0);
-  sel.option("acid loop", 1);
-  sel.option("cotton candy cascade", 2);
-  sel.option("spectrum serpent", 3);
-  sel.option("electric fern", 4);
-  sel.option("canyon breeze", 5);
-  sel.option("ocean flame", 6);
-  sel.option("technicolor bloom", 7);
+  sel.option("→ prismatic pulse", 0);
+  sel.option("→ acid loop", 1);
+  sel.option("→ cotton candy cascade", 2);
+  sel.option("→ spectrum serpent", 3);
+  sel.option("→ electric fern", 4);
+  sel.option("→ canyon breeze", 5);
+  sel.option("→ ocean flame", 6);
+  sel.option("→ technicolor bloom", 7);
 
   sel.changed(function () {
     pgSel = sel.value();
