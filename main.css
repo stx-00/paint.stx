@@ -19,7 +19,7 @@ body {
   font-style: normal;
   font-size: 13px;
   /* line-height: 14px; */
-  user-select: none; /* Disable text selection for the entire page */
+  user-select: none; /* so text doesn't get selected while drawing */
 }
 
 canvas {
@@ -30,9 +30,10 @@ canvas {
   width: 100vw;
   height: 100vh;
   margin: 0;
-  user-select: none; /* Prevent selection on the canvas */
+  user-select: none; /* so text doesn't get selected while drawing */
 }
 
+/* guiWrapper is the entire GUI */
 .guiWrapper {
   max-width: 100vw; /* Prevent the container from overflowing the viewport */
   box-sizing: border-box; /* Include padding in the width */
@@ -41,9 +42,10 @@ canvas {
   display: flex;
   top: 0;
   left: 0;
-  user-select: none; /* Prevent selection on the canvas */
+  user-select: none; /* so text doesn't get selected while drawing */
 }
 
+/* guiContent are all the elements in the GUI */
 .guiContent {
   display: flex;
   width: 100%;
@@ -51,10 +53,11 @@ canvas {
   padding-left: 15px;
   padding-right: 15px;
   gap: 80px;
-  user-select: none; /* Prevent selection on the canvas */
+  user-select: none; /* so text doesn't get selected while drawing */
   overflow: hidden; /* Prevent child elements from exceeding boundaries */
 }
 
+/* That's column1 (page title and buttons on left) */
 .guiInfo {
   display: flex;
   flex-direction: column;
@@ -66,8 +69,38 @@ canvas {
   margin-bottom: 20px;
 }
 
-.selectWrapper,
-.sliderWrapper {
+.button {
+  cursor: pointer;
+  user-select: none; /* Prevent selection on the canvas */
+}
+
+/* text that appears in "?" infoButton */
+.infoText {
+  position: absolute; /* Necessary for custom positioning */
+  color: rgb(0, 0, 0);
+  font-size: 13x;
+  max-width: 750px;
+  display: none; /* Initially hidden */
+  z-index: 10; /* Ensure it appears above other elements */
+}
+
+.infoText {
+  color: black; /* Default color */
+}
+
+/* Default link styling for infoText */
+.infoText a {
+  color: inherit; /* Inherit the color from the parent */
+  text-decoration: underline; /* Retain underline for links */
+}
+
+/* column 2 is select brush */
+.column2 {
+  width: 350px;
+}
+
+.selectWrapper {
+  position: relative;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -77,9 +110,40 @@ canvas {
   margin-bottom: 10px;
 }
 
-/* column 2 is select brush */
-.column2 {
-  width: 350px;
+/* Basic styling for the select element */
+.select {
+  width: 100%;
+  font-size: 13px;
+  font-family: "Fragment Mono", serif; /* Apply your desired font */
+  appearance: none; /* Removes default styling */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  position: relative;
+  border: none;
+  background: transparent;
+}
+
+/* Remove border and styles from the options dropdown */
+.select option {
+  font-family: "Fragment Mono", serif; /* Ensure the font is applied to options */
+  font-size: 13px; /* Adjust size if needed */
+  color: black;
+  padding: 10px;
+  margin: 0;
+  box-shadow: none;
+}
+
+/* Remove the popup window border in Firefox */
+.select::-moz-focus-inner {
+  border: 0;
+}
+
+/* to avoid select box appearing as active */
+.select:focus {
+  outline: none;
+  box-shadow: none;
+  border: none;
 }
 
 /* column 3 are the sliders */
@@ -90,9 +154,11 @@ canvas {
   overflow: hidden; /* Prevent child elements from exceeding boundaries */
 }
 
-.button {
-  cursor: pointer;
-  user-select: none; /* Prevent selection on the canvas */
+.sliderWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 /* General slider styles */
@@ -147,67 +213,6 @@ canvas {
   cursor: pointer;
   border-radius: 50%;
   border: 2px solid #5f5f5f;
-}
-
-/* Basic styling for the select element */
-.select {
-  width: 100%;
-  font-size: 13px;
-  font-family: "Fragment Mono", serif; /* Apply your desired font */
-  appearance: none; /* Removes default styling */
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  cursor: pointer;
-  position: relative;
-  border: none;
-  background: transparent;
-}
-
-/* Remove border and styles from the options dropdown */
-.select option {
-  font-family: "Fragment Mono", serif; /* Ensure the font is applied to options */
-  font-size: 13px; /* Adjust size if needed */
-  color: black;
-  padding: 10px;
-  margin: 0;
-  box-shadow: none;
-}
-
-/* Remove the popup window border in Firefox */
-.select::-moz-focus-inner {
-  border: 0;
-}
-
-/* to avoid select box appearing as active */
-.select:focus {
-  outline: none;
-  box-shadow: none;
-  border: none;
-}
-
-/* Container for the select element */
-.selectWrapper {
-  position: relative;
-}
-
-/* text that appears in "?" infoButton */
-.infoText {
-  position: absolute; /* Necessary for custom positioning */
-  color: rgb(0, 0, 0);
-  font-size: 13x;
-  max-width: 750px;
-  display: none; /* Initially hidden */
-  z-index: 10; /* Ensure it appears above other elements */
-}
-
-.infoText {
-  color: black; /* Default color */
-}
-
-/* Default link styling for infoText */
-.infoText a {
-  color: inherit; /* Inherit the color from the parent */
-  text-decoration: underline; /* Retain underline for links */
 }
 
 /* for mobile drawing */
