@@ -4,11 +4,11 @@ let size;
 let hyper;
 let shape;
 let backgroundSlider;
-let sliderActive = false; // to indicate slider activity for drawing
-let sliderClicked = false; // to indicate if the slider was just clicked
-let buttonClicked = false; // to indicate if a button is clicked
-let printQueue = []; // array to store the queued drawings
-let queueCounter; // counter for amount of drawings in print queue
+let sliderActive = false; // for not drawing while using sliders
+let sliderClicked = false; //
+let buttonClicked = false; //
+let printQueue = []; //
+let queueCounter; //
 let isDarkMode = false; // for mobile dark mode
 
 // Eco-mode for rendering only if the window is focused
@@ -36,8 +36,8 @@ function println(msg) {
 }
 
 function mouseReleased() {
-  buttonClicked = false; // Reset the flag when the mouse is released
-  sliderActive = false; // Reset slider activity if needed
+  buttonClicked = false; //
+  sliderActive = false; //
 }
 
 /*	
@@ -159,7 +159,6 @@ synth[3]
   .modulateScale(synth[3].osc(10, 0), -0.03)
   .modulate(synth[3].noise(0.6, () => hyper.value()))
   .scale(0.8, () => 1.05 + 0.1 * Math.sin(0.05 * time))
-  // .luma(0.1)
   .out();
 
 // electric fern
@@ -189,14 +188,10 @@ synth[5]
         0.1
       )
       .modulate(synth[5].noise(4.6, () => hyper.value()))
-      // .diff(synth[0].src(synth[0].o0))
       .scale(0.72)
       .color(0.5, 5, 1, 0, 1)
-      // .scale(0.99)
       .luma(1)
       .saturate(5)
-    // .color(1, 0, 3)
-    // .invert()
   )
   .out();
 
@@ -251,14 +246,12 @@ synth[7]
           .voronoi(10, 0.1, () => Math.sin(time) * 3)
           .saturate(3)
           .shift(0.5)
-        // .kaleid(200)
       )
       .modulateRotate(synth[7].src(synth[7].o0), () => Math.sin(time) * 2)
       .scrollX(10)
       .scrollY(2)
       .color(0.5, 0.8, 50)
       .luma()
-      // .invert()
 
       .repeatX(1)
       .repeatY(1)
@@ -603,7 +596,7 @@ function buildGUI() {
       adjustTextColor(); // Call this function to adjust text color
     })
     .mousePressed(() => {
-      sliderClicked = true;
+      sliderClicked = true; // to not draw when sliders are active
       sliderActive = true;
     })
     .mouseReleased(() => {
