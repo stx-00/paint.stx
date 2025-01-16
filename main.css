@@ -322,7 +322,15 @@ canvas {
   }
 }
 
-/* ———————————————————————————————————————— MOBILE ———————————————————————————————————————— */
+/* —————————————————————————————————————— MOBILE / TOUCH DEVICES —————————————————————————————————————— */
+
+/* Disable hover animations on touch devices */
+@media (hover: none) {
+  .button:hover,
+  .select:hover {
+    animation: none; /* Disable the shake animation */
+  }
+}
 
 @media (max-width: 768px) {
   body {
