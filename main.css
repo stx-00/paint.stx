@@ -1,4 +1,4 @@
-/* —————————————————————— TYPOGRAPHY —————————————————————— */
+/* ———————————————————————————————————————— TYPOGRAPHY ———————————————————————————————————————— */
 .fragment-mono-regular {
   font-family: "Fragment Mono", serif;
   font-weight: 400;
@@ -11,7 +11,7 @@
   font-style: italic;
 }
 
-/* —————————————————————— OVERALL —————————————————————— */
+/* ———————————————————————————————————————— OVERALL ———————————————————————————————————————— */
 
 body {
   margin: 0;
@@ -36,7 +36,7 @@ canvas {
   user-select: none; /* so text doesn't get selected while drawing */
 }
 
-/* —————————————————————— GUI GENERAL —————————————————————— */
+/* ———————————————————————————————————————— GUI GENERAL ———————————————————————————————————————— */
 
 /* guiWrapper is the entire GUI */
 .guiWrapper {
@@ -62,7 +62,7 @@ canvas {
   overflow: hidden; /* Prevent child elements from exceeding boundaries */
 }
 
-/* —————————————————————— EVERYTHING ON THE LEFT (COLUMN 1) —————————————————————— */
+/* ————————————————————————————— EVERYTHING ON THE LEFT (COLUMN 1) ————————————————————————————— */
 
 /* That's column1 (page title and buttons on left) */
 .guiInfo {
@@ -102,7 +102,7 @@ canvas {
   text-decoration: underline; /* Retain underline for links */
 }
 
-/* —————————————————————— EVERYTHING IN COLUMN 2 (select brush) —————————————————————— */
+/* ———————————————————————————— EVERYTHING IN COLUMN 2 (select brush) ———————————————————————————— */
 
 /* column 2 is select brush */
 .column2 {
@@ -157,7 +157,7 @@ canvas {
   border: none;
 }
 
-/* —————————————————————— EVERYTHING IN COLUMN 3 (SLIDERS) —————————————————————— */
+/* ————————————————————————————————— EVERYTHING IN COLUMN 3 (SLIDERS) ————————————————————————————————— */
 
 /* column 3 are the sliders */
 .column3 {
@@ -228,7 +228,7 @@ canvas {
   border: 2px solid #5f5f5f;
 }
 
-/* —————————————————————— CSS ANIMATION FOR HOVER —————————————————————— */
+/* ————————————————————————————————————— CSS ANIMATION FOR HOVER ————————————————————————————————————— */
 
 @keyframes shake {
   0%,
@@ -258,7 +258,7 @@ canvas {
   animation: shake 1s ease;
 }
 
-/* —————————————————————— FOR MOBILE DRAWING —————————————————————— */
+/* ———————————————————————————————————————— FOR MOBILE DRAWING ———————————————————————————————————————— */
 
 /* for mobile drawing */
 .guiWrapper,
@@ -268,13 +268,7 @@ canvas {
   pointer-events: auto;
 }
 
-/* —————————————————————— RESPONSIVENESS —————————————————————— */
-
-@media (min-width: 769px) {
-  .adjust-sliders-button {
-    display: none; /* Hide on desktop */
-  }
-}
+/* ———————————————————————————————————————— RESPONSIVENESS ———————————————————————————————————————— */
 
 @media (max-width: 1360px) {
   .guiContent {
@@ -332,7 +326,7 @@ canvas {
   }
 }
 
-/* —————————————————————— MOBILE —————————————————————— */
+/* ———————————————————————————————————————— MOBILE ———————————————————————————————————————— */
 
 @media (max-width: 768px) {
   body {
