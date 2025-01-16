@@ -635,7 +635,7 @@ function buildGUI() {
   let sliderHyperActive = createDiv("").parent(column3).class("sliderWrapper"); // for hyper activity of brush
 
   label("size", sliderBrushSize);
-  size = createSlider(0.1, 1, 0.5, 0.001)
+  size = createSlider(0.1, 1, 0.4, 0.001)
     .parent(sliderBrushSize)
     .class("slider")
     .input(() => (sliderActive = true))
