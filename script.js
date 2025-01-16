@@ -305,9 +305,9 @@ function setup() {
   mouseY = height / 2;
 
   // disable sliders if on mobile
-  if (window.innerWidth <= 768) {
-    document.querySelector(".column3").style.display = "none";
-  }
+  // if (window.innerWidth <= 768) {
+  //   document.querySelector(".column3").style.display = "none";
+  // }
 
   background(0);
   noStroke();
