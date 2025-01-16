@@ -628,6 +628,27 @@ function buildGUI() {
   // column 3 are the sliders
   let column3 = createDiv("").parent(guiContent).class("column3");
 
+  let sliderToggle = createDiv("+ adjust")
+    .parent(column3)
+    .class("sliderToggleButton button");
+
+  sliderToggle.mousePressed(() => {
+    const sliderWrappers = document.querySelectorAll(
+      ".column3 > .sliderWrapper"
+    );
+
+    // Get current visibility state of sliders
+    const slidersVisible = sliderWrappers[0].style.display !== "none";
+
+    // Toggle visibility of just the sliders
+    sliderWrappers.forEach((wrapper) => {
+      wrapper.style.display = slidersVisible ? "none" : "flex";
+    });
+
+    // Update button text
+    sliderToggle.html(slidersVisible ? "+ adjust" : "- hide");
+  });
+
   let sliderBrushSize = createDiv("").parent(column3).class("sliderWrapper"); // for brush size
   let sliderBrushShape = createDiv("").parent(column3).class("sliderWrapper"); // for brush shape
   let sliderRotate = createDiv("").parent(column3).class("sliderWrapper"); //for rotate
@@ -723,6 +744,14 @@ function buildGUI() {
 
   function label(txt, parent) {
     createDiv(txt).parent(parent).class("label");
+  }
+
+  if (window.innerWidth <= 768) {
+    // Initially hide sliders on mobile
+    const sliderWrappers = document.querySelectorAll(
+      ".column3 > .sliderWrapper"
+    );
+    sliderWrappers.forEach((wrapper) => (wrapper.style.display = "none"));
   }
 }
 

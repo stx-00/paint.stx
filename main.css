@@ -167,6 +167,10 @@ canvas {
   overflow: hidden; /* Prevent child elements from exceeding boundaries */
 }
 
+.sliderToggleButton {
+  display: none;
+}
+
 .sliderWrapper {
   position: relative;
   display: flex;
@@ -307,9 +311,7 @@ canvas {
 
 @media (max-width: 985px) {
   .column3 {
-    flex-direction: column; /* Stack sliders vertically */
     gap: 10px; /* Adjust gap between sliders */
-    align-items: flex-end; /* Align all sliders to the right */
   }
 
   .sliderWrapper {
@@ -435,6 +437,19 @@ canvas {
     flex-direction: column; /* Stack sliders vertically */
     gap: 5px; /* Adjust gap between sliders */
     align-items: flex-end; /* Align all sliders to the right */
+  }
+
+  .sliderToggleButton {
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .column3 > .sliderWrapper {
+    display: none;
+  }
+
+  .column3.show > .sliderWrapper {
+    display: flex;
   }
 
   .sliderWrapper {
