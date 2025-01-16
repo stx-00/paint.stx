@@ -316,7 +316,13 @@ function touchStarted(e) {
   // Prevent default interaction only on canvas
   if (touches.length > 0 && !sliderActive && !buttonClicked) {
     const touch = touches[0];
-    cleverlayer.image(pg[pgSel], touch.x, touch.y);
+    cleverlayer.image(
+      pg[pgSel],
+      touch.x,
+      touch.y,
+      pg[pgSel].width * scl,
+      pg[pgSel].height * scl
+    );
   }
 
   return false; // Prevent default interaction on the canvas
@@ -334,7 +340,13 @@ function touchMoved(e) {
   // Prevent default interaction only on canvas
   if (touches.length > 0 && !sliderActive && !buttonClicked) {
     const touch = touches[0];
-    cleverlayer.image(pg[pgSel], touch.x, touch.y);
+    cleverlayer.image(
+      pg[pgSel],
+      touch.x,
+      touch.y,
+      pg[pgSel].width * scl,
+      pg[pgSel].height * scl
+    );
   }
 
   return false; // Prevent default interaction on the canvas
@@ -353,7 +365,13 @@ function mousePressed(e) {
 
   // Allow drawing on the canvas
   if (!sliderActive && !buttonClicked) {
-    //cleverlayer.image(pg[pgSel], mouseX, mouseY);
+    cleverlayer.image(
+      pg[pgSel],
+      mouseX,
+      mouseY,
+      pg[pgSel].width * scl,
+      pg[pgSel].height * scl
+    );
   }
 }
 
@@ -827,7 +845,13 @@ function drawCurvedPath() {
   }
 
   // Use the currently selected brush to draw
-  cleverlayer.image(pg[pgSel], idlePos.x, idlePos.y);
+  cleverlayer.image(
+    pg[pgSel],
+    idlePos.x,
+    idlePos.y,
+    pg[pgSel].width * scl,
+    pg[pgSel].height * scl
+  );
 
   // Continue drawing after a short delay
   setTimeout(drawCurvedPath, 50); // Adjust delay for smoother or faster movement
