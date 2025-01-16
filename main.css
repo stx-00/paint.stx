@@ -226,6 +226,36 @@ canvas {
   border: 2px solid #5f5f5f;
 }
 
+/* —————————————————————— CSS ANIMATION FOR HOVER —————————————————————— */
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-10px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(10px);
+  }
+}
+
+.button:hover {
+  animation: shake 1s ease;
+}
+
+.select:hover {
+  animation: shake 1s ease;
+}
+
 /* —————————————————————— FOR MOBILE DRAWING —————————————————————— */
 
 /* for mobile drawing */
