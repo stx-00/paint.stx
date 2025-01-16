@@ -77,6 +77,7 @@ canvas {
 }
 
 .button {
+  align-self: flex-start; /* so only button text itself is active */
   cursor: pointer;
   user-select: none; /* Prevent selection on the canvas */
 }
@@ -121,9 +122,10 @@ canvas {
 
 /* Basic styling for the select element */
 .select {
-  width: 100%;
+  display: inline-block;
+  align-self: flex-start;
   font-size: 13px;
-  font-family: "Fragment Mono", serif; /* Apply your desired font */
+  font-family: "Fragment Mono", serif;
   appearance: none; /* Removes default styling */
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -135,8 +137,8 @@ canvas {
 
 /* Remove border and styles from the options dropdown */
 .select option {
-  font-family: "Fragment Mono", serif; /* Ensure the font is applied to options */
-  font-size: 13px; /* Adjust size if needed */
+  font-family: "Fragment Mono", serif;
+  font-size: 13px;
   color: black;
   padding: 10px;
   margin: 0;
