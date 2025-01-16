@@ -628,11 +628,41 @@ function buildGUI() {
   // column 3 are the sliders
   let column3 = createDiv("").parent(guiContent).class("column3");
 
-  let sliderBrushSize = createDiv("").parent(column3).class("sliderWrapper"); // for brush size
-  let sliderBrushShape = createDiv("").parent(column3).class("sliderWrapper"); // for brush shape
-  let sliderRotate = createDiv("").parent(column3).class("sliderWrapper"); //for rotate
-  let sliderHydraZoom = createDiv("").parent(column3).class("sliderWrapper"); // for hydra zoom
-  let sliderHyperActive = createDiv("").parent(column3).class("sliderWrapper"); // for hyper activity of brush
+  // Add the toggle button at the top of column3
+  let sliderToggle = createDiv("+ adjust")
+    .parent(column3)
+    .class("sliderToggleButton button");
+
+  // Create a container for all sliders
+  let sliderContent = createDiv("").parent(column3).class("sliderContent");
+
+  let sliderBrushSize = createDiv("")
+    .parent(sliderContent)
+    .class("sliderWrapper"); // for brush size
+  let sliderBrushShape = createDiv("")
+    .parent(sliderContent)
+    .class("sliderWrapper"); // for brush shape
+  let sliderRotate = createDiv("").parent(sliderContent).class("sliderWrapper"); //for rotate
+  let sliderHydraZoom = createDiv("")
+    .parent(sliderContent)
+    .class("sliderWrapper"); // for hydra zoom
+  let sliderHyperActive = createDiv("")
+    .parent(sliderContent)
+    .class("sliderWrapper"); // for hyper activity of brush
+
+  // Add click handler for the toggle button
+  sliderToggle.mousePressed(() => {
+    buttonClicked = true;
+    const sliderContentElement = document.querySelector(".sliderContent");
+    sliderContentElement.classList.toggle("show");
+
+    // Update button text based on state
+    if (sliderContentElement.classList.contains("show")) {
+      sliderToggle.html("- hide");
+    } else {
+      sliderToggle.html("+ adjust");
+    }
+  });
 
   label("size", sliderBrushSize);
   size = createSlider(0.1, 1, 0.5, 0.001)
@@ -668,7 +698,6 @@ function buildGUI() {
     .class("slider")
     .input(() => {
       sliderActive = true;
-      adjustTextColor(); // Call this function to adjust text color
     })
     .mousePressed(() => {
       sliderClicked = true; // to not draw when sliders are active
@@ -734,6 +763,21 @@ function updatePrintCounter(printButton) {
     printButton.html("print"); // Remove the counter when the queue is empty
   }
 }
+
+// Initialize mobile view
+function initializeMobileView() {
+  if (window.innerWidth <= 768) {
+    const sliderContentElement = document.querySelector(".sliderContent");
+    sliderContentElement.classList.remove("show");
+    const sliderToggle = document.querySelector(".sliderToggleButton");
+    if (sliderToggle) {
+      sliderToggle.html("+ adjust");
+    }
+  }
+}
+
+// Call this after buildGUI() completes
+initializeMobileView();
 
 // screen saver, auto drawing!
 let idleTimer; // Timer for detecting inactivity
@@ -820,6 +864,7 @@ window.addEventListener("mousedown", resetIdleTimer);
 window.addEventListener("keydown", resetIdleTimer);
 window.addEventListener("touchstart", resetIdleTimer);
 window.addEventListener("touchmove", resetIdleTimer);
+window.addEventListener("resize", initializeMobileView);
 
 // Initialize idle timer
 resetIdleTimer();

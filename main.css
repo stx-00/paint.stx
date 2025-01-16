@@ -159,12 +159,23 @@ canvas {
 
 /* ————————————————————————————————— EVERYTHING IN COLUMN 3 (SLIDERS) ————————————————————————————————— */
 
+.sliderToggleButton {
+  display: none; /* Hidden by default */
+}
+
 /* column 3 are the sliders */
 .column3 {
   display: flex;
   width: 100%;
   gap: 40px;
   overflow: hidden; /* Prevent child elements from exceeding boundaries */
+}
+
+/* Keep desktop layout untouched */
+.sliderContent {
+  display: flex;
+  flex: 1;
+  gap: 40px; /* Match your original column3 gap */
 }
 
 .sliderWrapper {
@@ -194,7 +205,7 @@ canvas {
   cursor: pointer;
   background: #000000;
   border-radius: 5px;
-  border: 1px solid #5f5f5f;
+  border: 1px solid #4a4949;
 }
 
 .slider::-moz-range-track {
@@ -203,7 +214,7 @@ canvas {
   cursor: pointer;
   background: #000000;
   border-radius: 5px;
-  border: 1px solid #5f5f5f;
+  border: 1px solid #4a4949;
 }
 
 /* Thumb styles */
@@ -215,8 +226,9 @@ canvas {
   background: #ffffff;
   cursor: pointer;
   border-radius: 50%;
-  border: 2px solid #5f5f5f;
+  border: 2px solid #4a4949;
   margin-top: -12px; /* Adjust to align with track */
+  box-shadow: none; /* Remove the shadow */
 }
 
 .slider::-moz-range-thumb {
@@ -225,7 +237,8 @@ canvas {
   background: #ffffff;
   cursor: pointer;
   border-radius: 50%;
-  border: 2px solid #5f5f5f;
+  border: 2px solid #4a4949;
+  box-shadow: none; /* Remove the shadow */
 }
 
 /* ————————————————————————————————————— CSS ANIMATION FOR HOVER ————————————————————————————————————— */
@@ -302,13 +315,7 @@ canvas {
 
 @media (max-width: 985px) {
   .column3 {
-    flex-direction: column; /* Stack sliders vertically */
     gap: 10px; /* Adjust gap between sliders */
-    align-items: flex-end; /* Align all sliders to the right */
-  }
-
-  .sliderWrapper {
-    width: 150px; /* Set maximum width for sliders */
   }
 
   .infoText {
@@ -426,10 +433,27 @@ canvas {
   }
 
   /* column 3 is sliders */
+  .sliderToggleButton {
+    display: block; /* Show only on mobile */
+    margin-bottom: 15px; /* Space between button and sliders */
+  }
+
+  /* Column3 structure */
   .column3 {
-    flex-direction: column; /* Stack sliders vertically */
-    gap: 5px; /* Adjust gap between sliders */
-    align-items: flex-end; /* Align all sliders to the right */
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Hide slider content by default on mobile */
+  .sliderContent {
+    display: none; /* Hidden by default on mobile */
+  }
+
+  /* When sliders are shown */
+  .sliderContent.show {
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* Maintain your existing gap between sliders */
   }
 
   .sliderWrapper {
