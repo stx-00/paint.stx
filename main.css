@@ -51,7 +51,6 @@ canvas {
   display: flex;
   top: 0;
   left: 0;
-  user-select: none; /* so text doesn't get selected while drawing */
 }
 
 .guiContent {
@@ -61,14 +60,13 @@ canvas {
   padding-left: 15px;
   padding-right: 15px;
   gap: 80px;
-  overflow: hidden; /* Prevent child elements from exceeding boundaries */
+  overflow: hidden;
 }
 
 /* =============================================================================
    COLUMN 1
    ========================================================================== */
 
-/* guiInfo column1 (page title and buttons on left) */
 .column1 {
   display: flex;
   flex-direction: column;
@@ -114,8 +112,8 @@ canvas {
 .select {
   display: inline-block;
   align-self: flex-start;
-  font-size: 13px;
   font-family: "Fragment Mono", serif;
+  font-size: 13px;
   appearance: none; /* Removes default styling */
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -134,7 +132,95 @@ canvas {
   box-shadow: none;
 }
 
+.select::-moz-focus-inner {
+  border: 0;
+}
+
+.select:focus {
+  outline: none;
+  box-shadow: none;
+  border: none;
+}
+
 .editor {
+  margin-top: 10px;
   width: 300px;
   height: 300px;
+}
+
+/* =============================================================================
+   COLUMN 3
+   ========================================================================== */
+
+/* column 3 are the sliders */
+
+.column3 {
+  display: flex;
+  width: 100%;
+  gap: 40px;
+  overflow: hidden; /* Prevent child elements from exceeding boundaries */
+}
+
+.sliderWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.slider {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  height: 1px;
+  background: none;
+  outline: none;
+  opacity: 1;
+  transition: opacity 0.2s;
+  margin: 20px 0;
+}
+
+.slider::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 1px; /* Exact track height */
+  cursor: pointer;
+  background: #000000; /* Black track line */
+  border: none; /* Ensure no borders */
+  box-shadow: 0 0 0 0 transparent; /* Remove shadows */
+  margin: 0; /* Reset any browser defaults */
+  padding: 0; /* Reset any browser defaults */
+}
+
+.slider::-moz-range-track {
+  width: 100%;
+  height: 1px; /* Exact track height */
+  cursor: pointer;
+  background: #000000; /* Black track line */
+  border: none; /* Ensure no borders */
+  margin: 0; /* Reset any browser defaults */
+  padding: 0; /* Reset any browser defaults */
+}
+
+/* Thumb styles */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background: #ffffff;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 1px solid #000000;
+  box-shadow: none;
+  margin-top: -12px; /* Adjust to align with track */
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #ffffff;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 1px solid #000000;
+  box-shadow: none;
 }
