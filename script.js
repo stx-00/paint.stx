@@ -96,7 +96,7 @@ function setup() {
   noStroke();
   noSmooth();
 
-  // initialize the cursor position in the center of the canvas
+  // cursor position in the center of the canvas
   mouseX = width / 2;
   mouseY = height / 2;
 }
