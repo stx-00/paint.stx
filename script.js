@@ -106,8 +106,8 @@ function setup() {
 }
 
 function draw() {
-  // background(0);
   clear();
+  background(255);
 
   // Display layers
   image(cleverlayer, width / 2, height / 2);
@@ -124,9 +124,40 @@ function draw() {
 }
 
 function buildGUI() {
-  // Brush selection dropdown
-  mySelect = createSelect();
-  mySelect.position(5, 5);
+  let guiWrapper = createDiv("").class("guiWrapper");
+  let guiContent = createDiv("").parent(guiWrapper).class("guiContent");
+
+  let column1 = createDiv("").parent(guiContent).class("column1");
+  let title = createDiv("p5*hydra paint").parent(column1).class("title");
+
+  let trash = createDiv("trash").parent(column1).class("trash button");
+  trash.mousePressed(() => {
+    clearCanvas();
+  });
+
+  function clearCanvas() {
+    cleverlayer.clear();
+  }
+
+  let save = createDiv("save").parent(column1).class("save button");
+  save.mousePressed(() => {
+    saveCanvas();
+  });
+
+  function saveCanvas() {
+    var filename = "p5-hydra-paint-sketch.png";
+    cleverlayer.save(filename);
+  }
+
+  let column2 = createDiv("").parent(guiContent).class("column2");
+
+  let brushControls = createDiv("").parent(column2).class("brushControls");
+
+  let selectWrapper = createDiv("")
+    .parent(brushControls)
+    .class("selectWrapper");
+
+  mySelect = createSelect().parent(selectWrapper).class("select");
   for (let i = 0; i < myBrushes.length; i++) {
     mySelect.option(myBrushes[i].name, i);
   }
@@ -137,8 +168,12 @@ function buildGUI() {
     eval(myEditor.value());
   });
 
+  let editorWrapper = createDiv("")
+    .parent(brushControls)
+    .class("editorWrapper");
+
   // Text editor for custom brush code
-  myEditor = createElement("textarea").position(5, 35).size(300, 300);
+  myEditor = createElement("textarea").parent(editorWrapper).class("editor");
   myEditor.value(myBrushes[0].code);
   myEditor.input(updateEditor);
 

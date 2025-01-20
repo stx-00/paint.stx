@@ -1,6 +1,31 @@
+/* =============================================================================
+   TYPOGRAPHY
+   ========================================================================== */
+
+.fragment-mono-regular {
+  font-family: "Fragment Mono", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.fragment-mono-regular-italic {
+  font-family: "Fragment Mono", serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+/* =============================================================================
+   BASE STYLES
+   ========================================================================== */
+
 body {
   margin: 0;
   overflow: hidden;
+  overflow-x: hidden;
+  font-family: "Fragment Mono", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 13px;
 }
 
 canvas {
@@ -12,4 +37,95 @@ canvas {
   height: 100vh;
   margin: 0;
   overflow: hidden;
+}
+
+/* =============================================================================
+   GUI LAYOUT
+   ========================================================================== */
+
+.guiWrapper {
+  max-width: 100vw;
+  box-sizing: border-box;
+  width: 100%;
+  position: fixed;
+  display: flex;
+  top: 0;
+  left: 0;
+  user-select: none; /* so text doesn't get selected while drawing */
+}
+
+.guiContent {
+  display: flex;
+  width: 100%;
+  padding-top: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+  gap: 80px;
+  overflow: hidden; /* Prevent child elements from exceeding boundaries */
+}
+
+/* =============================================================================
+   COLUMN 1
+   ========================================================================== */
+
+/* guiInfo column1 (page title and buttons on left) */
+.column1 {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 250px;
+}
+
+.title {
+  margin-bottom: 20px;
+}
+
+.button {
+  align-self: flex-start; /* so only button text itself is active */
+  cursor: pointer;
+}
+
+/* =============================================================================
+   COLUMN 2
+   ========================================================================== */
+
+/* column 2 is select brush */
+.column2 {
+  width: 350px;
+}
+
+.brush-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.selectWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.select {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 13px;
+  font-family: "Fragment Mono", serif;
+  appearance: none; /* Removes default styling */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  position: relative;
+  border: none;
+  background: transparent;
+}
+
+.select option {
+  font-family: "Fragment Mono", serif;
+  font-size: 13px;
+  color: black;
+  padding: 10px;
+  margin: 0;
+  box-shadow: none;
 }
