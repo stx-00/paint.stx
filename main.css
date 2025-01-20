@@ -107,6 +107,10 @@ canvas {
   flex: 1;
 }
 
+.selectWrapper > .label {
+  margin-bottom: 10px;
+}
+
 .select {
   display: inline-block;
   align-self: flex-start;
@@ -128,4 +132,9 @@ canvas {
   padding: 10px;
   margin: 0;
   box-shadow: none;
+}
+
+.editor {
+  width: 300px;
+  height: 300px;
 }

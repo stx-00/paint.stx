@@ -127,6 +127,10 @@ function buildGUI() {
   let guiWrapper = createDiv("").class("guiWrapper");
   let guiContent = createDiv("").parent(guiWrapper).class("guiContent");
 
+  function label(txt, parent) {
+    createDiv(txt).parent(parent).class("label");
+  }
+
   let column1 = createDiv("").parent(guiContent).class("column1");
   let title = createDiv("p5*hydra paint").parent(column1).class("title");
 
@@ -157,6 +161,7 @@ function buildGUI() {
     .parent(brushControls)
     .class("selectWrapper");
 
+  label("select your brush", selectWrapper);
   mySelect = createSelect().parent(selectWrapper).class("select");
   for (let i = 0; i < myBrushes.length; i++) {
     mySelect.option(myBrushes[i].name, i);
