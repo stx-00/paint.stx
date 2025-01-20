@@ -6,6 +6,8 @@ window.onfocus = function () {
   loop();
 };
 
+/////////////////////////////////////////////////////////////////////////////////
+
 /* CUSTOM FUNCTIONS FOR P5LIVE */
 // keep fullscreen if window resized
 function windowResized() {
@@ -21,6 +23,8 @@ function ease(iVal, oVal, eVal) {
 function println(msg) {
   print(msg);
 }
+
+/////////////////////////////////////////////////////////////////////////////////
 
 /*
 _hydra_texture // cc ojack.xyz + teddavis.org 2021
