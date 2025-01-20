@@ -32,8 +32,8 @@ let libs = ["https://unpkg.com/hydra-synth", "includes/libs/hydra-synth.js"];
 
 // Hydra canvas + init
 let hc = document.createElement("canvas"); // Hydra canvas
-hc.width = 200; // Tiny for brush
-hc.height = 200; // Tiny for brush
+hc.width = 500; // Tiny for brush
+hc.height = 500; // Tiny for brush
 document.body.appendChild(hc);
 hc.style.display = "none"; // Hide Hydra canvas from view
 
