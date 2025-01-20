@@ -49,6 +49,7 @@ noize = noise; // Use noize() since noise() is taken by p5js
 
 let pg; // Store Hydra texture
 let cleverlayer; // Layer on which we draw
+let size;
 
 let myBrushes = [
   {
@@ -117,9 +118,11 @@ function draw() {
   pg.clear();
   pg.drawingContext.drawImage(hc, 0, 0, pg.width, pg.height);
 
+  scl = size.value();
+
   // Draw Hydra texture as brush when the mouse is pressed
   if (mouseIsPressed) {
-    cleverlayer.image(pg, mouseX, mouseY);
+    cleverlayer.image(pg, mouseX, mouseY, pg.width * scl, pg.height * scl);
   }
 }
 
@@ -130,6 +133,8 @@ function buildGUI() {
   function label(txt, parent) {
     createDiv(txt).parent(parent).class("label");
   }
+
+  ///////////////////////////////////////////// COLUMN 1 /////////////////////////////////////////////
 
   let column1 = createDiv("").parent(guiContent).class("column1");
   let title = createDiv("p5*hydra paint").parent(column1).class("title");
@@ -152,6 +157,8 @@ function buildGUI() {
     var filename = "p5-hydra-paint-sketch.png";
     cleverlayer.save(filename);
   }
+
+  ///////////////////////////////////////////// COLUMN 2 /////////////////////////////////////////////
 
   let column2 = createDiv("").parent(guiContent).class("column2");
 
@@ -183,6 +190,30 @@ function buildGUI() {
   myEditor.input(updateEditor);
 
   eval(myEditor.value()); // Run text in editor as JS
+
+  ///////////////////////////////////////////// COLUMN 3 /////////////////////////////////////////////
+
+  let column3 = createDiv("").parent(guiContent).class("column3");
+
+  let sizeSlider = createDiv("").parent(column3).class("sliderWrapper");
+  let shapeSlider = createDiv("").parent(column3).class("sliderWrapper");
+  let rotateSlider = createDiv("").parent(column3).class("sliderWrapper");
+  let zoomSlider = createDiv("").parent(column3).class("sliderWrapper");
+  let hyperSlider = createDiv("").parent(column3).class("sliderWrapper");
+
+  label("size", sizeSlider);
+  size = createSlider(0.1, 1, 0.4, 0.001)
+    .parent(sizeSlider)
+    .class("slider")
+    .input(() => (sliderActive = true))
+    .mousePressed(() => {
+      sliderClicked = true;
+      sliderActive = true;
+    })
+    .mouseReleased(() => {
+      sliderActive = false;
+      setTimeout(() => (sliderClicked = false), 100);
+    });
 }
 
 function updateEditor() {
