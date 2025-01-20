@@ -110,15 +110,15 @@ function draw() {
   clear();
   background(255);
 
+  scl = size.value();
+
   // Display layers
   image(cleverlayer, width / 2, height / 2);
-  image(pg, mouseX, mouseY);
+  image(pg, mouseX, mouseY, pg.width * scl, pg.height * scl);
 
   // Update Hydra texture
   pg.clear();
   pg.drawingContext.drawImage(hc, 0, 0, pg.width, pg.height);
-
-  scl = size.value();
 
   // Draw Hydra texture as brush when the mouse is pressed
   if (mouseIsPressed) {
