@@ -213,6 +213,9 @@ function buildGUI() {
 
   label("zoom", zoomSlider);
   zoom = createSlider(5, 70, 15, 0).parent(zoomSlider).class("slider");
+
+  label("hyper", hyperSlider);
+  hyper = createSlider(0.5, 10, 3, 0.05).parent(hyperSlider).class("slider");
 }
 
 function updateEditor() {
