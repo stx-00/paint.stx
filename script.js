@@ -54,7 +54,7 @@ let size;
 let myBrushes = [
   {
     name: "brush 1",
-    code: `osc(15, 5, 1, 0.3)
+    code: `osc(() => zoom.value() / 5, 1, 0.3)
   .kaleid([3, 4, 5, 7, 8, 9, 10].fast(0.1))
   .color(0.5, 0.3)
   .colorama(0.4)
@@ -68,7 +68,7 @@ let myBrushes = [
         0.01
       )
       .scale(0.9)
-      .modulate(noize(0.6, 3))
+      .modulate(noize(0.6, () => hyper.value()))
       .rotate(() => rotate.value(), () => rotate.value() / 5)
   ).out()`,
   },
