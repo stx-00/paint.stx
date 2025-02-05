@@ -146,6 +146,7 @@ canvas {
   font-family: "Fragment Mono", serif;
   font-size: 13px;
   color: black;
+  padding: 5px;
   width: 400px;
   height: 400px;
 }
