@@ -69,6 +69,7 @@ let myBrushes = [
       )
       .scale(0.9)
       .modulate(noize(0.6, 3))
+      .rotate(() => rotate.value(), () => rotate.value() / 5)
   ).out()`,
   },
   {
