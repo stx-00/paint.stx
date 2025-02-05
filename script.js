@@ -206,6 +206,9 @@ function buildGUI() {
 
   label("shape", shapeSlider);
   shape = createSlider(5, 40, 30, 0).parent(shapeSlider).class("slider");
+
+  label("rotate", rotateSlider);
+  rotate = createSlider(0, 10, 0, 0).parent(rotateSlider).class("slider");
 }
 
 function updateEditor() {
