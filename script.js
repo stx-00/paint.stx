@@ -214,6 +214,20 @@ function buildGUI() {
       sliderActive = false;
       setTimeout(() => (sliderClicked = false), 100);
     });
+
+  label("shape", shapeSlider);
+  shape = createSlider(5, 40, 30, 0)
+    .parent(shapeSlider)
+    .class("slider")
+    .input(() => (sliderActive = true))
+    .mousePressed(() => {
+      sliderClicked = true;
+      sliderActive = true;
+    })
+    .mouseReleased(() => {
+      sliderActive = false;
+      setTimeout(() => (sliderClicked = false), 100);
+    });
 }
 
 function updateEditor() {
