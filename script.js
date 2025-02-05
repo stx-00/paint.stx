@@ -696,73 +696,60 @@ function buildGUI() {
   size = createSlider(0.1, 1, 0.4, 0.001)
     .parent(sliderBrushSize)
     .class("slider")
-    .input(() => (sliderActive = true))
     .mousePressed(() => {
       sliderClicked = true;
       sliderActive = true;
     })
     .mouseReleased(() => {
       sliderActive = false;
-      setTimeout(() => (sliderClicked = false), 100);
     });
 
   label("shape", sliderBrushShape);
   shape = createSlider(5, 40, 30, 0)
     .parent(sliderBrushShape)
     .class("slider")
-    .input(() => (sliderActive = true))
     .mousePressed(() => {
       sliderClicked = true;
       sliderActive = true;
     })
     .mouseReleased(() => {
       sliderActive = false;
-      setTimeout(() => (sliderClicked = false), 100);
     });
 
   label("rotate", sliderRotate);
   rotate = createSlider(0, 10, 0, 0)
     .parent(sliderRotate)
     .class("slider")
-    .input(() => {
-      sliderActive = true;
-      adjustTextColor(); // Call this function to adjust text color
-    })
     .mousePressed(() => {
       sliderClicked = true; // to not draw when sliders are active
       sliderActive = true;
     })
     .mouseReleased(() => {
       sliderActive = false;
-      setTimeout(() => (sliderClicked = false), 100);
     });
 
   label("zoom", sliderHydraZoom);
   zoom = createSlider(5, 70, 15, 0)
     .parent(sliderHydraZoom)
     .class("slider")
-    .input(() => (sliderActive = true))
     .mousePressed(() => {
       sliderClicked = true;
       sliderActive = true;
     })
     .mouseReleased(() => {
       sliderActive = false;
-      setTimeout(() => (sliderClicked = false), 100);
     });
 
   label("hyper", sliderHyperActive);
   hyper = createSlider(0.5, 10, 3, 0.05)
     .parent(sliderHyperActive)
     .class("slider")
-    .input(() => (sliderActive = true))
     .mousePressed(() => {
       sliderClicked = true;
       sliderActive = true;
     })
     .mouseReleased(() => {
       sliderActive = false;
-      setTimeout(() => (sliderClicked = false), 100);
     });
 
   // Set the selected option to "brush1" —— not sure this is wokrin
