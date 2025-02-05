@@ -202,32 +202,10 @@ function buildGUI() {
   let hyperSlider = createDiv("").parent(column3).class("sliderWrapper");
 
   label("size", sizeSlider);
-  size = createSlider(0.1, 1, 0.4, 0.001)
-    .parent(sizeSlider)
-    .class("slider")
-    .input(() => (sliderActive = true))
-    .mousePressed(() => {
-      sliderClicked = true;
-      sliderActive = true;
-    })
-    .mouseReleased(() => {
-      sliderActive = false;
-      setTimeout(() => (sliderClicked = false), 100);
-    });
+  size = createSlider(0.1, 1, 0.4, 0.001).parent(sizeSlider).class("slider");
 
   label("shape", shapeSlider);
-  shape = createSlider(5, 40, 30, 0)
-    .parent(shapeSlider)
-    .class("slider")
-    .input(() => (sliderActive = true))
-    .mousePressed(() => {
-      sliderClicked = true;
-      sliderActive = true;
-    })
-    .mouseReleased(() => {
-      sliderActive = false;
-      setTimeout(() => (sliderClicked = false), 100);
-    });
+  shape = createSlider(5, 40, 30, 0).parent(shapeSlider).class("slider");
 }
 
 function updateEditor() {
