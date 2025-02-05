@@ -143,7 +143,10 @@ canvas {
 
 .editor {
   margin-top: 10px;
-  width: 350px;
+  font-family: "Fragment Mono", serif;
+  font-size: 13px;
+  color: black;
+  width: 800px;
   height: 300px;
 }
 
