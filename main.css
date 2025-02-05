@@ -254,28 +254,43 @@ canvas {
    CSS ANIMATION
    ========================================================================== */
 
-@keyframes shake {
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-  25% {
-    transform: translateX(-5px);
-  }
-  50% {
-    transform: translateX(5px);
-  }
+@keyframes rainbowHover {
+  0% {
+    color: #ff0000;
+  } /* Red */
+  15% {
+    color: #ff8000;
+  } /* Orange */
+  30% {
+    color: #ffff00;
+  } /* Yellow */
+  45% {
+    color: #80ff00;
+  } /* Light green */
+  60% {
+    color: #00ff00;
+  } /* Green */
   75% {
-    transform: translateX(-5px);
-  }
+    color: #0080ff;
+  } /* Light blue */
+  90% {
+    color: #8000ff;
+  } /* Purple */
+  100% {
+    color: #ff0000;
+  } /* Back to red */
 }
 
 .button:hover {
-  animation: shake 0.5s ease;
+  animation: rainbowHover 3s linear infinite;
 }
 
 .select:hover {
-  animation: shake 0.5s ease;
+  animation: rainbowHover 3s linear infinite;
+}
+
+.title:hover {
+  animation: rainbowHover 3s linear infinite;
 }
 
 /* =============================================================================
