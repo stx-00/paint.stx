@@ -63,7 +63,7 @@ let myBrushes = [
   .modulate(src(o0), 0.9)
   .mask(
     shape(
-        30,
+        () => shape.value(),
         () => 0.5,
         0.01
       )
