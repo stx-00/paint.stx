@@ -471,7 +471,11 @@ function buildGUI() {
   //guiInfo is the 1st column with the button
 
   let guiInfo = createDiv("").parent(guiContent).class("guiInfo");
+
   let title = createDiv("p5*hydra paint").parent(guiInfo).class("title");
+  title.mousePressed(() => {
+    window.location.reload();
+  });
 
   let trashButton = createDiv("trash")
     .parent(guiInfo)
