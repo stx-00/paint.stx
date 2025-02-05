@@ -210,6 +210,9 @@ function buildGUI() {
 
   label("rotate", rotateSlider);
   rotate = createSlider(0, 10, 0, 0).parent(rotateSlider).class("slider");
+
+  label("zoom", zoomSlider);
+  zoom = createSlider(5, 70, 15, 0).parent(zoomSlider).class("slider");
 }
 
 function updateEditor() {
