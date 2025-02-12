@@ -239,6 +239,8 @@ function buildGUI() {
   label("hyper", hyperSlider);
   hyper = createSlider(0.5, 10, 3, 0.05).parent(hyperSlider).class("slider");
 
+  // to not draw while using sliders
+
   function addSliderListeners(slider) {
     slider.mouseOver(() => (isInteractingWithGUI = true));
     slider.mouseOut(() => (isInteractingWithGUI = false));
