@@ -201,11 +201,26 @@ function buildGUI() {
     let index = mySelect.value();
     myEditor.value(myBrushes[index].code);
     eval(myEditor.value());
+
+    if (myBrushes[index].name === "→ make your own") {
+      editorWrapper.style("display", "block");
+      toggleButton.html("\u00A0\u00A0- hide code");
+    }
   });
 
-  let toggleButton = createDiv("+ modify code")
+  let toggleButton = createDiv("\u00A0\u00A0+ modify code")
     .parent(selectWrapper)
     .class("toggleButton");
+
+  toggleButton.mousePressed(() => {
+    let isHidden = editorWrapper.style("display") === "none";
+    editorWrapper.style("display", isHidden ? "block" : "none");
+    toggleButton.html(
+      isHidden ? "\u00A0\u00A0- hide code" : "\u00A0\u00A0+ modify code"
+    );
+  });
+  toggleButton.mouseOver(() => (isInteractingWithGUI = true));
+  toggleButton.mouseOut(() => (isInteractingWithGUI = false));
 
   let editorWrapper = createDiv("")
     .parent(brushControls)
@@ -217,14 +232,10 @@ function buildGUI() {
   myEditor.value(myBrushes[0].code);
   myEditor.input(updateEditor);
 
-  toggleButton.mousePressed(() => {
-    let isHidden = editorWrapper.style("display") === "none";
-    editorWrapper.style("display", isHidden ? "block" : "none");
-    toggleButton.html(isHidden ? "- hide code" : "+ modify code");
-  });
-
-  toggleButton.mouseOver(() => (isInteractingWithGUI = true));
-  toggleButton.mouseOut(() => (isInteractingWithGUI = false));
+  myEditor.mouseOver(() => (isInteractingWithGUI = true));
+  myEditor.mouseOut(() => (isInteractingWithGUI = false));
+  myEditor.mousePressed(() => (isInteractingWithGUI = true));
+  myEditor.mouseReleased(() => (isInteractingWithGUI = false));
 
   eval(myEditor.value()); // Run text in editor as JS
 
