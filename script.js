@@ -50,6 +50,7 @@ noize = noise; // Use noize() since noise() is taken by p5js
 let pg; // Store Hydra texture
 let cleverlayer; // Layer on which we draw
 let size;
+let isInteractingWithGUI = false;
 
 let myBrushes = [
   {
@@ -139,7 +140,7 @@ function draw() {
   pg.drawingContext.drawImage(hc, 0, 0, pg.width, pg.height);
 
   // Draw Hydra texture as brush when the mouse is pressed
-  if (mouseIsPressed) {
+  if (mouseIsPressed && !isInteractingWithGUI) {
     cleverlayer.image(pg, mouseX, mouseY, pg.width * scl, pg.height * scl);
   }
 }
@@ -161,6 +162,8 @@ function buildGUI() {
   trash.mousePressed(() => {
     clearCanvas();
   });
+  trash.mouseOver(() => (isInteractingWithGUI = true));
+  trash.mouseOut(() => (isInteractingWithGUI = false));
 
   function clearCanvas() {
     cleverlayer.clear();
@@ -170,6 +173,8 @@ function buildGUI() {
   save.mousePressed(() => {
     saveCanvas();
   });
+  save.mouseOver(() => (isInteractingWithGUI = true));
+  save.mouseOut(() => (isInteractingWithGUI = false));
 
   function saveCanvas() {
     var filename = "p5-hydra-paint-sketch.png";
@@ -233,6 +238,19 @@ function buildGUI() {
 
   label("hyper", hyperSlider);
   hyper = createSlider(0.5, 10, 3, 0.05).parent(hyperSlider).class("slider");
+
+  function addSliderListeners(slider) {
+    slider.mouseOver(() => (isInteractingWithGUI = true));
+    slider.mouseOut(() => (isInteractingWithGUI = false));
+    slider.mousePressed(() => (isInteractingWithGUI = true));
+    slider.mouseReleased(() => (isInteractingWithGUI = false));
+  }
+
+  addSliderListeners(size);
+  addSliderListeners(shape);
+  addSliderListeners(rotate);
+  addSliderListeners(zoom);
+  addSliderListeners(hyper);
 }
 
 function updateEditor() {
