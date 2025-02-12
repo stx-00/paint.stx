@@ -28,6 +28,15 @@ body {
   font-size: 13px;
 }
 
+html {
+  -webkit-touch-callout: none;
+  -moz-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 canvas {
   position: fixed;
   top: 0;
