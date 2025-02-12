@@ -156,7 +156,12 @@ function buildGUI() {
   ///////////////////////////////////////////// COLUMN 1 /////////////////////////////////////////////
 
   let column1 = createDiv("").parent(guiContent).class("column1");
+
   let title = createDiv("p5*hydra paint").parent(column1).class("title");
+  title.style("cursor", "pointer");
+  title.mousePressed(() => {
+    window.location.reload();
+  });
 
   let trash = createDiv("trash").parent(column1).class("trash button");
   trash.mousePressed(() => {
