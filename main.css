@@ -49,6 +49,44 @@ canvas {
 }
 
 /* =============================================================================
+   CSS ANIMATION
+   ========================================================================== */
+
+@keyframes rainbowHover {
+  0% {
+    color: #ff0000;
+  } /* Red */
+  15% {
+    color: #ff8000;
+  } /* Orange */
+  30% {
+    color: #ffff00;
+  } /* Yellow */
+  45% {
+    color: #80ff00;
+  } /* Light green */
+  60% {
+    color: #00ff00;
+  } /* Green */
+  75% {
+    color: #0080ff;
+  } /* Light blue */
+  90% {
+    color: #8000ff;
+  } /* Purple */
+  100% {
+    color: #ff0000;
+  } /* Back to red */
+}
+
+.button:hover,
+.select:hover,
+.title:hover,
+.toggleButton:hover {
+  animation: rainbowHover 3s linear infinite;
+}
+
+/* =============================================================================
    GUI LAYOUT
    ========================================================================== */
 
