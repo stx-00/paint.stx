@@ -53,7 +53,7 @@ let size;
 
 let myBrushes = [
   {
-    name: "brush 1",
+    name: "prismatic pulse",
     code: `osc(() => zoom.value() / 5, 1, 0.3)
   .kaleid([3, 4, 5, 7, 8, 9, 10].fast(0.1))
   .color(0.5, 0.3)
@@ -73,8 +73,25 @@ let myBrushes = [
   ).out()`,
   },
   {
-    name: "brush 2",
-    code: `noize().out()`,
+    name: "acid loop",
+    code: `voronoi(() => zoom.value(), 0, 1)
+    .mult(
+    osc(10, 0.1, () => hyper.value() * 3)
+    .saturate(3)
+    .kaleid(200)
+    )
+    .mask(
+    shape(() => shape.value(), () => 0.5, 0.01)
+    .modulate(src(o0), 0.8)
+    .scrollY(-0.01)
+    .scale(0.99)
+    .modulate(
+    voronoi(() => hyper.value(), 1), 0.008)
+    .luma(0.3)
+    .color(15, 25, 1)
+    .rotate( () => rotate.value(), () => rotate.value() / 5)
+    )
+    .out()`,
   },
   {
     name: "brush 3",
