@@ -203,14 +203,28 @@ function buildGUI() {
     eval(myEditor.value());
   });
 
+  let toggleButton = createDiv("+ modify code")
+    .parent(selectWrapper)
+    .class("toggleButton");
+
   let editorWrapper = createDiv("")
     .parent(brushControls)
     .class("editorWrapper");
+  editorWrapper.style("display", "none"); // Initially hidden
 
   // Text editor for custom brush code
   myEditor = createElement("textarea").parent(editorWrapper).class("editor");
   myEditor.value(myBrushes[0].code);
   myEditor.input(updateEditor);
+
+  toggleButton.mousePressed(() => {
+    let isHidden = editorWrapper.style("display") === "none";
+    editorWrapper.style("display", isHidden ? "block" : "none");
+    toggleButton.html(isHidden ? "- hide code" : "+ modify code");
+  });
+
+  toggleButton.mouseOver(() => (isInteractingWithGUI = true));
+  toggleButton.mouseOut(() => (isInteractingWithGUI = false));
 
   eval(myEditor.value()); // Run text in editor as JS
 

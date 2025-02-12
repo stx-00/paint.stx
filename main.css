@@ -63,12 +63,11 @@ canvas {
 }
 
 .guiContent {
-  display: flex;
-  width: 100%;
-  padding-top: 15px;
-  padding-left: 15px;
-  padding-right: 15px;
+  display: grid;
+  grid-template-columns: 0.75fr 1.25fr 5fr;
   gap: 80px;
+  width: 100%;
+  padding: 15px;
   overflow: hidden;
 }
 
@@ -80,7 +79,6 @@ canvas {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 250px;
 }
 
 .title {
@@ -97,7 +95,7 @@ canvas {
    ========================================================================== */
 
 .column2 {
-  width: 400px;
+  min-height: 500px;
 }
 
 .brush-controls {
@@ -110,7 +108,6 @@ canvas {
   position: relative;
   display: flex;
   flex-direction: column;
-  flex: 1;
 }
 
 .selectWrapper > .label {
@@ -150,15 +147,26 @@ canvas {
   border: none;
 }
 
+.toggleButton {
+  cursor: pointer;
+  margin-top: 10px;
+  align-self: flex-start;
+}
+
+.editorWrapper {
+  margin-top: 10px;
+}
+
 .editor {
   margin-top: 10px;
   font-family: "Fragment Mono", serif;
   font-size: 13px;
   color: black;
   padding: 5px;
-  width: 400px;
-  height: 400px;
+  width: 250%;
+  height: 500px;
   background: rgba(255, 255, 255, 0.5);
+  /* border: none; */
   /* background: transparent; */
 }
 
@@ -168,7 +176,6 @@ canvas {
 
 .column3 {
   display: flex;
-  width: 100%;
   gap: 40px;
   overflow: hidden; /* Prevent child elements from exceeding boundaries */
 }
