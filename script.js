@@ -54,7 +54,7 @@ let isInteractingWithGUI = false;
 
 let myBrushes = [
   {
-    name: "prismatic pulse",
+    name: "→ prismatic pulse",
     code: `osc(() => zoom.value() / 5, 1, 0.3)
   .kaleid([3, 4, 5, 7, 8, 9, 10].fast(0.1))
   .color(0.5, 0.3)
@@ -74,7 +74,7 @@ let myBrushes = [
   ).out()`,
   },
   {
-    name: "acid loop",
+    name: "→ acid loop",
     code: `voronoi(() => zoom.value(), 0, 1)
     .mult(
     osc(10, 0.1, () => hyper.value() * 3)
@@ -95,11 +95,11 @@ let myBrushes = [
     .out()`,
   },
   {
-    name: "brush 3",
+    name: "→ brush 3",
     code: `gradient().out()`,
   },
   {
-    name: "blank",
+    name: "→ make your own",
     code: `// make your own!
 // ()=>shape.value() // 0 - 2`,
   },
