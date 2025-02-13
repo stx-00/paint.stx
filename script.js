@@ -64,7 +64,7 @@ let myBrushes = [
   .modulate(src(o0), 0.9)
   .mask(
     shape(
-        () => shape.value(),
+        () => shapeSlider.value(),
         () => 0.5,
         0.01
       )
@@ -82,7 +82,7 @@ let myBrushes = [
     .kaleid(200)
     )
     .mask(
-    shape(() => shape.value(), () => 0.5, 0.01)
+    shape(() => shapeSlider.value(), () => 0.5, 0.01)
     .modulate(src(o0), 0.8)
     .scrollY(-0.01)
     .scale(0.99)
@@ -101,7 +101,7 @@ let myBrushes = [
   {
     name: "→ make your own",
     code: `// make your own!
-// ()=>shape.value() // 0 - 2`,
+// ()=>shapeSlider.value() // 0 - 2`,
   },
 ];
 
@@ -205,9 +205,10 @@ function buildGUI() {
   mySelect.changed(() => {
     let index = mySelect.value();
     myEditor.value(myBrushes[index].code);
-    eval(myEditor.value());
+    updateBrush();
 
     if (myBrushes[index].name === "→ make your own") {
+      // *** grab local storage
       editorWrapper.style("display", "block");
       toggleButton.html("\u00A0\u00A0- hide code");
     }
@@ -235,21 +236,26 @@ function buildGUI() {
   // Text editor for custom brush code
   myEditor = createElement("textarea").parent(editorWrapper).class("editor");
   myEditor.value(myBrushes[0].code);
-  myEditor.input(updateEditor);
+  myEditor.input(updateBrush);
 
   myEditor.mouseOver(() => (isInteractingWithGUI = true));
   myEditor.mouseOut(() => (isInteractingWithGUI = false));
   myEditor.mousePressed(() => (isInteractingWithGUI = true));
   myEditor.mouseReleased(() => (isInteractingWithGUI = false));
 
-  eval(myEditor.value()); // Run text in editor as JS
+  updateBrush();
+  // update brush as a function
+
+  function updateBrush() {
+    eval(myEditor.value()); // Run text in editor as JS
+  }
 
   ///////////////////////////////////////////// COLUMN 3 /////////////////////////////////////////////
 
   let column3 = createDiv("").parent(guiContent).class("column3");
 
   let sizeSlider = createDiv("").parent(column3).class("sliderWrapper");
-  let shapeSlider = createDiv("").parent(column3).class("sliderWrapper");
+  let shapeHolder = createDiv("").parent(column3).class("sliderWrapper");
   let rotateSlider = createDiv("").parent(column3).class("sliderWrapper");
   let zoomSlider = createDiv("").parent(column3).class("sliderWrapper");
   let hyperSlider = createDiv("").parent(column3).class("sliderWrapper");
@@ -257,8 +263,8 @@ function buildGUI() {
   label("size", sizeSlider);
   size = createSlider(0.1, 1, 0.4, 0.001).parent(sizeSlider).class("slider");
 
-  label("shape", shapeSlider);
-  shape = createSlider(5, 40, 30, 0).parent(shapeSlider).class("slider");
+  label("shape", shapeHolder);
+  shapeSlider = createSlider(5, 40, 30, 0).parent(shapeHolder).class("slider");
 
   label("rotate", rotateSlider);
   rotate = createSlider(0, 10, 0, 0).parent(rotateSlider).class("slider");
@@ -279,12 +285,8 @@ function buildGUI() {
   }
 
   addSliderListeners(size);
-  addSliderListeners(shape);
+  addSliderListeners(shapeSlider);
   addSliderListeners(rotate);
   addSliderListeners(zoom);
   addSliderListeners(hyper);
-}
-
-function updateEditor() {
-  eval(myEditor.value());
 }
