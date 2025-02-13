@@ -203,10 +203,23 @@ canvas {
   color: black;
   padding: 5px;
   width: 250%;
-  height: 500px;
+  height: 450px;
+  /* overflow: auto; */
+  border: 1px solid rgba(0, 0, 0, 0.1);
+
   background: rgba(255, 255, 255, 0.5);
+
   /* border: none; */
   /* background: transparent; */
+}
+
+.editor:focus {
+  outline: none;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.editor::-webkit-resizer {
+  display: none;
 }
 
 /* =============================================================================
