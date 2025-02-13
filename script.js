@@ -182,7 +182,7 @@ function buildGUI() {
 
   let column1 = createDiv("").parent(guiContent).class("column1");
 
-  let title = createDiv("p5*hydra paint").parent(column1).class("title");
+  let title = createDiv("STX paint").parent(column1).class("title");
   title.style("cursor", "pointer");
   title.mousePressed(() => {
     window.location.reload();
@@ -246,8 +246,12 @@ function buildGUI() {
     updateBrush();
   }
 
+  ///////////////////////////////////////////// COLUMN 3 /////////////////////////////////////////////
+
+  let column3 = createDiv("").parent(guiContent).class("column3");
+
   let toggleButton = createDiv("\u00A0\u00A0+ modify code")
-    .parent(selectWrapper)
+    .parent(column3)
     .class("toggleButton");
 
   toggleButton.mousePressed(() => {
@@ -260,9 +264,7 @@ function buildGUI() {
   toggleButton.mouseOver(() => (isInteractingWithGUI = true));
   toggleButton.mouseOut(() => (isInteractingWithGUI = false));
 
-  let editorWrapper = createDiv("")
-    .parent(brushControls)
-    .class("editorWrapper");
+  let editorWrapper = createDiv("").parent(column3).class("editorWrapper");
   editorWrapper.style("display", "none"); // Initially hidden
 
   // Text editor for custom brush code
@@ -288,15 +290,15 @@ function buildGUI() {
     eval(myEditor.value()); // Run text in editor as JS
   }
 
-  ///////////////////////////////////////////// COLUMN 3 /////////////////////////////////////////////
+  ///////////////////////////////////////////// COLUMN 4 /////////////////////////////////////////////
 
-  let column3 = createDiv("").parent(guiContent).class("column3");
+  let column4 = createDiv("").parent(guiContent).class("column4");
 
-  let sizeHolder = createDiv("").parent(column3).class("sliderWrapper");
-  let shapeHolder = createDiv("").parent(column3).class("sliderWrapper");
-  let rotateHolder = createDiv("").parent(column3).class("sliderWrapper");
-  let zoomHolder = createDiv("").parent(column3).class("sliderWrapper");
-  let hyperHolder = createDiv("").parent(column3).class("sliderWrapper");
+  let sizeHolder = createDiv("").parent(column4).class("sliderWrapper");
+  let shapeHolder = createDiv("").parent(column4).class("sliderWrapper");
+  let rotateHolder = createDiv("").parent(column4).class("sliderWrapper");
+  let zoomHolder = createDiv("").parent(column4).class("sliderWrapper");
+  let hyperHolder = createDiv("").parent(column4).class("sliderWrapper");
 
   label("size", sizeHolder);
   sizeSlider = createSlider(0.1, 1, 0.4, 0.001)

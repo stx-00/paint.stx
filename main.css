@@ -102,7 +102,7 @@ canvas {
 
 .guiContent {
   display: grid;
-  grid-template-columns: 0.75fr 1.25fr 5fr;
+  grid-template-columns: 0.75fr 1.25fr 1.25fr 5fr;
   gap: 80px;
   width: 100%;
   padding: 15px;
@@ -212,7 +212,7 @@ canvas {
    COLUMN 3 (sliders)
    ========================================================================== */
 
-.column3 {
+.column4 {
   display: flex;
   gap: 40px;
   overflow: hidden; /* Prevent child elements from exceeding boundaries */
