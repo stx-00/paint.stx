@@ -49,13 +49,12 @@ noize = noise; // Use noize() since noise() is taken by p5js
 
 let pg; // Store Hydra texture
 let cleverlayer; // Layer on which we draw
-let size;
 let isInteractingWithGUI = false;
 
 let myBrushes = [
   {
     name: "→ prismatic pulse",
-    code: `osc(() => zoom.value() / 5, 1, 0.3)
+    code: `osc(() => zoomSlider.value() / 5, 1, 0.3)
   .kaleid([3, 4, 5, 7, 8, 9, 10].fast(0.1))
   .color(0.5, 0.3)
   .colorama(0.4)
@@ -69,15 +68,15 @@ let myBrushes = [
         0.01
       )
       .scale(0.9)
-      .modulate(noize(0.6, () => hyper.value()))
-      .rotate(() => rotate.value(), () => rotate.value() / 5)
+      .modulate(noize(0.6, () => hyperSlider.value()))
+      .rotate(() => rotateSlider.value(), () => rotateSlider.value() / 5)
   ).out()`,
   },
   {
     name: "→ acid loop",
-    code: `voronoi(() => zoom.value(), 0, 1)
+    code: `voronoi(() => zoomSlider.value(), 0, 1)
     .mult(
-    osc(10, 0.1, () => hyper.value() * 3)
+    osc(10, 0.1, () => hyperSlider.value() * 3)
     .saturate(3)
     .kaleid(200)
     )
@@ -87,10 +86,10 @@ let myBrushes = [
     .scrollY(-0.01)
     .scale(0.99)
     .modulate(
-    voronoi(() => hyper.value(), 1), 0.008)
+    voronoi(() => hyperSlider.value(), 1), 0.008)
     .luma(0.3)
     .color(15, 25, 1)
-    .rotate( () => rotate.value(), () => rotate.value() / 5)
+    .rotate( () => rotateSlider.value(), () => rotateSlider.value() / 5)
     )
     .out()`,
   },
@@ -151,7 +150,7 @@ function draw() {
   clear();
   background(255);
 
-  scl = size.value();
+  scl = sizeSlider.value();
 
   // Display layers
   image(cleverlayer, width / 2, height / 2);
@@ -289,14 +288,16 @@ function buildGUI() {
 
   let column3 = createDiv("").parent(guiContent).class("column3");
 
-  let sizeSlider = createDiv("").parent(column3).class("sliderWrapper");
+  let sizeHolder = createDiv("").parent(column3).class("sliderWrapper");
   let shapeHolder = createDiv("").parent(column3).class("sliderWrapper");
-  let rotateSlider = createDiv("").parent(column3).class("sliderWrapper");
-  let zoomSlider = createDiv("").parent(column3).class("sliderWrapper");
-  let hyperSlider = createDiv("").parent(column3).class("sliderWrapper");
+  let rotateHolder = createDiv("").parent(column3).class("sliderWrapper");
+  let zoomHolder = createDiv("").parent(column3).class("sliderWrapper");
+  let hyperHolder = createDiv("").parent(column3).class("sliderWrapper");
 
-  label("size", sizeSlider);
-  size = createSlider(0.1, 1, 0.4, 0.001).parent(sizeSlider).class("slider");
+  label("size", sizeHolder);
+  sizeSlider = createSlider(0.1, 1, 0.4, 0.001)
+    .parent(sizeHolder)
+    .class("slider");
 
   label("shape", shapeHolder);
   shapeSlider = createSlider(5, 40, settings.shapeSlider, 0)
@@ -307,14 +308,16 @@ function buildGUI() {
     saveSettings();
   });
 
-  label("rotate", rotateSlider);
-  rotate = createSlider(0, 10, 0, 0).parent(rotateSlider).class("slider");
+  label("rotate", rotateHolder);
+  rotateSlider = createSlider(0, 10, 0, 0).parent(rotateHolder).class("slider");
 
-  label("zoom", zoomSlider);
-  zoom = createSlider(5, 70, 15, 0).parent(zoomSlider).class("slider");
+  label("zoom", zoomHolder);
+  zoomSlider = createSlider(5, 70, 15, 0).parent(zoomHolder).class("slider");
 
-  label("hyper", hyperSlider);
-  hyper = createSlider(0.5, 10, 3, 0.05).parent(hyperSlider).class("slider");
+  label("hyper", hyperHolder);
+  hyperSlider = createSlider(0.5, 10, 3, 0.05)
+    .parent(hyperHolder)
+    .class("slider");
 
   // to not draw while using sliders
 
@@ -325,11 +328,11 @@ function buildGUI() {
     slider.mouseReleased(() => (isInteractingWithGUI = false));
   }
 
-  addSliderListeners(size);
+  addSliderListeners(sizeSlider);
   addSliderListeners(shapeSlider);
-  addSliderListeners(rotate);
-  addSliderListeners(zoom);
-  addSliderListeners(hyper);
+  addSliderListeners(rotateSlider);
+  addSliderListeners(zoomSlider);
+  addSliderListeners(hyperSlider);
 
   // set all sliders from local storage
   mySelect.value(settings.index);
