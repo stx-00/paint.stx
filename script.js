@@ -215,13 +215,9 @@ function buildGUI() {
 
   let column2 = createDiv("").parent(guiContent).class("column2");
 
-  let brushControls = createDiv("").parent(column2).class("brushControls");
+  let selectWrapper = createDiv("").parent(column2).class("selectWrapper");
 
-  let selectWrapper = createDiv("")
-    .parent(brushControls)
-    .class("selectWrapper");
-
-  label("select your brush", selectWrapper);
+  label("brush", selectWrapper);
   mySelect = createSelect().parent(selectWrapper).class("select");
   for (let i = 0; i < myBrushes.length; i++) {
     mySelect.option(myBrushes[i].name, i);
@@ -250,16 +246,15 @@ function buildGUI() {
 
   let column3 = createDiv("").parent(guiContent).class("column3");
 
-  let toggleButton = createDiv("\u00A0\u00A0+ modify code")
-    .parent(column3)
-    .class("toggleButton");
+  let codeWrapper = createDiv("").parent(column3).class("codeWrapper");
+
+  label("code", codeWrapper);
+  let toggleButton = createDiv("+ show").parent(column3).class("toggleButton");
 
   toggleButton.mousePressed(() => {
     let isHidden = editorWrapper.style("display") === "none";
     editorWrapper.style("display", isHidden ? "block" : "none");
-    toggleButton.html(
-      isHidden ? "\u00A0\u00A0- hide code" : "\u00A0\u00A0+ modify code"
-    );
+    toggleButton.html(isHidden ? "- hide" : "+ show");
   });
   toggleButton.mouseOver(() => (isInteractingWithGUI = true));
   toggleButton.mouseOut(() => (isInteractingWithGUI = false));

@@ -102,8 +102,8 @@ canvas {
 
 .guiContent {
   display: grid;
-  grid-template-columns: 0.75fr 1.25fr 1.25fr 5fr;
-  gap: 80px;
+  grid-template-columns: 0.75fr 1fr 0.75fr 4fr;
+  gap: 40px;
   width: 100%;
   padding: 15px;
   overflow: hidden;
@@ -185,9 +185,16 @@ canvas {
   border: none;
 }
 
+/* =============================================================================
+   COLUMN 3 (brush code)
+   ========================================================================== */
+
+.codeWrapper > .label {
+  margin-bottom: 10px;
+}
+
 .toggleButton {
   cursor: pointer;
-  margin-top: 10px;
   align-self: flex-start;
 }
 
@@ -209,7 +216,7 @@ canvas {
 }
 
 /* =============================================================================
-   COLUMN 3 (sliders)
+   COLUMN 4 (sliders)
    ========================================================================== */
 
 .column4 {
