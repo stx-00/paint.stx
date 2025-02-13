@@ -235,7 +235,7 @@ function buildGUI() {
       // *** grab local storage
       myEditor.value(settings.myCode);
       editorWrapper.style("display", "block");
-      toggleButton.html("\u00A0\u00A0- hide code");
+      toggleButton.html("- hide");
     } else {
       myEditor.value(myBrushes[settings.index].code);
     }
