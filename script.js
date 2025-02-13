@@ -49,7 +49,7 @@ noize = noise; // Use noize() since noise() is taken by p5js
 
 let pg; // Store Hydra texture
 let cleverlayer; // Layer on which we draw
-let isInteractingWithGUI = false;
+let isInteractingWithGUI = false; // to disable drawing while using GUI
 
 let myBrushes = [
   {
@@ -106,7 +106,11 @@ let myBrushes = [
 
 let defaultSettings = {
   index: 0,
+  sizeSlider: 0.4,
   shapeSlider: 30,
+  rotateSlider: 0,
+  zoomSlider: 15,
+  hyperSlider: 3,
   myCode: `// make your own!
 // ()=>shapeSlider.value() // 0 - 2`,
 };
@@ -309,15 +313,29 @@ function buildGUI() {
   });
 
   label("rotate", rotateHolder);
-  rotateSlider = createSlider(0, 10, 0, 0).parent(rotateHolder).class("slider");
+  rotateSlider = createSlider(0, 10, settings.rotateSlider, 0)
+    .parent(rotateHolder)
+    .class("slider");
+  rotateSlider.input(() => {
+    settings.rotateSlider = rotateSlider.value();
+    saveSettings();
+  });
 
   label("zoom", zoomHolder);
-  zoomSlider = createSlider(5, 70, 15, 0).parent(zoomHolder).class("slider");
+  zoomSlider = createSlider(5, 70, settings.zoomSlider, 0)
+    .parent(zoomHolder)
+    .class("slider");
+  zoomSlider.input(() => {
+    settings.zoomSlider = zoomSlider.value();
+  });
 
   label("hyper", hyperHolder);
-  hyperSlider = createSlider(0.5, 10, 3, 0.05)
+  hyperSlider = createSlider(0.5, 10, settings.hyperSlider, 0.05)
     .parent(hyperHolder)
     .class("slider");
+  hyperSlider.input(() => {
+    settings.hyperSlider = hyperSlider.value();
+  });
 
   // to not draw while using sliders
 
