@@ -53,7 +53,7 @@ let isInteractingWithGUI = false; // to disable drawing while using GUI
 
 let myBrushes = [
   {
-    name: "→ prismatic pulse",
+    name: "↓ prismatic pulse",
     code: `osc(() => zoomSlider.value() / 5, 1, 0.3)
   .kaleid([3, 4, 5, 7, 8, 9, 10].fast(0.1))
   .color(0.5, 0.3)
@@ -73,7 +73,7 @@ let myBrushes = [
   ).out()`,
   },
   {
-    name: "→ acid loop",
+    name: "↓ acid loop",
     code: `voronoi(() => zoomSlider.value(), 0, 1)
     .mult(
     osc(10, 0.1, () => hyperSlider.value() * 3)
@@ -94,11 +94,11 @@ let myBrushes = [
     .out()`,
   },
   {
-    name: "→ brush 3",
+    name: "↓ brush 3",
     code: `gradient().out()`,
   },
   {
-    name: "→ make your own",
+    name: "↓ make your own",
     code: `// make your own!
 // ()=>shapeSlider.value() // 0 - 2`,
   },
@@ -231,7 +231,7 @@ function buildGUI() {
   });
 
   function updateEditor() {
-    if (myBrushes[settings.index].name === "→ make your own") {
+    if (myBrushes[settings.index].name === "↓ make your own") {
       // *** grab local storage
       myEditor.value(settings.myCode);
       editorWrapper.style("display", "block");
@@ -266,7 +266,7 @@ function buildGUI() {
   myEditor = createElement("textarea").parent(editorWrapper).class("editor");
   myEditor.value(myBrushes[0].code);
   myEditor.input(() => {
-    if (myBrushes[settings.index].name === "→ make your own") {
+    if (myBrushes[settings.index].name === "↓ make your own") {
       settings.myCode = myEditor.value();
       saveSettings();
     }
