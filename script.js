@@ -214,6 +214,33 @@ function buildGUI() {
     window.location.reload();
   });
 
+  let info = createDiv("?").parent(column1).class("info button");
+  let infoText;
+
+  info.mousePressed(() => {
+    if (!infoText) {
+      infoText = createDiv(
+        'STX paint lets you draw with brushes built using <a href="https://p5js.org/" target="_blank" style="color: #000000; text-decoration: underline;">p5.js</a> and <a href="https://hydra.ojack.xyz/" target="_blank" style="color: #000000; text-decoration: underline;">hydra</a>.<br><br>Hate your sketch? Trash it.<br>Love your sketch? Save it to download as an image.<br><br>Want to fill a sketchbook? Add your drawing to the print queue.<br>Keep drawing as many pages as you like, then hit print.<br><br>This tool was designed and built by <a href="https://www.siiritaennler.ch/" target="_blank" style="color: #000000; text-decoration: underline;">Siiri Tännler</a> and mentored by <a href="https://teddavis.org/" target="_blank" style="color: #000000; text-decoration: underline;">Ted Davis</a>.<br><br>A first version of this tool was created in collaboration with Sarah Choi and Yevheniia Semenova during a class taught by Ted Davis at IDCE HGK/FHNW.<br><br><a href="https://github.com/stx-00/p5-hydra-brush-tool" target="_blank" style="color: #000000; text-decoration: underline;">GitHub</a>'
+      )
+        .parent(guiContent)
+        .class("infoText");
+
+      const column2Position = column2.elt.getBoundingClientRect();
+      infoText.style("left", column2Position.left + "px");
+      infoText.style("display", "block");
+
+      infoText.mouseOver(() => (isInteractingWithGUI = true));
+      infoText.mouseOut(() => (isInteractingWithGUI = false));
+    } else {
+      infoText.style(
+        "display",
+        infoText.style("display") === "none" ? "block" : "none"
+      );
+    }
+  });
+  info.mouseOver(() => (isInteractingWithGUI = true));
+  info.mouseOut(() => (isInteractingWithGUI = false));
+
   let save = createDiv("save").parent(column1).class("save button");
   save.mousePressed(() => {
     saveCanvas();
