@@ -158,10 +158,6 @@ canvas {
   position: relative;
   border: none;
   background: transparent;
-  text-indent: 0;
-  padding-left: 0;
-  margin-left: 0;
-  text-align: left;
 }
 
 .select option {
