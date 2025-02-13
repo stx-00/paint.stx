@@ -99,8 +99,21 @@ let myBrushes = [
   },
   {
     name: "↓ make your own",
-    code: `// make your own!
-// ()=>shapeSlider.value() // 0 - 2`,
+    code: `// code hydra in here! 
+// https://hydra.ojack.xyz/functions/
+
+// use these to plug in sliders:
+// ()=>sizeSlider.value()
+// ()=>shapeSlider.value()
+// ()=>rotateSlider.value()
+// ()=>zoomSlider.value()
+// ()=>hyperSlider.value()
+
+///////////////////////////////////////
+
+osc(5)
+.mask(shape((100))) 
+.out()`,
   },
 ];
 
@@ -111,8 +124,21 @@ let defaultSettings = {
   rotateSlider: 0,
   zoomSlider: 15,
   hyperSlider: 3,
-  myCode: `// make your own!
-// ()=>shapeSlider.value() // 0 - 2`,
+  myCode: `// code hydra in here! 
+// https://hydra.ojack.xyz/functions/
+
+// use these to plug in sliders:
+// ()=>sizeSlider.value()
+// ()=>shapeSlider.value()
+// ()=>rotateSlider.value()
+// ()=>zoomSlider.value()
+// ()=>hyperSlider.value()
+
+///////////////////////////////////////
+
+osc(5)
+.mask(shape((100))) 
+.out()`,
 };
 
 let settings = JSON.parse(JSON.stringify(defaultSettings)); // this is clone JS object
