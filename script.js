@@ -105,6 +105,28 @@ let myBrushes = [
   },
 ];
 
+let defaultSettings = {
+  index: 0,
+  shapeSlider: 30,
+  myCode: `// make your own!
+// ()=>shapeSlider.value() // 0 - 2`,
+};
+
+let settings = JSON.parse(JSON.stringify(defaultSettings)); // this is clone JS object
+
+if (localStorage.hasOwnProperty("paintSettings")) {
+  tempSettings = JSON.parse(localStorage.getItem("paintSettings"));
+  for (const [key, value] of Object.entries(tempSettings)) {
+    settings[key] = value;
+  }
+} else {
+  localStorage.setItem("paintSettings", JSON.stringify(defaultSettings));
+}
+
+function saveSettings() {
+  localStorage.setItem("paintSettings", JSON.stringify(settings));
+}
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
@@ -203,16 +225,23 @@ function buildGUI() {
   }
 
   mySelect.changed(() => {
-    let index = mySelect.value();
-    myEditor.value(myBrushes[index].code);
-    updateBrush();
+    settings.index = mySelect.value();
+    saveSettings();
 
-    if (myBrushes[index].name === "→ make your own") {
+    updateEditor();
+  });
+
+  function updateEditor() {
+    if (myBrushes[settings.index].name === "→ make your own") {
       // *** grab local storage
+      myEditor.value(settings.myCode);
       editorWrapper.style("display", "block");
       toggleButton.html("\u00A0\u00A0- hide code");
+    } else {
+      myEditor.value(myBrushes[settings.index].code);
     }
-  });
+    updateBrush();
+  }
 
   let toggleButton = createDiv("\u00A0\u00A0+ modify code")
     .parent(selectWrapper)
@@ -236,7 +265,13 @@ function buildGUI() {
   // Text editor for custom brush code
   myEditor = createElement("textarea").parent(editorWrapper).class("editor");
   myEditor.value(myBrushes[0].code);
-  myEditor.input(updateBrush);
+  myEditor.input(() => {
+    if (myBrushes[settings.index].name === "→ make your own") {
+      settings.myCode = myEditor.value();
+      saveSettings();
+    }
+    updateBrush();
+  });
 
   myEditor.mouseOver(() => (isInteractingWithGUI = true));
   myEditor.mouseOut(() => (isInteractingWithGUI = false));
@@ -264,7 +299,13 @@ function buildGUI() {
   size = createSlider(0.1, 1, 0.4, 0.001).parent(sizeSlider).class("slider");
 
   label("shape", shapeHolder);
-  shapeSlider = createSlider(5, 40, 30, 0).parent(shapeHolder).class("slider");
+  shapeSlider = createSlider(5, 40, settings.shapeSlider, 0)
+    .parent(shapeHolder)
+    .class("slider");
+  shapeSlider.input(() => {
+    settings.shapeSlider = shapeSlider.value();
+    saveSettings();
+  });
 
   label("rotate", rotateSlider);
   rotate = createSlider(0, 10, 0, 0).parent(rotateSlider).class("slider");
@@ -289,4 +330,8 @@ function buildGUI() {
   addSliderListeners(rotate);
   addSliderListeners(zoom);
   addSliderListeners(hyper);
+
+  // set all sliders from local storage
+  mySelect.value(settings.index);
+  updateEditor();
 }
