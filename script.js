@@ -214,17 +214,6 @@ function buildGUI() {
     window.location.reload();
   });
 
-  let trash = createDiv("trash").parent(column1).class("trash button");
-  trash.mousePressed(() => {
-    clearCanvas();
-  });
-  trash.mouseOver(() => (isInteractingWithGUI = true));
-  trash.mouseOut(() => (isInteractingWithGUI = false));
-
-  function clearCanvas() {
-    cleverlayer.clear();
-  }
-
   let save = createDiv("save").parent(column1).class("save button");
   save.mousePressed(() => {
     saveCanvas();
@@ -235,6 +224,17 @@ function buildGUI() {
   function saveCanvas() {
     var filename = "p5-hydra-paint-sketch.png";
     cleverlayer.save(filename);
+  }
+
+  let trash = createDiv("trash").parent(column1).class("trash button");
+  trash.mousePressed(() => {
+    clearCanvas();
+  });
+  trash.mouseOver(() => (isInteractingWithGUI = true));
+  trash.mouseOut(() => (isInteractingWithGUI = false));
+
+  function clearCanvas() {
+    cleverlayer.clear();
   }
 
   ///////////////////////////////////////////// COLUMN 2 /////////////////////////////////////////////
