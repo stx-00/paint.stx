@@ -442,8 +442,16 @@ body.dark-mode .infoText a {
 
   /* Adjust info text positioning for mobile */
   .infoText {
+    position: fixed;
     top: 100px;
-    width: fit-content;
-    padding-right: 10px;
+    left: 15px !important; /* Override any inline styles */
+    width: calc(100vw - 30px) !important; /* Account for padding */
+    max-width: 100%;
+    padding: 0 15px;
+    box-sizing: border-box;
+  }
+
+  body.dark-mode .infoText a {
+    color: #ffffff !important;
   }
 }
