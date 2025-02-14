@@ -386,7 +386,7 @@ body.dark-mode .infoText a {
 
 @media (max-width: 850px) {
   .guiContent {
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 1fr 3fr;
     gap: 20px;
   }
 
@@ -442,7 +442,8 @@ body.dark-mode .infoText a {
 
   /* Adjust info text positioning for mobile */
   .infoText {
-    width: 70vw;
     top: 100px;
+    width: fit-content;
+    padding-right: 10px;
   }
 }
