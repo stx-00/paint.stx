@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <meta charset="utf-8" />
     <meta
@@ -7,11 +7,8 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
     <title>p5*hydra paint</title>
+    <link rel="stylesheet" href="main.css" />
 
-    <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="./main.css" />
-
-    <!-- FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -19,15 +16,12 @@
       rel="stylesheet"
     />
 
-    <!-- LIBRARIES -->
-    <script
-      type="text/javascript"
-      src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"
-    ></script>
-    <script type="text/javascript" src="https://unpkg.com/hydra-synth"></script>
-
-    <!-- JS -->
-    <script type="text/javascript" src="./script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/p5@latest/lib/p5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/processing/p5.js-sound/lib/p5.sound.min.js"></script>
+    <script src="https://unpkg.com/hydra-synth"></script>
+    <script src="includes/libs/hydra-synth.js"></script>
   </head>
-  <body></body>
+  <body style="background: rgb(0, 0, 0)">
+    <script src="script.js" defer></script>
+  </body>
 </html>
