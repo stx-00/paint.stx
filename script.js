@@ -51,6 +51,8 @@ let pg; // Store Hydra texture
 let cleverlayer; // Layer on which we draw
 let isInteractingWithGUI = false; // to disable drawing while using GUI
 
+const customBrush = "↓ make your own";
+
 let myBrushes = [
   {
     name: "↓ prismatic pulse",
@@ -244,9 +246,11 @@ osc(() => zoomSlider.value(), 2, 1)
   .out()`,
   },
   {
-    name: "↓ make your own",
+    name: customBrush,
     code: `// code hydra in here! 
 // https://hydra.ojack.xyz/functions/
+
+// use noize() instead of noise() 
 
 // use these to plug in sliders:
 // ()=>sizeSlider.value()
@@ -430,7 +434,7 @@ function buildGUI() {
   });
 
   function updateEditor() {
-    if (myBrushes[settings.index].name === "↓ make your own") {
+    if (myBrushes[settings.index].name === customBrush) {
       // *** grab local storage
       myEditor.value(settings.myCode);
       editorWrapper.style("display", "block");
@@ -465,7 +469,7 @@ function buildGUI() {
   myEditor = createElement("textarea").parent(editorWrapper).class("editor");
   myEditor.value(myBrushes[0].code);
   myEditor.input(() => {
-    if (myBrushes[settings.index].name === "↓ make your own") {
+    if (myBrushes[settings.index].name === customBrush) {
       settings.myCode = myEditor.value();
       saveSettings();
     }
