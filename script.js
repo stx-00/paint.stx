@@ -367,10 +367,10 @@ function buildGUI() {
     window.location.reload();
   });
 
-  let info = createDiv("?").parent(column1).class("info button");
+  let infoButton = createDiv("?").parent(column1).class("button");
   let infoText;
 
-  info.mousePressed(() => {
+  infoButton.mousePressed(() => {
     if (!infoText) {
       infoText = createDiv(
         'STX paint lets you draw with brushes built using <a href="https://p5js.org/" target="_blank" style="color: #000000; text-decoration: underline;">p5.js</a> and <a href="https://hydra.ojack.xyz/" target="_blank" style="color: #000000; text-decoration: underline;">hydra</a>.<br><br>Hate your sketch? Trash it.<br>Love your sketch? Save it to download as an image.<br><br>Want to fill a sketchbook? Add your drawing to the print queue.<br>Keep drawing as many pages as you like, then hit print.<br><br>This tool was designed and built by <a href="https://www.siiritaennler.ch/" target="_blank" style="color: #000000; text-decoration: underline;">Siiri Tännler</a> and mentored by <a href="https://teddavis.org/" target="_blank" style="color: #000000; text-decoration: underline;">Ted Davis</a>.<br><br>A first version of this tool was created in collaboration with Sarah Choi and Yevheniia Semenova during a class taught by Ted Davis at IDCE HGK/FHNW.<br><br><a href="https://github.com/stx-00/p5-hydra-brush-tool" target="_blank" style="color: #000000; text-decoration: underline;">GitHub</a>'
@@ -391,33 +391,141 @@ function buildGUI() {
       );
     }
   });
-  info.mouseOver(() => (isInteractingWithGUI = true));
-  info.mouseOut(() => (isInteractingWithGUI = false));
+  infoButton.mouseOver(() => (isInteractingWithGUI = true));
+  infoButton.mouseOut(() => (isInteractingWithGUI = false));
 
-  let trash = createDiv("trash").parent(column1).class("trash button");
-  trash.mousePressed(() => {
+  let trashButton = createDiv("trash").parent(column1).class("button");
+  trashButton.mousePressed(() => {
     clearCanvas();
   });
-  trash.mouseOver(() => (isInteractingWithGUI = true));
-  trash.mouseOut(() => (isInteractingWithGUI = false));
+  trashButton.mouseOver(() => (isInteractingWithGUI = true));
+  trashButton.mouseOut(() => (isInteractingWithGUI = false));
 
   function clearCanvas() {
     cleverlayer.clear();
   }
 
-  let save = createDiv("save").parent(column1).class("save button");
-  save.mousePressed(() => {
+  let saveButton = createDiv("save").parent(column1).class("button");
+  saveButton.mousePressed(() => {
     saveCanvas();
   });
-  save.mouseOver(() => (isInteractingWithGUI = true));
-  save.mouseOut(() => (isInteractingWithGUI = false));
+  saveButton.mouseOver(() => (isInteractingWithGUI = true));
+  saveButton.mouseOut(() => (isInteractingWithGUI = false));
 
   function saveCanvas() {
     var filename = "p5-hydra-paint-sketch.png";
     cleverlayer.save(filename);
   }
 
-  let darkToggle = createDiv("dark").parent(column1).class("dark button");
+  let addButton = createDiv("add").parent(column1).class("button");
+  addButton.mousePressed(() => {
+    isInteractingWithGUI = true;
+    const canvasData = cleverlayer.canvas.toDataURL(); // Convert canvas to image data
+    printQueue.push(canvasData); // Add the image to the print queue
+    updatePrintCounter(printButton); // Update the counter
+    clearCanvas(); // Clear the canvas after adding
+  });
+  addButton.mouseOver(() => (isInteractingWithGUI = true));
+  addButton.mouseOver(() => (isInteractingWithGUI = false));
+
+  let printButton = createDiv("print").parent(column1).class("button");
+  printButton.mousePressed(() => {
+    isInteractingWithGUI = true;
+    if (printQueue.length === 0) {
+      alert("add drawings to the print queue!");
+      return;
+    }
+
+    // Detect device orientation
+    const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+
+    // Open a new window for printing
+    const printWindow = window.open("", "_blank", "width=800,height=600");
+    const printDocument = printWindow.document;
+
+    // Write the basic HTML structure into the print window
+    printDocument.write(`
+      <html>
+        <head>
+          <title>p5*hydra paint print queue</title>
+          <style>
+            @media print {
+              body {
+                margin: 0;
+                padding: 0;
+              }
+  
+              .page {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh; /* Full viewport height for centering */
+                page-break-after: always; /* Ensure each drawing is on its own page */
+              }
+  
+              img {
+                max-width: 100%;
+                max-height: 100%; /* Prevent images from overflowing the page */
+              }
+  
+              @page {
+                size: A4 ${
+                  isPortrait ? "portrait" : "landscape"
+                }; /* Dynamic page size */
+                margin: 3mm; /* Remove margins for full-page centering */
+              }
+            }
+          </style>
+        </head>
+        <body>
+    `);
+
+    // Add each drawing wrapped in a centered container
+    printQueue.forEach((item) => {
+      printDocument.write(`
+        <div class="page">
+          <img src="${item}" alt="p5*hydra painting">
+        </div>
+      `);
+    });
+
+    // Close the HTML structure
+    printDocument.write(`
+      </body>
+      <script>
+        window.addEventListener('afterprint', function() {
+          window.close();
+        });
+
+        setTimeout(() => {
+          if (!document.hidden) {
+            window.close();
+          }
+        }, 500);
+      </script>
+    </html>
+  `);
+    printDocument.close();
+
+    // Automatically trigger the print dialog
+    printWindow.print();
+
+    // Clear the print queue after printing
+    printQueue = [];
+    updatePrintCounter(printButton); // Update the counter after clearing
+  });
+  printButton.mouseOver(() => (isInteractingWithGUI = true));
+  printButton.mouseOver(() => (isInteractingWithGUI = false));
+
+  function updatePrintCounter(printButton) {
+    if (printQueue.length > 0) {
+      printButton.html(`print (${printQueue.length})`); // Show the counter if there are drawings
+    } else {
+      printButton.html("print"); // Remove the counter when the queue is empty
+    }
+  }
+
+  let darkToggle = createDiv("dark").parent(column1).class("button");
   darkToggle.mousePressed(() => {
     isInteractingWithGUI = true;
     darkMode = !darkMode;
