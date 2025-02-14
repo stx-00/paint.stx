@@ -443,8 +443,7 @@ body.dark-mode .infoText a {
   /* Adjust info text positioning for mobile */
   .infoText {
     position: fixed;
-    top: 100px;
-    left: 15px !important; /* Override any inline styles */
+    top: 106px;
     width: calc(100vw - 30px) !important; /* Account for padding */
     max-width: 100%;
     padding: 0 15px;
