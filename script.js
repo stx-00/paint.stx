@@ -366,6 +366,8 @@ function buildGUI() {
   title.mousePressed(() => {
     window.location.reload();
   });
+  title.mouseOver(() => (isInteractingWithGUI = true));
+  title.mouseOut(() => (isInteractingWithGUI = false));
 
   let infoButton = createDiv("?").parent(column1).class("button");
   let infoText;
@@ -426,7 +428,7 @@ function buildGUI() {
     clearCanvas(); // Clear the canvas after adding
   });
   addButton.mouseOver(() => (isInteractingWithGUI = true));
-  addButton.mouseOver(() => (isInteractingWithGUI = false));
+  addButton.mouseOut(() => (isInteractingWithGUI = false));
 
   let printButton = createDiv("print").parent(column1).class("button");
   printButton.mousePressed(() => {
@@ -515,7 +517,7 @@ function buildGUI() {
     updatePrintCounter(printButton); // Update the counter after clearing
   });
   printButton.mouseOver(() => (isInteractingWithGUI = true));
-  printButton.mouseOver(() => (isInteractingWithGUI = false));
+  printButton.mouseOut(() => (isInteractingWithGUI = false));
 
   function updatePrintCounter(printButton) {
     if (printQueue.length > 0) {
@@ -533,7 +535,7 @@ function buildGUI() {
     darkToggle.html(darkMode ? "light" : "dark");
   });
   darkToggle.mouseOver(() => (isInteractingWithGUI = true));
-  darkToggle.mouseOver(() => (isInteractingWithGUI = false));
+  darkToggle.mouseOut(() => (isInteractingWithGUI = false));
 
   ///////////////////////////////////////////// COLUMN 2 /////////////////////////////////////////////
 
