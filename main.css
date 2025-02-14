@@ -356,8 +356,15 @@ body.dark-mode .infoText a {
 }
 
 /* =============================================================================
-     MOBILE
+     RESPONSIVENESS / TABLET / MOBILE
      ========================================================================== */
+
+@media (hover: none) {
+  .button:hover,
+  .select:hover {
+    animation: none;
+  }
+}
 
 @media (max-width: 950px) {
   .guiContent {
@@ -370,6 +377,14 @@ body.dark-mode .infoText a {
 }
 
 @media (max-width: 850px) {
+  body {
+    font-size: 11px;
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent; /* Disable gray overlay for all elements */
+  }
+
   .guiContent {
     grid-template-columns: 1fr 1.5fr 2fr;
     gap: 20px;
