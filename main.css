@@ -26,6 +26,7 @@ body {
   font-weight: 400;
   font-style: normal;
   font-size: 13px;
+  line-height: 18px;
 }
 
 html {
@@ -102,7 +103,7 @@ canvas {
 
 .guiContent {
   display: grid;
-  grid-template-columns: 0.75fr 1fr 0.75fr 4fr;
+  grid-template-columns: 1fr 1fr 1fr 6fr;
   gap: 40px;
   width: 100%;
   padding: 15px;
@@ -116,7 +117,7 @@ canvas {
 .column1 {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 18px;
 }
 
 .title {
@@ -130,7 +131,7 @@ canvas {
 
 .infoText {
   position: absolute;
-  top: 131px;
+  top: 125px;
   width: 650px;
   z-index: 1000;
 }
@@ -204,9 +205,10 @@ canvas {
 }
 
 .editor {
-  margin-top: 10px;
+  margin-top: 12px;
   font-family: "Fragment Mono", serif;
   font-size: 13px;
+  line-height: 18px;
   color: black;
   padding: 5px;
   width: 400%;
