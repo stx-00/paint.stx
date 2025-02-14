@@ -356,13 +356,17 @@ body.dark-mode .infoText a {
 }
 
 /* =============================================================================
-     RESPONSIVENESS / TABLET / MOBILE
+     RESPONSIVENESS 
      ========================================================================== */
 
 @media (hover: none) {
   .button:hover,
   .select:hover {
     animation: none;
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent; /* Disable gray overlay for all elements */
   }
 }
 
@@ -376,28 +380,64 @@ body.dark-mode .infoText a {
   }
 }
 
+/* =============================================================================
+     MOBILE 
+     ========================================================================== */
+
 @media (max-width: 850px) {
-  body {
-    font-size: 11px;
-  }
-
-  * {
-    -webkit-tap-highlight-color: transparent; /* Disable gray overlay for all elements */
-  }
-
   .guiContent {
-    grid-template-columns: 1fr 1.5fr 2fr;
+    grid-template-columns: 1fr 2fr;
     gap: 20px;
-    padding: 10px;
+  }
+
+  .selectWrapper,
+  .label {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+  }
+
+  .select {
+    -webkit-appearance: none; /* Remove Safari's default styles */
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+    padding: 0;
+    text-indent: 0; /* Remove any unexpected indentation */
+    text-align: left;
+    display: block; /* Ensure block-level alignment */
+    color: black;
+    background: none; /* Ensure no background is set */
+  }
+
+  .select option {
+    color: black;
+  }
+
+  button,
+  select {
+    outline: none;
+    box-shadow: none;
+    border: none;
+    background: transparent; /* Optional: Ensure no background is applied */
+    -webkit-tap-highlight-color: transparent; /* Disable gray overlay */
+  }
+
+  button:focus,
+  button:active,
+  select:focus,
+  select:active {
+    outline: none;
+    box-shadow: none;
+    background: transparent; /* Removes any background effect on click */
+  }
+
+  .column3 {
+    display: none;
   }
 
   .column4 {
     display: none;
-  }
-
-  .editor {
-    width: 95%;
-    height: 80vh;
   }
 
   /* Adjust info text positioning for mobile */
