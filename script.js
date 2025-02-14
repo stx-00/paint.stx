@@ -50,6 +50,9 @@ noize = noise; // Use noize() since noise() is taken by p5js
 let pg; // Store Hydra texture
 let cleverlayer; // Layer on which we draw
 let isInteractingWithGUI = false; // to disable drawing while using GUI
+let printQueue = []; // for adding to print queue
+let queueCounter;
+let darkMode = false;
 
 const customBrush = "↓ make your own";
 
@@ -328,7 +331,7 @@ function setup() {
 
 function draw() {
   clear();
-  background(255);
+  background(darkMode ? 0 : 255);
 
   scl = sizeSlider.value();
 
@@ -391,6 +394,17 @@ function buildGUI() {
   info.mouseOver(() => (isInteractingWithGUI = true));
   info.mouseOut(() => (isInteractingWithGUI = false));
 
+  let trash = createDiv("trash").parent(column1).class("trash button");
+  trash.mousePressed(() => {
+    clearCanvas();
+  });
+  trash.mouseOver(() => (isInteractingWithGUI = true));
+  trash.mouseOut(() => (isInteractingWithGUI = false));
+
+  function clearCanvas() {
+    cleverlayer.clear();
+  }
+
   let save = createDiv("save").parent(column1).class("save button");
   save.mousePressed(() => {
     saveCanvas();
@@ -403,16 +417,15 @@ function buildGUI() {
     cleverlayer.save(filename);
   }
 
-  let trash = createDiv("trash").parent(column1).class("trash button");
-  trash.mousePressed(() => {
-    clearCanvas();
+  let darkToggle = createDiv("dark").parent(column1).class("dark button");
+  darkToggle.mousePressed(() => {
+    isInteractingWithGUI = true;
+    darkMode = !darkMode;
+    document.body.classList.toggle("dark-mode");
+    darkToggle.html(darkMode ? "light" : "dark");
   });
-  trash.mouseOver(() => (isInteractingWithGUI = true));
-  trash.mouseOut(() => (isInteractingWithGUI = false));
-
-  function clearCanvas() {
-    cleverlayer.clear();
-  }
+  darkToggle.mouseOver(() => (isInteractingWithGUI = true));
+  darkToggle.mouseOver(() => (isInteractingWithGUI = false));
 
   ///////////////////////////////////////////// COLUMN 2 /////////////////////////////////////////////
 

@@ -299,3 +299,58 @@ canvas {
   border: 1px solid #000000;
   box-shadow: none;
 }
+
+/* =============================================================================
+     DARKMODE 
+     ========================================================================== */
+
+body.dark-mode {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+body.dark-mode .button,
+body.dark-mode .select,
+body.dark-mode .title,
+body.dark-mode .toggleButton,
+body.dark-mode .label,
+body.dark-mode .infoText,
+body.dark-mode .editor {
+  color: #ffffff;
+}
+
+body.dark-mode .editor {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+body.dark-mode .editor:focus {
+  border: 1px solid rgba(255, 255, 255, 1);
+}
+
+body.dark-mode .slider::-webkit-slider-runnable-track {
+  background: #ffffff;
+}
+
+body.dark-mode .slider::-moz-range-track {
+  background: #ffffff;
+}
+
+body.dark-mode .slider::-webkit-slider-thumb {
+  background: #000000;
+  border: 1px solid #ffffff;
+}
+
+body.dark-mode .slider::-moz-range-thumb {
+  background: #000000;
+  border: 1px solid #ffffff;
+}
+
+body.dark-mode .select option {
+  background: #000000;
+  color: #ffffff;
+}
+
+body.dark-mode .infoText a {
+  color: #ffffff !important;
+}
