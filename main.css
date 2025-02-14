@@ -50,44 +50,6 @@ canvas {
 }
 
 /* =============================================================================
-     CSS ANIMATION
-     ========================================================================== */
-
-@keyframes rainbowHover {
-  0% {
-    color: #ff0000;
-  } /* Red */
-  15% {
-    color: #ff8000;
-  } /* Orange */
-  30% {
-    color: #ffff00;
-  } /* Yellow */
-  45% {
-    color: #80ff00;
-  } /* Light green */
-  60% {
-    color: #00ff00;
-  } /* Green */
-  75% {
-    color: #0080ff;
-  } /* Light blue */
-  90% {
-    color: #8000ff;
-  } /* Purple */
-  100% {
-    color: #ff0000;
-  } /* Back to red */
-}
-
-.button:hover,
-.select:hover,
-.title:hover,
-.toggleButton:hover {
-  animation: rainbowHover 3s linear infinite;
-}
-
-/* =============================================================================
      GUI LAYOUT
      ========================================================================== */
 
@@ -353,4 +315,79 @@ body.dark-mode .select option {
 
 body.dark-mode .infoText a {
   color: #ffffff !important;
+}
+
+/* =============================================================================
+     CSS ANIMATION
+     ========================================================================== */
+
+@keyframes rainbowHover {
+  0% {
+    color: #ff0000;
+  } /* Red */
+  15% {
+    color: #ff8000;
+  } /* Orange */
+  30% {
+    color: #ffff00;
+  } /* Yellow */
+  45% {
+    color: #80ff00;
+  } /* Light green */
+  60% {
+    color: #00ff00;
+  } /* Green */
+  75% {
+    color: #0080ff;
+  } /* Light blue */
+  90% {
+    color: #8000ff;
+  } /* Purple */
+  100% {
+    color: #ff0000;
+  } /* Back to red */
+}
+
+.button:hover,
+.select:hover,
+.title:hover,
+.toggleButton:hover {
+  animation: rainbowHover 3s linear infinite;
+}
+
+/* =============================================================================
+     MOBILE
+     ========================================================================== */
+
+@media (max-width: 950px) {
+  .guiContent {
+    gap: 20px;
+  }
+
+  .column4 {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 850px) {
+  .guiContent {
+    grid-template-columns: 1fr 1.5fr 2fr;
+    gap: 20px;
+    padding: 10px;
+  }
+
+  .column4 {
+    display: none;
+  }
+
+  .editor {
+    width: 95%;
+    height: 80vh;
+  }
+
+  /* Adjust info text positioning for mobile */
+  .infoText {
+    width: 70vw;
+    top: 100px;
+  }
 }
