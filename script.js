@@ -64,7 +64,7 @@ let myBrushes = [
   .mask(
     shape(
         () => shapeSlider.value(),
-        () => 0.5,
+        0.5,
         0.01
       )
       .scale(0.9)
@@ -81,7 +81,7 @@ let myBrushes = [
     .kaleid(200)
     )
     .mask(
-    shape(() => shapeSlider.value(), () => 0.5, 0.01)
+    shape(() => shapeSlider.value(), 0.5, 0.01)
     .modulate(src(o0), 0.8)
     .scrollY(-0.01)
     .scale(0.99)
@@ -94,8 +94,154 @@ let myBrushes = [
     .out()`,
   },
   {
-    name: "↓ brush 3",
-    code: `gradient().out()`,
+    name: "↓ cotton candy cascade",
+    code: `osc(() => zoomSlider.value(), 0.28, 0.3)
+  .mask(
+    shape(
+        () => shapeSlider.value(),
+        0.5,
+        0.01
+      )
+      .modulate(osc(10).rotate(0, -0.1), 1)
+      .rotate(
+        () => rotateSlider.value(),
+        () => rotateSlider.value() / 15
+      )
+  )
+  .modulate(noize(0.6, () => hyperSlider.value()))
+  .color(2.83, 0.91, () => hyperSlider.value() * 50)
+  .out()`,
+  },
+  {
+    name: "↓ spectrum serpent",
+    code: `osc(() => zoomSlider.value(), 1, 2)
+  .kaleid()
+  .mult(
+    osc(20, 0.001, 0)
+      .mask(
+        shape(
+          () => shapeSlider.value(),
+          0.5,
+          0.01
+        )
+      )
+      .rotate(
+        () => rotateSlider.value(),
+        () => rotateSlider.value()
+      )
+  )
+  .modulateScale(osc(10, 0), -0.03)
+  .modulate(noize(0.6, () => hyperSlider.value()))
+  .scale(0.8, () => 1.05 + 0.1 * Math.sin(0.05 * time))
+  .out()`,
+  },
+  {
+    name: "↓ electric fern",
+    code: `osc(() => zoomSlider.value(), 2, 3)
+  .modulateScale(osc(40, 0, 1).kaleid(8))
+  .mask(
+    shape(
+        () => shapeSlider.value(),
+        0.5,
+        0.01
+      )
+      .repeat(2, 4)
+      .modulate(noize(0.6, () => hyperSlider.value()))
+      .rotate(
+        () => rotateSlider.value() / 50,
+        () => rotateSlider.value() / 50
+      )
+  )
+  .out()`,
+  },
+  {
+    name: "↓ canyon breeze",
+    code: `osc(() => zoomSlider.value(), 0.25, 0.25)
+  .rotate(0, 0.1)
+  .rotate(() => rotateSlider.value())
+  .mask(
+    shape(
+        () => shapeSlider.value() * 10,
+        0.5,
+        0.1
+      )
+      .modulate(noize(4.6, () => hyperSlider.value()))
+      .scale(0.72)
+      .color(0.5, 5, 1, 0, 1)
+      .luma(1)
+      .saturate(5)
+      .rotate(
+        () => rotateSlider.value(),
+        () => rotateSlider.value()
+      )
+  )
+  .out()`,
+  },
+  {
+    name: "↓ ocean flame",
+    code: `voronoi(2, 0.5, 0.3);
+osc(() => zoomSlider.value(), 2, 1)
+  .mask(
+    shape(
+        () => shapeSlider.value(),
+        0.5,
+        0.01
+      )
+      .mult(
+        osc(10, 0.1, () => Math.sin(time) * 3)
+          .saturate(3)
+          .kaleid(200)
+      )
+      .modulate(src(o0), 0.5)
+      .modulate(noize(0.6, () => hyperSlider.value()))
+      .add(src(o0), 0.8)
+      .scrollY(-0.01)
+      .scale(0.99)
+      .modulate(voronoi(8, 1), 0.008)
+      .luma(0.3)
+      .rotate(
+        () => rotateSlider.value(),
+        () => rotateSlider.value() / 2
+      )
+  )
+  .out()`,
+  },
+  {
+    name: "↓ technicolor bloom",
+    code: `noize(() => zoomSlider.value(), 0.5, 1)
+  .color(
+    () => Math.sin(time * Math.random()) * 0.5 + 0.5,
+    () => Math.cos(time * Math.random()) * 0.5 + 0.5,
+    () => Math.sin(time * Math.random() * 1.5) * 0.5 + 0.5
+  )
+  .rotate(0.009, () => Math.sin(time) * 1)
+  .saturate(10)
+  .mask(
+    shape(
+        () => shapeSlider.value(),
+        0.5,
+        0.01
+      )
+      .modulate(src(o0), 0.5)
+      .modulate(noize(0.6, () => hyperSlider.value()))
+      .mult(
+        voronoi(10, 0.1, () => Math.sin(time) * 3)
+          .saturate(3)
+          .shift(0.5)
+      )
+      .modulateRotate(src(o0), () => Math.sin(time) * 2)
+      .scrollX(10)
+      .scrollY(2)
+      .color(0.5, 0.8, 50)
+      .luma()
+      .repeatX(1)
+      .repeatY(1)
+      .rotate(
+        () => rotateSlider.value(),
+        () => rotateSlider.value()
+      )
+  )
+  .out()`,
   },
   {
     name: "↓ make your own",
