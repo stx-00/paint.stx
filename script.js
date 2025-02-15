@@ -161,15 +161,16 @@ let myBrushes = [
     code: `osc(() => zoomSlider.value(), 0.25, 0.25)
   .rotate(0, 0.1)
   .rotate(() => rotateSlider.value())
+.saturate( 4 )
+.layer(gradient().r())
   .mask(
     shape(
-        () => shapeSlider.value() * 10,
+        () => shapeSlider.value(),
         0.5,
         0.1
       )
       .modulate(noize(4.6, () => hyperSlider.value()))
       .scale(0.72)
-      .color(0.5, 5, 1, 0, 1)
       .luma(1)
       .saturate(5)
       .rotate(
