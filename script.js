@@ -601,13 +601,21 @@ function buildGUI() {
   let codeWrapper = createDiv("").parent(column3).class("codeWrapper");
 
   label("code", codeWrapper);
-  let toggleButton = createDiv("+ show").parent(column3).class("toggleButton");
+  let toggleText = window.innerWidth <= 850 ? "+ show code" : "+ show";
+  let toggleButton = createDiv(toggleText)
+    .parent(column3)
+    .class("toggleButton");
 
   toggleButton.mousePressed(() => {
     isInteractingWithGUI = true;
     let isHidden = editorWrapper.style("display") === "none";
     editorWrapper.style("display", isHidden ? "block" : "none");
-    toggleButton.html(isHidden ? "- hide" : "+ show");
+    if (window.innerWidth <= 850) {
+      toggleButton.html(isHidden ? "- hide code" : "+ show code");
+    } else {
+      toggleButton.html(isHidden ? "- hide" : "+ show");
+    }
+
     setTimeout(() => {
       isInteractingWithGUI = false;
     }, 100);

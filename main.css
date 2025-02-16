@@ -398,13 +398,26 @@ body.dark-mode .infoText a {
       "col1 .    col4";
     grid-template-columns: 1.5fr 2fr 1fr;
     grid-template-rows: 50px 1fr 1fr;
-    gap: 20px;
+    column-gap: 20px;
+    row-gap: 5px;
   }
 
   /* —————————————— COLUMN 1 —————————————— */
 
   .column1 {
     grid-area: col1;
+  }
+
+  .infoText {
+    position: absolute;
+    left: 15px !important;
+    top: 285px !important;
+    width: calc(100% - 30px) !important; /* Full width minus padding */
+    padding: 0 !important; /* Remove any additional padding */
+  }
+
+  body.dark-mode .infoText a {
+    color: #ffffff !important;
   }
 
   /* —————————————— COLUMN 2 —————————————— */
@@ -461,6 +474,14 @@ body.dark-mode .infoText a {
     grid-area: col3;
   }
 
+  .codeWrapper > .label {
+    display: none;
+  }
+
+  .editor {
+    width: 130%;
+  }
+
   /* —————————————— COLUMN 4 —————————————— */
 
   .column4 {
@@ -505,19 +526,5 @@ body.dark-mode .infoText a {
   .slider::-moz-range-thumb {
     width: 15px;
     height: 15px;
-  }
-
-  /* Adjust info text positioning for mobile */
-  .infoText {
-    position: fixed;
-    top: 106px;
-    width: calc(100vw - 30px) !important; /* Account for padding */
-    max-width: 100%;
-    padding: 0 15px;
-    box-sizing: border-box;
-  }
-
-  body.dark-mode .infoText a {
-    color: #ffffff !important;
   }
 }
