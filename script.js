@@ -347,6 +347,26 @@ function draw() {
   }
 }
 
+function addTouchListeners(element) {
+  element.touchStarted(() => {
+    isInteractingWithGUI = true;
+  });
+
+  element.touchEnded(() => {
+    // Add a small delay to ensure the interaction is complete
+    setTimeout(() => {
+      isInteractingWithGUI = false;
+    }, 100);
+  });
+
+  // Also add touch cancel handling
+  element.elt.addEventListener("touchcancel", () => {
+    setTimeout(() => {
+      isInteractingWithGUI = false;
+    }, 100);
+  });
+}
+
 function buildGUI() {
   let guiWrapper = createDiv("").class("guiWrapper");
   let guiContent = createDiv("").parent(guiWrapper).class("guiContent");
@@ -803,6 +823,31 @@ function buildGUI() {
   addSliderListeners(rotateSlider);
   addSliderListeners(zoomSlider);
   addSliderListeners(hyperSlider);
+
+  let buttons = selectAll(".button");
+  buttons.forEach((button) => addTouchListeners(button));
+
+  // Add to select
+  addTouchListeners(mySelect);
+
+  // Add to toggle button
+  addTouchListeners(toggleButton);
+
+  // Add to editor
+  addTouchListeners(myEditor);
+
+  // Add to title
+  addTouchListeners(title);
+
+  // Add to slider toggle
+  addTouchListeners(sliderToggle);
+
+  // Add touch listeners to all sliders (in addition to existing mouse listeners)
+  [sizeSlider, shapeSlider, rotateSlider, zoomSlider, hyperSlider].forEach(
+    (slider) => {
+      addTouchListeners(slider);
+    }
+  );
 
   // set all sliders from local storage
   mySelect.value(settings.index);

@@ -397,6 +397,14 @@ body.dark-mode .infoText a {
     font-size: 12px;
     line-height: 17px;
   }
+
+  .guiWrapper {
+    touch-action: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
   .guiContent {
     grid-template-areas:
       "col1 col2 col4"
@@ -499,6 +507,7 @@ body.dark-mode .infoText a {
     width: 165%;
     margin-left: -30px;
     font-size: 12px;
+    touch-action: auto;
   }
 
   /* —————————————— COLUMN 4 —————————————— */
