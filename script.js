@@ -653,6 +653,21 @@ function buildGUI() {
 
   ///////////////////////////////////////////// COLUMN 4 /////////////////////////////////////////////
 
+  let sliderToggle = createDiv("+ adjust").class("slider-toggle button");
+  sliderToggle.parent(guiContent);
+  sliderToggle.mousePressed(() => {
+    isInteractingWithGUI = true;
+    let isHidden = !column4.elt.classList.contains("show");
+    column4.elt.classList.toggle("show");
+    sliderToggle.html(isHidden ? "- adjust" : "+ adjust");
+    setTimeout(() => {
+      isInteractingWithGUI = false;
+    }, 100);
+  });
+
+  sliderToggle.mouseOver(() => (isInteractingWithGUI = true));
+  sliderToggle.mouseOut(() => (isInteractingWithGUI = false));
+
   let column4 = createDiv("").parent(guiContent).class("column4");
 
   let sizeHolder = createDiv("").parent(column4).class("sliderWrapper");
