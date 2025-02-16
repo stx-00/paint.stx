@@ -6,6 +6,8 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <title>STX paint</title>
     <link rel="stylesheet" href="main.css" />
 
@@ -20,6 +22,30 @@
     <script src="https://cdn.jsdelivr.net/gh/processing/p5.js-sound/lib/p5.sound.min.js"></script>
     <script src="https://unpkg.com/hydra-synth"></script>
     <script src="includes/libs/hydra-synth.js"></script>
+    <script>
+      function updateStatusBarColor() {
+        const isDarkMode = document.body.classList.contains("dark-mode");
+        document
+          .querySelector('meta[name="apple-mobile-web-app-status-bar-style"]')
+          .setAttribute("content", isDarkMode ? "black" : "default");
+      }
+
+      // Listen for dark mode changes
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.attributeName === "class") {
+            updateStatusBarColor();
+          }
+        });
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        observer.observe(document.body, {
+          attributes: true,
+        });
+        updateStatusBarColor();
+      });
+    </script>
   </head>
   <body style="background: rgb(0, 0, 0)">
     <script src="script.js" defer></script>
