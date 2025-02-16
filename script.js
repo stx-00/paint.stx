@@ -355,6 +355,37 @@ function buildGUI() {
     createDiv(txt).parent(parent).class("label");
   }
 
+  /////////////////////////////////////////// TOGGLE STATES ///////////////////////////////////////////
+
+  let toggleStates = {
+    info: false,
+    code: false,
+    sliders: false,
+  };
+
+  function closeOtherToggles(exceptToggle) {
+    if (exceptToggle !== "info" && toggleStates.info && infoText) {
+      infoText.style("display", "none");
+      toggleStates.info = false;
+    }
+
+    if (exceptToggle !== "code" && toggleStates.code) {
+      editorWrapper.style("display", "none");
+      if (window.innerWidth <= 850) {
+        toggleButton.html("+ show code");
+      } else {
+        toggleButton.html("+ show");
+      }
+      toggleStates.code = false;
+    }
+
+    if (exceptToggle !== "sliders" && toggleStates.sliders) {
+      column4.elt.classList.remove("show");
+      sliderToggle.html("+ adjust");
+      toggleStates.sliders = false;
+    }
+  }
+
   ///////////////////////////////////////////// COLUMN 1 /////////////////////////////////////////////
 
   let column1 = createDiv("").parent(guiContent).class("column1");
@@ -547,14 +578,18 @@ function buildGUI() {
       const column2Position = column2.elt.getBoundingClientRect();
       infoText.style("left", column2Position.left + "px");
       infoText.style("display", "block");
+      toggleStates.info = true;
+      closeOtherToggles("info");
 
       infoText.mouseOver(() => (isInteractingWithGUI = true));
       infoText.mouseOut(() => (isInteractingWithGUI = false));
     } else {
-      infoText.style(
-        "display",
-        infoText.style("display") === "none" ? "block" : "none"
-      );
+      const willBeVisible = infoText.style("display") === "none";
+      if (willBeVisible) {
+        closeOtherToggles("info");
+      }
+      infoText.style("display", willBeVisible ? "block" : "none");
+      toggleStates.info = willBeVisible;
     }
     setTimeout(() => {
       isInteractingWithGUI = false;
@@ -608,13 +643,19 @@ function buildGUI() {
 
   toggleButton.mousePressed(() => {
     isInteractingWithGUI = true;
-    let isHidden = editorWrapper.style("display") === "none";
-    editorWrapper.style("display", isHidden ? "block" : "none");
-    if (window.innerWidth <= 850) {
-      toggleButton.html(isHidden ? "- hide code" : "+ show code");
-    } else {
-      toggleButton.html(isHidden ? "- hide" : "+ show");
+    const willBeVisible = editorWrapper.style("display") === "none";
+
+    if (willBeVisible) {
+      closeOtherToggles("code");
     }
+
+    editorWrapper.style("display", willBeVisible ? "block" : "none");
+    if (window.innerWidth <= 850) {
+      toggleButton.html(willBeVisible ? "- hide code" : "+ show code");
+    } else {
+      toggleButton.html(willBeVisible ? "- hide" : "+ show");
+    }
+    toggleStates.code = willBeVisible;
 
     setTimeout(() => {
       isInteractingWithGUI = false;
@@ -665,9 +706,16 @@ function buildGUI() {
   sliderToggle.parent(guiContent);
   sliderToggle.mousePressed(() => {
     isInteractingWithGUI = true;
-    let isHidden = !column4.elt.classList.contains("show");
+    const willBeVisible = !column4.elt.classList.contains("show");
+
+    if (willBeVisible) {
+      closeOtherToggles("sliders");
+    }
+
     column4.elt.classList.toggle("show");
-    sliderToggle.html(isHidden ? "- adjust" : "+ adjust");
+    sliderToggle.html(willBeVisible ? "- adjust" : "+ adjust");
+    toggleStates.sliders = willBeVisible;
+
     setTimeout(() => {
       isInteractingWithGUI = false;
     }, 100);
