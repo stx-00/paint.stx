@@ -550,19 +550,6 @@ function buildGUI() {
     }
   }
 
-  let darkToggle = createDiv("dark").parent(column1).class("button");
-  darkToggle.mousePressed(() => {
-    isInteractingWithGUI = true;
-    darkMode = !darkMode;
-    document.body.classList.toggle("dark-mode");
-    darkToggle.html(darkMode ? "light" : "dark");
-    setTimeout(() => {
-      isInteractingWithGUI = false;
-    }, 100);
-  });
-  darkToggle.mouseOver(() => (isInteractingWithGUI = true));
-  darkToggle.mouseOut(() => (isInteractingWithGUI = false));
-
   let infoButton = createDiv("?").parent(column1).class("button");
   let infoText;
 
@@ -597,6 +584,19 @@ function buildGUI() {
   });
   infoButton.mouseOver(() => (isInteractingWithGUI = true));
   infoButton.mouseOut(() => (isInteractingWithGUI = false));
+
+  let darkToggle = createDiv("dark").parent(column1).class("button");
+  darkToggle.mousePressed(() => {
+    isInteractingWithGUI = true;
+    darkMode = !darkMode;
+    document.body.classList.toggle("dark-mode");
+    darkToggle.html(darkMode ? "light" : "dark");
+    setTimeout(() => {
+      isInteractingWithGUI = false;
+    }, 100);
+  });
+  darkToggle.mouseOver(() => (isInteractingWithGUI = true));
+  darkToggle.mouseOut(() => (isInteractingWithGUI = false));
 
   ///////////////////////////////////////////// COLUMN 2 /////////////////////////////////////////////
 
