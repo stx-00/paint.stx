@@ -480,6 +480,8 @@ body.dark-mode .infoText a {
 
   .column3 {
     grid-area: col3;
+    overflow: visible;
+    position: relative;
   }
 
   .codeWrapper > .label {
@@ -487,7 +489,9 @@ body.dark-mode .infoText a {
   }
 
   .editor {
-    width: 130%;
+    height: 60vh;
+    width: 165%;
+    margin-left: -30px;
     font-size: 12px;
   }
 
