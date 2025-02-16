@@ -367,7 +367,9 @@ body.dark-mode .infoText a {
 
 @media (hover: none) {
   .button:hover,
-  .select:hover {
+  .select:hover,
+  .title:hover,
+  .toggleButton:hover {
     animation: none;
   }
 
