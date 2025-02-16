@@ -436,6 +436,7 @@ body.dark-mode .infoText a {
   .label {
     margin: 0;
     padding: 0;
+    margin-bottom: 1px;
     text-align: left;
   }
 
@@ -500,7 +501,7 @@ body.dark-mode .infoText a {
   .column4 {
     grid-area: col4;
     flex-direction: column;
-    gap: 5px;
+    gap: 0px;
     align-items: flex-start;
     align-self: start;
     position: sticky;
@@ -510,7 +511,7 @@ body.dark-mode .infoText a {
     display: block;
     cursor: pointer;
     position: relative;
-    margin-bottom: 10px;
+    margin-bottom: 9px;
   }
 
   .column4 .sliderWrapper {
@@ -519,6 +520,7 @@ body.dark-mode .infoText a {
 
   .column4.show .sliderWrapper {
     display: block;
+    margin-bottom: 5px;
   }
 
   .slider {
