@@ -413,7 +413,8 @@ function buildGUI() {
   let title = createDiv("STX paint").parent(column1).class("title");
   title.style("cursor", "pointer");
   title.mousePressed(() => {
-    sInteractingWithGUI = true;
+    isInteractingWithGUI = true;
+    localStorage.clear();
     window.location.reload();
     setTimeout(() => {
       isInteractingWithGUI = false;
