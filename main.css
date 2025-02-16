@@ -18,6 +18,25 @@
      BASE STYLES
      ========================================================================== */
 
+:root {
+  --sat: env(safe-area-inset-top);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--sat);
+  background: #ffffff;
+  z-index: 10000;
+}
+
+body.dark-mode::before {
+  background: #000000;
+}
+
 body {
   margin: 0;
   overflow: hidden;
@@ -61,6 +80,7 @@ canvas {
   display: flex;
   top: 0;
   left: 0;
+  padding-top: env(safe-area-inset-top);
 }
 
 .guiContent {
