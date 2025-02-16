@@ -329,6 +329,9 @@ function setup() {
 
 function draw() {
   clear();
+  if (isInteractingWithGUI) {
+    return; // Skip drawing completely if interacting with GUI
+  }
   background(darkMode ? 0 : 255);
 
   scl = sizeSlider.value();
@@ -353,6 +356,32 @@ function buildGUI() {
 
   function label(txt, parent) {
     createDiv(txt).parent(parent).class("label");
+  }
+
+  /////////////////////////////// HELP FOR NOT DRAWING ON MOBILE  ///////////////////////////////
+
+  function preventDrawingOnClick(element) {
+    element.touchStarted(() => {
+      isInteractingWithGUI = true;
+      return false;
+    });
+
+    element.touchEnded(() => {
+      setTimeout(() => {
+        isInteractingWithGUI = false;
+      }, 250);
+      return false;
+    });
+
+    element.mousePressed(() => {
+      isInteractingWithGUI = true;
+    });
+
+    element.mouseReleased(() => {
+      setTimeout(() => {
+        isInteractingWithGUI = false;
+      }, 250);
+    });
   }
 
   /////////////////////////////////////////// TOGGLE STATES ///////////////////////////////////////////
@@ -392,24 +421,14 @@ function buildGUI() {
 
   let title = createDiv("STX paint").parent(column1).class("title");
   title.style("cursor", "pointer");
-  title.mousePressed(() => {
-    sInteractingWithGUI = true;
-    window.location.reload();
-    setTimeout(() => {
-      isInteractingWithGUI = false;
-    }, 100);
-  });
+  preventDrawingOnClick(title);
+  title.mousePressed(() => window.location.reload());
   title.mouseOver(() => (isInteractingWithGUI = true));
   title.mouseOut(() => (isInteractingWithGUI = false));
 
   let saveButton = createDiv("save").parent(column1).class("button");
-  saveButton.mousePressed(() => {
-    isInteractingWithGUI = true;
-    saveCanvas();
-    setTimeout(() => {
-      isInteractingWithGUI = false;
-    }, 100);
-  });
+  preventDrawingOnClick(saveButton);
+  saveButton.mousePressed(() => saveCanvas());
   saveButton.mouseOver(() => (isInteractingWithGUI = true));
   saveButton.mouseOut(() => (isInteractingWithGUI = false));
 
@@ -419,13 +438,8 @@ function buildGUI() {
   }
 
   let trashButton = createDiv("trash").parent(column1).class("button");
-  trashButton.mousePressed(() => {
-    isInteractingWithGUI = true;
-    clearCanvas();
-    setTimeout(() => {
-      isInteractingWithGUI = false;
-    }, 100);
-  });
+  preventDrawingOnClick(trashButton);
+  trashButton.mousePressed(() => clearCanvas());
   trashButton.mouseOver(() => (isInteractingWithGUI = true));
   trashButton.mouseOut(() => (isInteractingWithGUI = false));
 
@@ -434,27 +448,21 @@ function buildGUI() {
   }
 
   let addButton = createDiv("add").parent(column1).class("button");
+  preventDrawingOnClick(addButton);
   addButton.mousePressed(() => {
-    isInteractingWithGUI = true;
     const canvasData = cleverlayer.canvas.toDataURL(); // Convert canvas to image data
     printQueue.push(canvasData); // Add the image to the print queue
     updatePrintCounter(printButton); // Update the counter
     clearCanvas(); // Clear the canvas after adding
-    setTimeout(() => {
-      isInteractingWithGUI = false;
-    }, 100);
   });
   addButton.mouseOver(() => (isInteractingWithGUI = true));
   addButton.mouseOut(() => (isInteractingWithGUI = false));
 
   let printButton = createDiv("print").parent(column1).class("button");
+  preventDrawingOnClick(printButton);
   printButton.mousePressed(() => {
-    isInteractingWithGUI = true;
     if (printQueue.length === 0) {
       alert("add drawings to the print queue!");
-      setTimeout(() => {
-        isInteractingWithGUI = false;
-      }, 100);
       return;
     }
 
@@ -467,66 +475,66 @@ function buildGUI() {
 
     // Write the basic HTML structure into the print window
     printDocument.write(`
-      <html>
-        <head>
-          <title>p5*hydra paint print queue</title>
-          <style>
-            @media print {
-              body {
-                margin: 0;
-                padding: 0;
-              }
-  
-              .page {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh; /* Full viewport height for centering */
-                page-break-after: always; /* Ensure each drawing is on its own page */
-              }
-  
-              img {
-                max-width: 100%;
-                max-height: 100%; /* Prevent images from overflowing the page */
-              }
-  
-              @page {
-                size: A4 ${
-                  isPortrait ? "portrait" : "landscape"
-                }; /* Dynamic page size */
-                margin: 3mm; /* Remove margins for full-page centering */
-              }
+    <html>
+      <head>
+        <title>p5*hydra paint print queue</title>
+        <style>
+          @media print {
+            body {
+              margin: 0;
+              padding: 0;
             }
-          </style>
-        </head>
-        <body>
-    `);
+
+            .page {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 100vh; /* Full viewport height for centering */
+              page-break-after: always; /* Ensure each drawing is on its own page */
+            }
+
+            img {
+              max-width: 100%;
+              max-height: 100%; /* Prevent images from overflowing the page */
+            }
+
+            @page {
+              size: A4 ${
+                isPortrait ? "portrait" : "landscape"
+              }; /* Dynamic page size */
+              margin: 3mm; /* Remove margins for full-page centering */
+            }
+          }
+        </style>
+      </head>
+      <body>
+  `);
 
     // Add each drawing wrapped in a centered container
     printQueue.forEach((item) => {
       printDocument.write(`
-        <div class="page">
-          <img src="${item}" alt="p5*hydra painting">
-        </div>
-      `);
+      <div class="page">
+        <img src="${item}" alt="p5*hydra painting">
+      </div>
+    `);
     });
 
     // Close the HTML structure
     printDocument.write(`
-      </body>
-      <script>
-        window.addEventListener('afterprint', function() {
-          window.close();
-        });
+    </body>
+    <script>
+      window.addEventListener('afterprint', function() {
+        window.close();
+      });
 
-        setTimeout(() => {
-          if (!document.hidden) {
-            window.close();
-          }
-        }, 500);
-      </script>
-    </html>
-  `);
+      setTimeout(() => {
+        if (!document.hidden) {
+          window.close();
+        }
+      }, 500);
+    </script>
+  </html>
+`);
     printDocument.close();
 
     // Automatically trigger the print dialog
@@ -535,9 +543,6 @@ function buildGUI() {
     // Clear the print queue after printing
     printQueue = [];
     updatePrintCounter(printButton); // Update the counter after clearing
-    setTimeout(() => {
-      isInteractingWithGUI = false;
-    }, 100);
   });
   printButton.mouseOver(() => (isInteractingWithGUI = true));
   printButton.mouseOut(() => (isInteractingWithGUI = false));
@@ -553,8 +558,8 @@ function buildGUI() {
   let infoButton = createDiv("?").parent(column1).class("button");
   let infoText;
 
+  preventDrawingOnClick(infoButton);
   infoButton.mousePressed(() => {
-    isInteractingWithGUI = true;
     if (!infoText) {
       infoText = createDiv(
         'STX paint lets you draw with brushes built using <a href="https://p5js.org/" target="_blank" style="color: #000000; text-decoration: underline;">p5.js</a> and <a href="https://hydra.ojack.xyz/" target="_blank" style="color: #000000; text-decoration: underline;">hydra</a>.<br><br>Hate your sketch? Trash it.<br>Love your sketch? Save it to download as an image.<br><br>Want to fill a sketchbook? Add your drawing to the print queue.<br>Keep drawing as many pages as you like, then hit print.<br><br>This tool was designed and built by <a href="https://www.siiritaennler.ch/" target="_blank" style="color: #000000; text-decoration: underline;">Siiri Tännler</a> and mentored by <a href="https://teddavis.org/" target="_blank" style="color: #000000; text-decoration: underline;">Ted Davis</a>.<br><br>A first version of this tool was created in collaboration with Sarah Choi and Yevheniia Semenova during a class taught by Ted Davis at IDCE HGK/FHNW.<br><br><a href="https://github.com/stx-00/p5-hydra-brush-tool" target="_blank" style="color: #000000; text-decoration: underline;">GitHub</a>'
@@ -578,22 +583,16 @@ function buildGUI() {
       infoText.style("display", willBeVisible ? "block" : "none");
       toggleStates.info = willBeVisible;
     }
-    setTimeout(() => {
-      isInteractingWithGUI = false;
-    }, 100);
   });
   infoButton.mouseOver(() => (isInteractingWithGUI = true));
   infoButton.mouseOut(() => (isInteractingWithGUI = false));
 
   let darkToggle = createDiv("dark").parent(column1).class("button");
+  preventDrawingOnClick(darkToggle);
   darkToggle.mousePressed(() => {
-    isInteractingWithGUI = true;
     darkMode = !darkMode;
     document.body.classList.toggle("dark-mode");
     darkToggle.html(darkMode ? "light" : "dark");
-    setTimeout(() => {
-      isInteractingWithGUI = false;
-    }, 100);
   });
   darkToggle.mouseOver(() => (isInteractingWithGUI = true));
   darkToggle.mouseOut(() => (isInteractingWithGUI = false));
@@ -641,8 +640,8 @@ function buildGUI() {
     .parent(column3)
     .class("toggleButton");
 
+  preventDrawingOnClick(toggleButton);
   toggleButton.mousePressed(() => {
-    isInteractingWithGUI = true;
     const willBeVisible = editorWrapper.style("display") === "none";
 
     if (willBeVisible) {
@@ -656,10 +655,6 @@ function buildGUI() {
       toggleButton.html(willBeVisible ? "- hide" : "+ show");
     }
     toggleStates.code = willBeVisible;
-
-    setTimeout(() => {
-      isInteractingWithGUI = false;
-    }, 100);
   });
   toggleButton.mouseOver(() => (isInteractingWithGUI = true));
   toggleButton.mouseOut(() => (isInteractingWithGUI = false));
@@ -670,28 +665,18 @@ function buildGUI() {
   // Text editor for custom brush code
   myEditor = createElement("textarea").parent(editorWrapper).class("editor");
   myEditor.value(myBrushes[0].code);
+  preventDrawingOnClick(myEditor);
+
   myEditor.input(() => {
-    isInteractingWithGUI = true;
     if (myBrushes[settings.index].name === customBrush) {
       settings.myCode = myEditor.value();
       saveSettings();
     }
     updateBrush();
-    setTimeout(() => {
-      isInteractingWithGUI = false;
-    }, 100);
   });
 
   myEditor.mouseOver(() => (isInteractingWithGUI = true));
   myEditor.mouseOut(() => (isInteractingWithGUI = false));
-  myEditor.mousePressed(() => {
-    isInteractingWithGUI = true;
-  });
-  myEditor.mouseReleased(() => {
-    setTimeout(() => {
-      isInteractingWithGUI = false;
-    }, 100);
-  });
 
   updateBrush();
   // update brush as a function
@@ -706,8 +691,8 @@ function buildGUI() {
 
   let sliderToggle = createDiv("+ adjust").class("slider-toggle button");
   sliderToggle.parent(column4);
+  preventDrawingOnClick(sliderToggle);
   sliderToggle.mousePressed(() => {
-    isInteractingWithGUI = true;
     const willBeVisible = !column4.elt.classList.contains("show");
 
     if (willBeVisible) {
@@ -717,10 +702,6 @@ function buildGUI() {
     column4.elt.classList.toggle("show");
     sliderToggle.html(willBeVisible ? "- adjust" : "+ adjust");
     toggleStates.sliders = willBeVisible;
-
-    setTimeout(() => {
-      isInteractingWithGUI = false;
-    }, 100);
   });
 
   sliderToggle.mouseOver(() => (isInteractingWithGUI = true));
