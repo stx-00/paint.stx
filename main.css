@@ -391,6 +391,10 @@ body.dark-mode .infoText a {
      ========================================================================== */
 
 @media (max-width: 850px) {
+  body {
+    font-size: 12px;
+    line-height: 17px;
+  }
   .guiContent {
     grid-template-areas:
       "col1 col2 col4"
@@ -410,10 +414,10 @@ body.dark-mode .infoText a {
 
   .infoText {
     position: absolute;
-    left: 15px !important;
-    top: 285px !important;
-    width: calc(100% - 30px) !important; /* Full width minus padding */
-    padding: 0 !important; /* Remove any additional padding */
+    left: calc(1.5fr + 20px) !important; /* Aligns with start of column 2 */
+    top: 180px !important;
+    width: calc(100% - 150px) !important;
+    padding: 0 !important;
   }
 
   body.dark-mode .infoText a {
@@ -434,6 +438,7 @@ body.dark-mode .infoText a {
   }
 
   .select {
+    font-size: 12px;
     -webkit-appearance: none; /* Remove Safari's default styles */
     -moz-appearance: none;
     appearance: none;
@@ -448,6 +453,7 @@ body.dark-mode .infoText a {
 
   .select option {
     color: black;
+    font-size: 12px;
   }
 
   button,
@@ -480,6 +486,7 @@ body.dark-mode .infoText a {
 
   .editor {
     width: 130%;
+    font-size: 12px;
   }
 
   /* —————————————— COLUMN 4 —————————————— */
