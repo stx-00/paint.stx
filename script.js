@@ -347,19 +347,19 @@ function draw() {
   }
 }
 
+// for not drawing on mobile while interacting with GUI
+
 function addTouchListeners(element) {
   element.touchStarted(() => {
     isInteractingWithGUI = true;
   });
 
   element.touchEnded(() => {
-    // Add a small delay to ensure the interaction is complete
     setTimeout(() => {
       isInteractingWithGUI = false;
     }, 100);
   });
 
-  // Also add touch cancel handling
   element.elt.addEventListener("touchcancel", () => {
     setTimeout(() => {
       isInteractingWithGUI = false;
@@ -828,22 +828,12 @@ function buildGUI() {
   let buttons = selectAll(".button");
   buttons.forEach((button) => addTouchListeners(button));
 
-  // Add to select
   addTouchListeners(mySelect);
-
-  // Add to toggle button
   addTouchListeners(toggleButton);
-
-  // Add to editor
   addTouchListeners(myEditor);
-
-  // Add to title
   addTouchListeners(title);
-
-  // Add to slider toggle
   addTouchListeners(sliderToggle);
 
-  // Add touch listeners to all sliders (in addition to existing mouse listeners)
   [sizeSlider, shapeSlider, rotateSlider, zoomSlider, hyperSlider].forEach(
     (slider) => {
       addTouchListeners(slider);
