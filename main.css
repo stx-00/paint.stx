@@ -402,7 +402,7 @@ body.dark-mode .infoText a {
       "col1 col2 col4"
       "col1 col3 col4"
       "col1 .    col4";
-    grid-template-columns: 1.5fr 2fr 1fr;
+    grid-template-columns: 1.5fr 2fr 1.5fr;
     grid-template-rows: 50px 1fr 1fr;
     column-gap: 20px;
     row-gap: 5px;
@@ -497,28 +497,24 @@ body.dark-mode .infoText a {
     grid-area: col4;
     flex-direction: column;
     gap: 5px;
-    display: none;
-    align-items: flex-end;
+    align-items: flex-start;
+    align-self: start;
+    position: sticky;
   }
 
   .slider-toggle {
     display: block;
     cursor: pointer;
-    position: fixed;
-    top: 15px;
-    right: 15px;
-    z-index: 1000;
+    position: relative;
+    margin-bottom: 10px;
   }
 
-  .column4.show {
-    display: flex;
-    right: 15px;
-    padding-top: 30px;
+  .column4 .sliderWrapper {
+    display: none;
   }
 
-  .sliderWrapper {
-    width: 100%;
-    height: 150px;
+  .column4.show .sliderWrapper {
+    display: block;
   }
 
   .slider {
