@@ -403,7 +403,7 @@ body.dark-mode .infoText a {
       "col1 col3 col4"
       "col1 .    col4";
     grid-template-columns: 1.5fr 2fr 1.5fr;
-    grid-template-rows: 50px 1fr 1fr;
+    grid-template-rows: 47px 1fr 1fr;
     column-gap: 20px;
     row-gap: 5px;
   }
@@ -412,6 +412,10 @@ body.dark-mode .infoText a {
 
   .column1 {
     grid-area: col1;
+  }
+
+  .title {
+    margin-bottom: 17px;
   }
 
   .infoText {
@@ -490,6 +494,7 @@ body.dark-mode .infoText a {
   }
 
   .editor {
+    margin-top: 2px;
     height: 60vh;
     width: 165%;
     margin-left: -30px;
