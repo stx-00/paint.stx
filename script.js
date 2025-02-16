@@ -371,52 +371,6 @@ function buildGUI() {
   title.mouseOver(() => (isInteractingWithGUI = true));
   title.mouseOut(() => (isInteractingWithGUI = false));
 
-  let infoButton = createDiv("?").parent(column1).class("button");
-  let infoText;
-
-  infoButton.mousePressed(() => {
-    isInteractingWithGUI = true;
-    if (!infoText) {
-      infoText = createDiv(
-        'STX paint lets you draw with brushes built using <a href="https://p5js.org/" target="_blank" style="color: #000000; text-decoration: underline;">p5.js</a> and <a href="https://hydra.ojack.xyz/" target="_blank" style="color: #000000; text-decoration: underline;">hydra</a>.<br><br>Hate your sketch? Trash it.<br>Love your sketch? Save it to download as an image.<br><br>Want to fill a sketchbook? Add your drawing to the print queue.<br>Keep drawing as many pages as you like, then hit print.<br><br>This tool was designed and built by <a href="https://www.siiritaennler.ch/" target="_blank" style="color: #000000; text-decoration: underline;">Siiri Tännler</a> and mentored by <a href="https://teddavis.org/" target="_blank" style="color: #000000; text-decoration: underline;">Ted Davis</a>.<br><br>A first version of this tool was created in collaboration with Sarah Choi and Yevheniia Semenova during a class taught by Ted Davis at IDCE HGK/FHNW.<br><br><a href="https://github.com/stx-00/p5-hydra-brush-tool" target="_blank" style="color: #000000; text-decoration: underline;">GitHub</a>'
-      )
-        .parent(guiContent)
-        .class("infoText");
-
-      const column2Position = column2.elt.getBoundingClientRect();
-      infoText.style("left", column2Position.left + "px");
-      infoText.style("display", "block");
-
-      infoText.mouseOver(() => (isInteractingWithGUI = true));
-      infoText.mouseOut(() => (isInteractingWithGUI = false));
-    } else {
-      infoText.style(
-        "display",
-        infoText.style("display") === "none" ? "block" : "none"
-      );
-    }
-    setTimeout(() => {
-      isInteractingWithGUI = false;
-    }, 100);
-  });
-  infoButton.mouseOver(() => (isInteractingWithGUI = true));
-  infoButton.mouseOut(() => (isInteractingWithGUI = false));
-
-  let trashButton = createDiv("trash").parent(column1).class("button");
-  trashButton.mousePressed(() => {
-    isInteractingWithGUI = true;
-    clearCanvas();
-    setTimeout(() => {
-      isInteractingWithGUI = false;
-    }, 100);
-  });
-  trashButton.mouseOver(() => (isInteractingWithGUI = true));
-  trashButton.mouseOut(() => (isInteractingWithGUI = false));
-
-  function clearCanvas() {
-    cleverlayer.clear();
-  }
-
   let saveButton = createDiv("save").parent(column1).class("button");
   saveButton.mousePressed(() => {
     isInteractingWithGUI = true;
@@ -431,6 +385,21 @@ function buildGUI() {
   function saveCanvas() {
     var filename = "STX-paint-sketch.png";
     cleverlayer.save(filename);
+  }
+
+  let trashButton = createDiv("trash").parent(column1).class("button");
+  trashButton.mousePressed(() => {
+    isInteractingWithGUI = true;
+    clearCanvas();
+    setTimeout(() => {
+      isInteractingWithGUI = false;
+    }, 100);
+  });
+  trashButton.mouseOver(() => (isInteractingWithGUI = true));
+  trashButton.mouseOut(() => (isInteractingWithGUI = false));
+
+  function clearCanvas() {
+    cleverlayer.clear();
   }
 
   let addButton = createDiv("add").parent(column1).class("button");
@@ -562,6 +531,37 @@ function buildGUI() {
   });
   darkToggle.mouseOver(() => (isInteractingWithGUI = true));
   darkToggle.mouseOut(() => (isInteractingWithGUI = false));
+
+  let infoButton = createDiv("?").parent(column1).class("button");
+  let infoText;
+
+  infoButton.mousePressed(() => {
+    isInteractingWithGUI = true;
+    if (!infoText) {
+      infoText = createDiv(
+        'STX paint lets you draw with brushes built using <a href="https://p5js.org/" target="_blank" style="color: #000000; text-decoration: underline;">p5.js</a> and <a href="https://hydra.ojack.xyz/" target="_blank" style="color: #000000; text-decoration: underline;">hydra</a>.<br><br>Hate your sketch? Trash it.<br>Love your sketch? Save it to download as an image.<br><br>Want to fill a sketchbook? Add your drawing to the print queue.<br>Keep drawing as many pages as you like, then hit print.<br><br>This tool was designed and built by <a href="https://www.siiritaennler.ch/" target="_blank" style="color: #000000; text-decoration: underline;">Siiri Tännler</a> and mentored by <a href="https://teddavis.org/" target="_blank" style="color: #000000; text-decoration: underline;">Ted Davis</a>.<br><br>A first version of this tool was created in collaboration with Sarah Choi and Yevheniia Semenova during a class taught by Ted Davis at IDCE HGK/FHNW.<br><br><a href="https://github.com/stx-00/p5-hydra-brush-tool" target="_blank" style="color: #000000; text-decoration: underline;">GitHub</a>'
+      )
+        .parent(guiContent)
+        .class("infoText");
+
+      const column2Position = column2.elt.getBoundingClientRect();
+      infoText.style("left", column2Position.left + "px");
+      infoText.style("display", "block");
+
+      infoText.mouseOver(() => (isInteractingWithGUI = true));
+      infoText.mouseOut(() => (isInteractingWithGUI = false));
+    } else {
+      infoText.style(
+        "display",
+        infoText.style("display") === "none" ? "block" : "none"
+      );
+    }
+    setTimeout(() => {
+      isInteractingWithGUI = false;
+    }, 100);
+  });
+  infoButton.mouseOver(() => (isInteractingWithGUI = true));
+  infoButton.mouseOut(() => (isInteractingWithGUI = false));
 
   ///////////////////////////////////////////// COLUMN 2 /////////////////////////////////////////////
 
