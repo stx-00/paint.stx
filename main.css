@@ -543,13 +543,13 @@ body.dark-mode .infoText a {
 
   /* Thumb styles */
   .slider::-webkit-slider-thumb {
-    width: 15px;
-    height: 15px;
+    width: 20px;
+    height: 20px;
     margin-top: -8px; /* Adjust to align with track */
   }
 
   .slider::-moz-range-thumb {
-    width: 15px;
-    height: 15px;
+    width: 20px;
+    height: 20px;
   }
 }
