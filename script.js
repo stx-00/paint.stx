@@ -342,7 +342,10 @@ function draw() {
 
   // Display layers
   image(cleverlayer, width / 2, height / 2);
-  image(pg, mouseX, mouseY, pg.width * scl, pg.height * scl);
+
+  if (!idle) {
+    image(pg, mouseX, mouseY, pg.width * scl, pg.height * scl);
+  }
 
   // Update Hydra texture
   pg.clear();
