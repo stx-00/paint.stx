@@ -93,7 +93,7 @@ canvas {
 
 .infoText {
   position: absolute;
-  top: 125px;
+  top: 91px;
   width: 650px;
   z-index: 1000;
 }
