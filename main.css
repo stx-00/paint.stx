@@ -545,7 +545,7 @@ body.dark-mode .infoText a {
   .slider::-webkit-slider-thumb {
     width: 20px;
     height: 20px;
-    margin-top: -8px; /* Adjust to align with track */
+    margin-top: -10px; /* Adjust to align with track */
   }
 
   .slider::-moz-range-thumb {
