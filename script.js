@@ -489,15 +489,43 @@ function buildGUI() {
       return;
     }
 
-    // Detect device orientation
-    const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+    // Check if device is mobile
+    const isMobile =
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      );
 
-    // Open a new window for printing
-    const printWindow = window.open("", "_blank", "width=800,height=600");
-    const printDocument = printWindow.document;
+    if (isMobile) {
+      // Create temporary container in current window
+      const printContainer = document.createElement("div");
+      printContainer.style.display = "none";
+      document.body.appendChild(printContainer);
 
-    // Write the basic HTML structure into the print window
-    printDocument.write(`
+      // Add print content
+      printContainer.innerHTML = `
+      <div style="display: none;">
+        ${printQueue
+          .map(
+            (item) => `
+          <div style="page-break-after: always;">
+            <img src="${item}" alt="p5*hydra painting" style="width: 100%; height: auto;">
+          </div>
+        `
+          )
+          .join("")}
+      </div>
+    `;
+
+      // Print and cleanup
+      window.print();
+      document.body.removeChild(printContainer);
+    } else {
+      // Original desktop behavior with new window
+      const printWindow = window.open("", "_blank", "width=800,height=600");
+      const printDocument = printWindow.document;
+
+      // Write the basic HTML structure
+      printDocument.write(`
       <html>
         <head>
           <title>p5*hydra paint print queue</title>
@@ -507,25 +535,24 @@ function buildGUI() {
                 margin: 0;
                 padding: 0;
               }
-  
               .page {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                height: 100vh; /* Full viewport height for centering */
-                page-break-after: always; /* Ensure each drawing is on its own page */
+                height: 100vh;
+                page-break-after: always;
               }
-  
               img {
                 max-width: 100%;
-                max-height: 100%; /* Prevent images from overflowing the page */
+                max-height: 100%;
               }
-  
               @page {
                 size: A4 ${
-                  isPortrait ? "portrait" : "landscape"
-                }; /* Dynamic page size */
-                margin: 3mm; /* Remove margins for full-page centering */
+                  window.matchMedia("(orientation: portrait)").matches
+                    ? "portrait"
+                    : "landscape"
+                };
+                margin: 3mm;
               }
             }
           </style>
@@ -533,39 +560,38 @@ function buildGUI() {
         <body>
     `);
 
-    // Add each drawing wrapped in a centered container
-    printQueue.forEach((item) => {
-      printDocument.write(`
+      // Add each drawing
+      printQueue.forEach((item) => {
+        printDocument.write(`
         <div class="page">
           <img src="${item}" alt="p5*hydra painting">
         </div>
       `);
-    });
+      });
 
-    // Close the HTML structure
-    printDocument.write(`
-      </body>
-      <script>
-        window.addEventListener('afterprint', function() {
-          window.close();
-        });
-
-        setTimeout(() => {
-          if (!document.hidden) {
+      // Close the HTML structure
+      printDocument.write(`
+        </body>
+        <script>
+          window.addEventListener('afterprint', function() {
             window.close();
-          }
-        }, 500);
-      </script>
-    </html>
-  `);
-    printDocument.close();
+          });
+          setTimeout(() => {
+            if (!document.hidden) {
+              window.close();
+            }
+          }, 500);
+        </script>
+      </html>
+    `);
 
-    // Automatically trigger the print dialog
-    printWindow.print();
+      printDocument.close();
+      printWindow.print();
+    }
 
     // Clear the print queue after printing
     printQueue = [];
-    updatePrintCounter(printButton); // Update the counter after clearing
+    updatePrintCounter(printButton);
     setTimeout(() => {
       isInteractingWithGUI = false;
     }, 100);
