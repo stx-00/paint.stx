@@ -589,6 +589,24 @@ function buildGUI() {
 
       infoText.mouseOver(() => (isInteractingWithGUI = true));
       infoText.mouseOut(() => (isInteractingWithGUI = false));
+
+      // adding touch handling for all links inside the info text
+      let links = infoText.elt.getElementsByTagName("a");
+      for (let link of links) {
+        link.addEventListener("touchstart", () => {
+          isInteractingWithGUI = true;
+        });
+        link.addEventListener("touchend", () => {
+          setTimeout(() => {
+            isInteractingWithGUI = false;
+          }, 100);
+        });
+        link.addEventListener("touchcancel", () => {
+          setTimeout(() => {
+            isInteractingWithGUI = false;
+          }, 100);
+        });
+      }
     } else {
       const willBeVisible = infoText.style("display") === "none";
       if (willBeVisible) {
