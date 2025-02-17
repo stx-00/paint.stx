@@ -330,6 +330,8 @@ function setup() {
   // cursor position in the center of the canvas
   mouseX = width / 2;
   mouseY = height / 2;
+
+  resetIdleTimer(); // for screensaver mode
 }
 
 function draw() {
@@ -873,3 +875,92 @@ function buildGUI() {
   mySelect.value(settings.index);
   updateEditor();
 }
+
+//////////////////////////////////////////// SCREEN SAVER MODE //////////////////////////////////
+
+let idleTimer;
+let idleDrawingTimer;
+let idle = false;
+let idlePos = { x: 0, y: 0 };
+let idleVelocity = { x: 0, y: 0 };
+let angle = 0;
+
+const IDLE_TIMEOUT = 20000; // Time before screensaver starts (20 seconds)
+const IDLE_DURATION = 40000; // How long screensaver runs (40 seconds)
+const MOVEMENT_SPEED = 3; // Base movement speed
+const CURVE_INTENSITY = 0.1; // How curved the motion is
+const RANDOM_FACTOR = 0.05; // Amount of randomness in motion
+const ANGLE_CHANGE = 0.03; // Speed of direction change
+const DRAW_INTERVAL = 50; // Delay between draws (ms)
+
+function startIdleDrawing() {
+  idle = true;
+  noCursor();
+
+  // Initialize position at current mouse location or random position
+  idlePos.x = mouseX || random(width);
+  idlePos.y = mouseY || random(height);
+
+  // Set random initial velocity
+  idleVelocity.x = random(-MOVEMENT_SPEED, MOVEMENT_SPEED);
+  idleVelocity.y = random(-MOVEMENT_SPEED, MOVEMENT_SPEED);
+
+  // Set timer to stop drawing
+  idleDrawingTimer = setTimeout(stopIdleDrawing, IDLE_DURATION);
+  drawCurvedPath();
+}
+
+function stopIdleDrawing() {
+  idle = false;
+  cursor();
+  clearTimeout(idleDrawingTimer);
+}
+
+function resetIdleTimer() {
+  clearTimeout(idleTimer);
+  if (idle) {
+    stopIdleDrawing();
+  }
+  idleTimer = setTimeout(startIdleDrawing, IDLE_TIMEOUT);
+}
+
+function drawCurvedPath() {
+  if (!idle) return;
+
+  // Update position
+  idlePos.x += idleVelocity.x;
+  idlePos.y += idleVelocity.y;
+
+  // Add curved motion with randomness
+  idleVelocity.x +=
+    CURVE_INTENSITY * cos(angle) + random(-RANDOM_FACTOR, RANDOM_FACTOR);
+  idleVelocity.y +=
+    CURVE_INTENSITY * sin(angle) + random(-RANDOM_FACTOR, RANDOM_FACTOR);
+  angle += random(ANGLE_CHANGE * 0.5, ANGLE_CHANGE * 1.5);
+
+  // Bounce off canvas boundaries
+  if (idlePos.x <= 0 || idlePos.x >= width) {
+    idleVelocity.x *= -1;
+    angle += PI / 2;
+  }
+  if (idlePos.y <= 0 || idlePos.y >= height) {
+    idleVelocity.y *= -1;
+    angle += PI / 2;
+  }
+
+  // Draw using current brush
+  cleverlayer.image(pg, idlePos.x, idlePos.y, pg.width * scl, pg.height * scl);
+
+  // Continue drawing loop
+  setTimeout(drawCurvedPath, DRAW_INTERVAL);
+}
+
+// Event listeners for user activity
+const resetEvents = [
+  "mousemove",
+  "mousedown",
+  "keydown",
+  "touchstart",
+  "touchmove",
+];
+resetEvents.forEach((event) => window.addEventListener(event, resetIdleTimer));
