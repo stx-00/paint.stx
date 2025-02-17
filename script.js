@@ -833,6 +833,7 @@ function buildGUI() {
   addTouchListeners(myEditor);
   addTouchListeners(title);
   addTouchListeners(sliderToggle);
+  addTouchListeners(infoButton);
 
   [sizeSlider, shapeSlider, rotateSlider, zoomSlider, hyperSlider].forEach(
     (slider) => {
