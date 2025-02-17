@@ -147,7 +147,7 @@ let myBrushes = [
         0.5,
         0.01
       )
-      .repeat(2, 4)
+      .repeat(2, 2)
       .modulate(noize(0.6, () => hyperSlider.value()))
       .rotate(
         () => rotateSlider.value() / 50,
