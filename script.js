@@ -612,6 +612,8 @@ function buildGUI() {
     darkMode = !darkMode;
     document.body.classList.toggle("dark-mode");
     darkToggle.html(darkMode ? "light" : "dark");
+    const themeColorMeta = document.querySelector("#theme-color");
+    themeColorMeta.setAttribute("content", darkMode ? "#000000" : "#FFFFFF");
     setTimeout(() => {
       isInteractingWithGUI = false;
     }, 100);
