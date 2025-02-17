@@ -630,6 +630,7 @@ function buildGUI() {
   infoButton.mouseOut(() => (isInteractingWithGUI = false));
 
   let darkToggle = createDiv("dark").parent(column1).class("button");
+  darkToggle.html(darkMode ? "light" : "dark");
   darkToggle.mousePressed(() => {
     isInteractingWithGUI = true;
     darkMode = !darkMode;
