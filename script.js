@@ -254,7 +254,6 @@ osc(() => zoomSlider.value(), 2, 1)
 // use noize() instead of noise() 
 
 // use these to plug in sliders:
-// ()=>sizeSlider.value()
 // ()=>shapeSlider.value()
 // ()=>rotateSlider.value()
 // ()=>zoomSlider.value()
@@ -279,7 +278,6 @@ let defaultSettings = {
 // https://hydra.ojack.xyz/functions/
 
 // use these to plug in sliders:
-// ()=>sizeSlider.value()
 // ()=>shapeSlider.value()
 // ()=>rotateSlider.value()
 // ()=>zoomSlider.value()
