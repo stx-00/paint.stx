@@ -274,6 +274,7 @@ let defaultSettings = {
   rotateSlider: 0,
   zoomSlider: 15,
   hyperSlider: 3,
+  darkMode: false,
   myCode: `// code hydra in here! 
 // https://hydra.ojack.xyz/functions/
 
@@ -296,6 +297,12 @@ if (localStorage.hasOwnProperty("paintSettings")) {
   tempSettings = JSON.parse(localStorage.getItem("paintSettings"));
   for (const [key, value] of Object.entries(tempSettings)) {
     settings[key] = value;
+  }
+  darkMode = settings.darkMode;
+  if (darkMode) {
+    document.body.classList.add("dark-mode");
+    const themeColorMeta = document.querySelector("#theme-color");
+    themeColorMeta.setAttribute("content", "#000000");
   }
 } else {
   localStorage.setItem("paintSettings", JSON.stringify(defaultSettings));
@@ -626,6 +633,8 @@ function buildGUI() {
   darkToggle.mousePressed(() => {
     isInteractingWithGUI = true;
     darkMode = !darkMode;
+    settings.darkMode = darkMode;
+    saveSettings();
     document.body.classList.toggle("dark-mode");
     darkToggle.html(darkMode ? "light" : "dark");
     const themeColorMeta = document.querySelector("#theme-color");
