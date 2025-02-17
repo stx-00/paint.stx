@@ -93,7 +93,7 @@ canvas {
 
 .infoText {
   position: absolute;
-  top: 90px;
+  top: 125px;
   width: 650px;
   z-index: 1000;
 }
@@ -431,7 +431,7 @@ body.dark-mode .infoText a {
     left: calc(1.5fr + 20px) !important; /* Aligns with start of column 2 */
     width: calc(100% - 150px) !important;
     padding: 0 !important;
-    margin-top: 12px;
+    margin-top: -22px;
   }
 
   body.dark-mode .infoText a {
