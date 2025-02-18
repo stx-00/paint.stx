@@ -277,6 +277,8 @@ let defaultSettings = {
   myCode: `// code hydra in here! 
 // https://hydra.ojack.xyz/functions/
 
+// use noize() instead of noise() 
+
 // use these to plug in sliders:
 // ()=>shapeSlider.value()
 // ()=>rotateSlider.value()
@@ -430,7 +432,7 @@ function buildGUI() {
 
   let column1 = createDiv("").parent(guiContent).class("column1");
 
-  let title = createDiv("STX paint").parent(column1).class("title");
+  let title = createDiv("paint.stx").parent(column1).class("title");
 
   let darkToggle = createDiv("dark").parent(column1).class("button");
   darkToggle.html(darkMode ? "light" : "dark");
@@ -457,7 +459,7 @@ function buildGUI() {
     isInteractingWithGUI = true;
     if (!infoText) {
       infoText = createDiv(
-        'STX paint is a drawing tool combining <a href="https://hydra.ojack.xyz/" target="_blank" style="color: #000000; text-decoration: underline;">hydra</a> and <a href="https://p5js.org/" target="_blank" style="color: #000000; text-decoration: underline;">p5.js</a> to create custom brushes<br><br>select a brush and adjust its appearance with the sliders<br>or live code the brush in the editor (+ show)<br><br>love your drawing? → save (to download as png)<br>want to share it with us? → submit<br>hate it? → trash<br><br>want to fill a sketchbook? → add your drawing to the print queue<br>ready to print? → print<br><br>this tool was designed and developed by <a href="https://www.siiritaennler.ch/" target="_blank" style="color: #000000; text-decoration: underline;">Siiri Tännler</a> and mentored by <a href="https://teddavis.org/" target="_blank" style="color: #000000; text-decoration: underline;">Ted Davis</a><br><br>a first version of this tool was created in collaboration with Sarah Choi and Yevheniia Semenova during a class on making tools with p5.js and hydra, taught by Ted Davis at <a href="https://www.fhnw.ch/en/degree-programmes/art-and-design/master-of-arts/master-of-arts-fhnw-in-design-digital-communication-environments" target="_blank" style="color: #000000; text-decoration: underline;">IDCE MA HGK/FHNW</a><br><br><a href="https://github.com/stx-00/STX.paint" target="_blank" style="color: #000000; text-decoration: underline;">GitHub</a>'
+        'paint.stx is a drawing tool combining <a href="https://hydra.ojack.xyz/" target="_blank" style="color: #000000; text-decoration: underline;">hydra</a> and <a href="https://p5js.org/" target="_blank" style="color: #000000; text-decoration: underline;">p5.js</a> to create custom brushes<br><br>select a brush and adjust its appearance with the sliders<br>or live code the brush in the editor (+ show)<br><br>love your drawing? → save (to download as png)<br>want to share it with us? → submit<br>hate it? → trash<br><br>want to fill a sketchbook? → add your drawing to the print queue<br>ready to print? → print<br><br>this tool was designed and developed by <a href="https://www.siiritaennler.ch/" target="_blank" style="color: #000000; text-decoration: underline;">Siiri Tännler</a> and mentored by <a href="https://teddavis.org/" target="_blank" style="color: #000000; text-decoration: underline;">Ted Davis</a><br><br>a first version of this tool was created in collaboration with Sarah Choi and Yevheniia Semenova during a class on making tools with p5.js and hydra, taught by Ted Davis at <a href="https://www.fhnw.ch/en/degree-programmes/art-and-design/master-of-arts/master-of-arts-fhnw-in-design-digital-communication-environments" target="_blank" style="color: #000000; text-decoration: underline;">IDCE MA HGK/FHNW</a><br><br><a href="https://github.com/stx-00/paint.stx" target="_blank" style="color: #000000; text-decoration: underline;">GitHub</a>'
       )
         .parent(guiContent)
         .class("infoText");
@@ -515,7 +517,7 @@ function buildGUI() {
   saveButton.mouseOut(() => (isInteractingWithGUI = false));
 
   function saveCanvas() {
-    var filename = "STX-paint-sketch.png";
+    var filename = "paint.stx_" + timeStamp() + ".png";
     cleverlayer.save(filename);
   }
 
@@ -584,7 +586,7 @@ function buildGUI() {
     printDocument.write(`
       <html>
         <head>
-          <title>p5*hydra paint print queue</title>
+          <title>paint.stx print queue</title>
           <style>
             @media print {
               body {
@@ -596,20 +598,18 @@ function buildGUI() {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                height: 100vh; /* Full viewport height for centering */
-                page-break-after: always; /* Ensure each drawing is on its own page */
+                height: 100vh; 
+                page-break-after: always; 
               }
   
               img {
                 max-width: 100%;
-                max-height: 100%; /* Prevent images from overflowing the page */
+                max-height: 100%; 
               }
   
               @page {
-                size: A4 ${
-                  isPortrait ? "portrait" : "landscape"
-                }; /* Dynamic page size */
-                margin: 3mm; /* Remove margins for full-page centering */
+                size: A4 ${isPortrait ? "portrait" : "landscape"}; 
+                margin: 3mm; 
               }
             }
           </style>
@@ -621,7 +621,7 @@ function buildGUI() {
     printQueue.forEach((item) => {
       printDocument.write(`
         <div class="page">
-          <img src="${item}" alt="p5*hydra painting">
+          <img src="${item}" alt="paint.stx">
         </div>
       `);
     });
@@ -630,22 +630,16 @@ function buildGUI() {
     printDocument.write(`
       </body>
       <script>
-        window.addEventListener('afterprint', function() {
-          window.close();
-        });
-
-        setTimeout(() => {
-          if (!document.hidden) {
+        window.onload = function() {
+          setTimeout(() => {
+            window.print();
             window.close();
-          }
-        }, 500);
+          }, 500);
+        };
       </script>
     </html>
   `);
     printDocument.close();
-
-    // Automatically trigger the print dialog
-    printWindow.print();
 
     setTimeout(() => {
       isInteractingWithGUI = false;
@@ -936,13 +930,14 @@ function layerShare(cleverlayer) {
   mouseIsPressed = false;
 
   setTimeout(() => {
-    let consent = confirm("are you sure you want to submit this drawing?");
+    // let consent = confirm("are you sure you want to submit this drawing?");
+    let submitName = prompt("give your drawing a name", timeStamp());
 
-    if (consent) {
+    if (submitName) {
       let imgUrl = `https://api.imgbb.com/1/upload`;
       const body = new FormData();
       body.append("image", cleverlayer.elt.toDataURL().split(",").pop());
-      body.append("name", "STX-paint-" + timeStamp());
+      body.append("name", "paint.stx_" + sanitize(submitName));
       body.append("key", "67651298af19d3695022df79faf0dead");
 
       fetch(imgUrl, {
@@ -979,6 +974,10 @@ function layerShare(cleverlayer) {
     mouseIsPressed = false;
     isInteractingWithGUI = false;
   }, 200);
+}
+
+function sanitize(str) {
+  return str.toLowerCase().replace(/[^a-z0-9_\-üäïöë]/gi, "_");
 }
 
 function timeStamp(timeInput) {
