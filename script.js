@@ -888,7 +888,7 @@ let idlePos = { x: 0, y: 0 };
 let idleVelocity = { x: 0, y: 0 };
 let angle = 0;
 
-const IDLE_TIMEOUT = 20000; // Time before screensaver starts (20 seconds)
+const IDLE_TIMEOUT = 60000; // Time before screensaver starts (60 seconds)
 const IDLE_DURATION = 40000; // How long screensaver runs (40 seconds)
 const MOVEMENT_SPEED = 3; // Base movement speed
 const CURVE_INTENSITY = 0.1; // How curved the motion is
