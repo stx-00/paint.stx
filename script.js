@@ -182,8 +182,7 @@ let myBrushes = [
   },
   {
     name: "↓ ocean flame",
-    code: `voronoi(2, 0.5, 0.3);
-osc(() => zoomSlider.value(), 2, 1)
+    code: `osc(() => zoomSlider.value(), 2, 1)
   .mask(
     shape(
         () => shapeSlider.value(),
