@@ -29,16 +29,24 @@ body {
   line-height: 18px;
 }
 
-html {
+html,
+body {
+  touch-action: none;
   -webkit-touch-callout: none;
   -moz-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 canvas {
+  touch-action: none;
+  -webkit-user-select: none;
   position: fixed;
   top: 0;
   left: 0;
