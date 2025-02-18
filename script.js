@@ -674,20 +674,27 @@ function buildGUI() {
     mySelect.option(myBrushes[i].name, i);
   }
 
+  mySelect.elt.addEventListener("mousedown", () => {
+    if (isDesktopSafari()) {
+      mouseIsPressed = false;
+    }
+    isInteractingWithGUI = true;
+  });
+
   mySelect.changed(() => {
     if (isDesktopSafari()) {
       mouseIsPressed = false;
-      isInteractingWithGUI = true;
-
-      setTimeout(() => {
-        isInteractingWithGUI = false;
-      }, 300);
     }
 
     settings.index = mySelect.value();
     saveSettings();
     updateEditor();
+
+    setTimeout(() => {
+      isInteractingWithGUI = false;
+    }, 300);
   });
+
   function updateEditor() {
     if (myBrushes[settings.index].name === customBrush) {
       // *** grab local storage
