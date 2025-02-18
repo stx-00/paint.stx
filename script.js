@@ -640,6 +640,17 @@ function buildGUI() {
   darkToggle.mouseOver(() => (isInteractingWithGUI = true));
   darkToggle.mouseOut(() => (isInteractingWithGUI = false));
 
+  let submitButton = createDiv("submit").parent(column1).class("button");
+  submitButton.mousePressed(() => {
+    isInteractingWithGUI = true;
+    layerShare(cleverlayer);
+    setTimeout(() => {
+      isInteractingWithGUI = false;
+    }, 100);
+  });
+  submitButton.mouseOver(() => (isInteractingWithGUI = true));
+  submitButton.mouseOut(() => (isInteractingWithGUI = false));
+
   ///////////////////////////////////////////// COLUMN 2 /////////////////////////////////////////////
 
   let column2 = createDiv("").parent(guiContent).class("column2");
@@ -855,6 +866,7 @@ function buildGUI() {
   addTouchListeners(title);
   addTouchListeners(sliderToggle);
   addTouchListeners(infoButton);
+  addTouchListeners(submitButton);
 
   [sizeSlider, shapeSlider, rotateSlider, zoomSlider, hyperSlider].forEach(
     (slider) => {
@@ -865,6 +877,70 @@ function buildGUI() {
   // set all sliders from local storage
   mySelect.value(settings.index);
   updateEditor();
+}
+
+//////////////////////////////////////// IMAGE SUBMIT ///////////////////////////////////////////
+
+function layerShare(cleverlayer) {
+  isInteractingWithGUI = true;
+  mouseIsPressed = false;
+
+  setTimeout(() => {
+    let consent = confirm("are you sure you want to submit this drawing?");
+
+    if (consent) {
+      let imgUrl = `https://api.imgbb.com/1/upload`;
+      const body = new FormData();
+      body.append("image", cleverlayer.elt.toDataURL().split(",").pop());
+      body.append("name", "STX-paint-" + timeStamp());
+      body.append("key", "67651298af19d3695022df79faf0dead");
+
+      fetch(imgUrl, {
+        method: "POST",
+        body: body,
+      })
+        .then((res) => res.json())
+        .then((jsonObj) => {
+          if (jsonObj.success) {
+            mouseIsPressed = false;
+            isInteractingWithGUI = false;
+
+            setTimeout(() => {
+              alert("thanks for submitting!");
+              mouseIsPressed = false;
+              isInteractingWithGUI = false;
+            }, 100);
+          } else {
+            alert("upload failed :( please try again");
+          }
+        })
+        .catch((err) => {
+          alert("error uploading image :( please try again");
+          mouseIsPressed = false;
+          isInteractingWithGUI = false;
+        });
+    } else {
+      mouseIsPressed = false;
+      isInteractingWithGUI = false;
+    }
+  }, 50); // short delay before showing confirm dialog
+
+  setTimeout(() => {
+    mouseIsPressed = false;
+    isInteractingWithGUI = false;
+  }, 200);
+}
+
+function timeStamp(timeInput) {
+  let d = new Date();
+  d.setTime(d.getTime() - new Date().getTimezoneOffset() * 60 * 1000);
+  if (timeInput != undefined) {
+    d = new Date(timeInput * 1);
+  }
+  return d
+    .toISOString()
+    .replace(/[^0-9]/g, "")
+    .slice(0, -3);
 }
 
 //////////////////////////////////////////// SCREEN SAVER MODE //////////////////////////////////
