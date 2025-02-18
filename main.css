@@ -94,7 +94,8 @@ canvas {
 .infoText {
   position: absolute;
   top: 125px;
-  width: 650px;
+  width: calc(100vw - 200px);
+  max-width: 650px;
   z-index: 1000;
 }
 
@@ -375,6 +376,13 @@ body.dark-mode .infoText a {
 
   * {
     -webkit-tap-highlight-color: transparent; /* Disable gray overlay for all elements */
+  }
+}
+
+@media (max-width: 1024px) {
+  .infoText {
+    width: calc(100vw - 250px);
+    max-width: 60vw;
   }
 }
 
