@@ -562,10 +562,13 @@ function buildGUI() {
   let printButton = createDiv("print").parent(column1).class("button");
   printButton.mousePressed(() => {
     isInteractingWithGUI = true;
+    mouseIsPressed = false;
+
     if (printQueue.length === 0) {
       alert("add drawings to the print queue!");
       setTimeout(() => {
         isInteractingWithGUI = false;
+        mouseIsPressed = false;
       }, 100);
       return;
     }
@@ -644,11 +647,9 @@ function buildGUI() {
     // Automatically trigger the print dialog
     printWindow.print();
 
-    // Clear the print queue after printing
-    printQueue = [];
-    updatePrintCounter(printButton); // Update the counter after clearing
     setTimeout(() => {
       isInteractingWithGUI = false;
+      mouseIsPressed = false;
     }, 100);
   });
   printButton.mouseOver(() => (isInteractingWithGUI = true));
@@ -661,6 +662,28 @@ function buildGUI() {
       printButton.html("print"); // Remove the counter when the queue is empty
     }
   }
+
+  let clearQueueButton = createDiv("clear").parent(column1).class("button");
+  clearQueueButton.mousePressed(() => {
+    isInteractingWithGUI = true;
+    if (printQueue.length === 0) {
+      alert("print queue is already empty!");
+      setTimeout(() => {
+        isInteractingWithGUI = false;
+      }, 100);
+      return;
+    }
+
+    // Clear the queue
+    printQueue = [];
+    updatePrintCounter(printButton);
+
+    setTimeout(() => {
+      isInteractingWithGUI = false;
+    }, 100);
+  });
+  clearQueueButton.mouseOver(() => (isInteractingWithGUI = true));
+  clearQueueButton.mouseOut(() => (isInteractingWithGUI = false));
 
   ///////////////////////////////////////////// COLUMN 2 /////////////////////////////////////////////
 
@@ -892,6 +915,8 @@ function buildGUI() {
   addTouchListeners(sliderToggle);
   addTouchListeners(infoButton);
   addTouchListeners(submitButton);
+  addTouchListeners(printButton);
+  addTouchListeners(clearQueueButton);
 
   [sizeSlider, shapeSlider, rotateSlider, zoomSlider, hyperSlider].forEach(
     (slider) => {
