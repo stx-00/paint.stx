@@ -664,10 +664,16 @@ function buildGUI() {
   }
 
   mySelect.changed(() => {
+    isInteractingWithGUI = true;
+
     settings.index = mySelect.value();
     saveSettings();
 
     updateEditor();
+
+    setTimeout(() => {
+      isInteractingWithGUI = false;
+    }, 100);
   });
 
   function updateEditor() {
