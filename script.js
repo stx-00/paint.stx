@@ -376,6 +376,17 @@ function addTouchListeners(element) {
   });
 }
 
+// for detecting safari on desktop (and its issues)
+
+function isDesktopSafari() {
+  const ua = navigator.userAgent;
+  return (
+    !ua.match(/iPhone|iPad|iPod|Android/i) && // Not mobile
+    ua.indexOf("Safari") !== -1 &&
+    ua.indexOf("Chrome") === -1
+  ); // Safari but not Chrome
+}
+
 function buildGUI() {
   let guiWrapper = createDiv("").class("guiWrapper");
   let guiContent = createDiv("").parent(guiWrapper).class("guiContent");
@@ -664,18 +675,19 @@ function buildGUI() {
   }
 
   mySelect.changed(() => {
-    isInteractingWithGUI = true;
+    if (isDesktopSafari()) {
+      mouseIsPressed = false;
+      isInteractingWithGUI = true;
+
+      setTimeout(() => {
+        isInteractingWithGUI = false;
+      }, 300);
+    }
 
     settings.index = mySelect.value();
     saveSettings();
-
     updateEditor();
-
-    setTimeout(() => {
-      isInteractingWithGUI = false;
-    }, 100);
   });
-
   function updateEditor() {
     if (myBrushes[settings.index].name === customBrush) {
       // *** grab local storage
