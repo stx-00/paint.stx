@@ -355,7 +355,6 @@ body.dark-mode .infoText a {
 
 .button:hover,
 .select:hover,
-.title:hover,
 .toggleButton:hover {
   animation: rainbowHover 3s linear infinite;
 }

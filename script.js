@@ -420,17 +420,6 @@ function buildGUI() {
   let column1 = createDiv("").parent(guiContent).class("column1");
 
   let title = createDiv("STX paint").parent(column1).class("title");
-  title.style("cursor", "pointer");
-  title.mousePressed(() => {
-    isInteractingWithGUI = true;
-    localStorage.clear();
-    window.location.reload();
-    setTimeout(() => {
-      isInteractingWithGUI = false;
-    }, 100);
-  });
-  title.mouseOver(() => (isInteractingWithGUI = true));
-  title.mouseOut(() => (isInteractingWithGUI = false));
 
   let saveButton = createDiv("save").parent(column1).class("button");
   saveButton.mousePressed(() => {
