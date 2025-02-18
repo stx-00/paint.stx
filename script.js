@@ -421,6 +421,77 @@ function buildGUI() {
 
   let title = createDiv("STX paint").parent(column1).class("title");
 
+  let darkToggle = createDiv("dark").parent(column1).class("button");
+  darkToggle.html(darkMode ? "light" : "dark");
+  darkToggle.mousePressed(() => {
+    isInteractingWithGUI = true;
+    darkMode = !darkMode;
+    settings.darkMode = darkMode;
+    saveSettings();
+    document.body.classList.toggle("dark-mode");
+    darkToggle.html(darkMode ? "light" : "dark");
+    const themeColorMeta = document.querySelector("#theme-color");
+    themeColorMeta.setAttribute("content", darkMode ? "#000000" : "#FFFFFF");
+    setTimeout(() => {
+      isInteractingWithGUI = false;
+    }, 100);
+  });
+  darkToggle.mouseOver(() => (isInteractingWithGUI = true));
+  darkToggle.mouseOut(() => (isInteractingWithGUI = false));
+
+  let infoButton = createDiv("?").parent(column1).class("button");
+  let infoText;
+
+  infoButton.mousePressed(() => {
+    isInteractingWithGUI = true;
+    if (!infoText) {
+      infoText = createDiv(
+        'STX paint is a drawing tool combining <a href="https://hydra.ojack.xyz/" target="_blank" style="color: #000000; text-decoration: underline;">hydra</a> and <a href="https://p5js.org/" target="_blank" style="color: #000000; text-decoration: underline;">p5.js</a> to create custom brushes<br><br>select a brush<br>adjust its appearance with the sliders<br>or live code the brush in the editor (+ show)<br><br>love your sketch? hit save, to download as png<br>hate it? hit trash<br><br>want to fill a sketchbook? add your drawing to the print queue<br>ready to print? hit print<br><br>this tool was designed and developed by <a href="https://www.siiritaennler.ch/" target="_blank" style="color: #000000; text-decoration: underline;">siiri tännler</a> and mentored by <a href="https://teddavis.org/" target="_blank" style="color: #000000; text-decoration: underline;">ted davis</a><br><br>a first version of this tool was created in collaboration with sarah choi and yevheniia semenova during a class on making tools with p5 and hydra, taught by ted at <a href="https://www.fhnw.ch/en/degree-programmes/art-and-design/master-of-arts/master-of-arts-fhnw-in-design-digital-communication-environments" target="_blank" style="color: #000000; text-decoration: underline;">idce ma hgk/fhnw</a><br><br><a href="https://github.com/stx-00/STX.paint" target="_blank" style="color: #000000; text-decoration: underline;">github</a>'
+      )
+        .parent(guiContent)
+        .class("infoText");
+
+      const column2Position = column2.elt.getBoundingClientRect();
+      infoText.style("left", column2Position.left + "px");
+      infoText.style("display", "block");
+      toggleStates.info = true;
+      closeOtherToggles("info");
+
+      infoText.mouseOver(() => (isInteractingWithGUI = true));
+      infoText.mouseOut(() => (isInteractingWithGUI = false));
+
+      // adding touch handling for all links inside the info text
+      let links = infoText.elt.getElementsByTagName("a");
+      for (let link of links) {
+        link.addEventListener("touchstart", () => {
+          isInteractingWithGUI = true;
+        });
+        link.addEventListener("touchend", () => {
+          setTimeout(() => {
+            isInteractingWithGUI = false;
+          }, 100);
+        });
+        link.addEventListener("touchcancel", () => {
+          setTimeout(() => {
+            isInteractingWithGUI = false;
+          }, 100);
+        });
+      }
+    } else {
+      const willBeVisible = infoText.style("display") === "none";
+      if (willBeVisible) {
+        closeOtherToggles("info");
+      }
+      infoText.style("display", willBeVisible ? "block" : "none");
+      toggleStates.info = willBeVisible;
+    }
+    setTimeout(() => {
+      isInteractingWithGUI = false;
+    }, 100);
+  });
+  infoButton.mouseOver(() => (isInteractingWithGUI = true));
+  infoButton.mouseOut(() => (isInteractingWithGUI = false));
+
   let saveButton = createDiv("save").parent(column1).class("button");
   saveButton.mousePressed(() => {
     isInteractingWithGUI = true;
@@ -436,6 +507,17 @@ function buildGUI() {
     var filename = "STX-paint-sketch.png";
     cleverlayer.save(filename);
   }
+
+  let submitButton = createDiv("submit").parent(column1).class("button");
+  submitButton.mousePressed(() => {
+    isInteractingWithGUI = true;
+    layerShare(cleverlayer);
+    setTimeout(() => {
+      isInteractingWithGUI = false;
+    }, 100);
+  });
+  submitButton.mouseOver(() => (isInteractingWithGUI = true));
+  submitButton.mouseOut(() => (isInteractingWithGUI = false));
 
   let trashButton = createDiv("trash").parent(column1).class("button");
   trashButton.mousePressed(() => {
@@ -568,88 +650,6 @@ function buildGUI() {
       printButton.html("print"); // Remove the counter when the queue is empty
     }
   }
-
-  let infoButton = createDiv("?").parent(column1).class("button");
-  let infoText;
-
-  infoButton.mousePressed(() => {
-    isInteractingWithGUI = true;
-    if (!infoText) {
-      infoText = createDiv(
-        'STX paint is a drawing tool combining <a href="https://hydra.ojack.xyz/" target="_blank" style="color: #000000; text-decoration: underline;">hydra</a> and <a href="https://p5js.org/" target="_blank" style="color: #000000; text-decoration: underline;">p5.js</a> to create custom brushes<br><br>select a brush<br>adjust its appearance with the sliders<br>or live code the brush in the editor (+ show)<br><br>love your sketch? hit save, to download as png<br>hate it? hit trash<br><br>want to fill a sketchbook? add your drawing to the print queue<br>ready to print? hit print<br><br>this tool was designed and developed by <a href="https://www.siiritaennler.ch/" target="_blank" style="color: #000000; text-decoration: underline;">siiri tännler</a> and mentored by <a href="https://teddavis.org/" target="_blank" style="color: #000000; text-decoration: underline;">ted davis</a><br><br>a first version of this tool was created in collaboration with sarah choi and yevheniia semenova during a class on making tools with p5 and hydra, taught by ted at <a href="https://www.fhnw.ch/en/degree-programmes/art-and-design/master-of-arts/master-of-arts-fhnw-in-design-digital-communication-environments" target="_blank" style="color: #000000; text-decoration: underline;">idce ma hgk/fhnw</a><br><br><a href="https://github.com/stx-00/STX.paint" target="_blank" style="color: #000000; text-decoration: underline;">github</a>'
-      )
-        .parent(guiContent)
-        .class("infoText");
-
-      const column2Position = column2.elt.getBoundingClientRect();
-      infoText.style("left", column2Position.left + "px");
-      infoText.style("display", "block");
-      toggleStates.info = true;
-      closeOtherToggles("info");
-
-      infoText.mouseOver(() => (isInteractingWithGUI = true));
-      infoText.mouseOut(() => (isInteractingWithGUI = false));
-
-      // adding touch handling for all links inside the info text
-      let links = infoText.elt.getElementsByTagName("a");
-      for (let link of links) {
-        link.addEventListener("touchstart", () => {
-          isInteractingWithGUI = true;
-        });
-        link.addEventListener("touchend", () => {
-          setTimeout(() => {
-            isInteractingWithGUI = false;
-          }, 100);
-        });
-        link.addEventListener("touchcancel", () => {
-          setTimeout(() => {
-            isInteractingWithGUI = false;
-          }, 100);
-        });
-      }
-    } else {
-      const willBeVisible = infoText.style("display") === "none";
-      if (willBeVisible) {
-        closeOtherToggles("info");
-      }
-      infoText.style("display", willBeVisible ? "block" : "none");
-      toggleStates.info = willBeVisible;
-    }
-    setTimeout(() => {
-      isInteractingWithGUI = false;
-    }, 100);
-  });
-  infoButton.mouseOver(() => (isInteractingWithGUI = true));
-  infoButton.mouseOut(() => (isInteractingWithGUI = false));
-
-  let darkToggle = createDiv("dark").parent(column1).class("button");
-  darkToggle.html(darkMode ? "light" : "dark");
-  darkToggle.mousePressed(() => {
-    isInteractingWithGUI = true;
-    darkMode = !darkMode;
-    settings.darkMode = darkMode;
-    saveSettings();
-    document.body.classList.toggle("dark-mode");
-    darkToggle.html(darkMode ? "light" : "dark");
-    const themeColorMeta = document.querySelector("#theme-color");
-    themeColorMeta.setAttribute("content", darkMode ? "#000000" : "#FFFFFF");
-    setTimeout(() => {
-      isInteractingWithGUI = false;
-    }, 100);
-  });
-  darkToggle.mouseOver(() => (isInteractingWithGUI = true));
-  darkToggle.mouseOut(() => (isInteractingWithGUI = false));
-
-  let submitButton = createDiv("submit").parent(column1).class("button");
-  submitButton.mousePressed(() => {
-    isInteractingWithGUI = true;
-    layerShare(cleverlayer);
-    setTimeout(() => {
-      isInteractingWithGUI = false;
-    }, 100);
-  });
-  submitButton.mouseOver(() => (isInteractingWithGUI = true));
-  submitButton.mouseOut(() => (isInteractingWithGUI = false));
 
   ///////////////////////////////////////////// COLUMN 2 /////////////////////////////////////////////
 
