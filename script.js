@@ -123,7 +123,9 @@ let myBrushes = [
     name: "↓ spectrum serpent",
     code: `osc(() => zoomSlider.value(), 1, 2)
   .kaleid()
-  .mask(
+  .mult(
+    osc(5, 0.001, 0)
+      .mask(
         shape(
           () => shapeSlider.value(),
           0.5,
@@ -134,6 +136,7 @@ let myBrushes = [
         () => rotateSlider.value(),
         () => rotateSlider.value()
       )
+  )
   .modulateScale(osc(10, 0), -0.03)
   .modulate(noize(0.6, () => hyperSlider.value()))
   .scale(0.8, () => 1.05 + 0.1 * Math.sin(0.05 * time))
