@@ -465,7 +465,7 @@ body.dark-mode .infoText a {
   .infoText {
     position: absolute;
     left: calc(1.5fr + 20px) !important; /* Aligns with start of column 2 */
-    width: calc(100% - 150px) !important;
+    width: calc(100% - 100px) !important;
     padding: 0 !important;
     margin-top: -23px;
   }
