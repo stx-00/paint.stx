@@ -56,6 +56,8 @@ let darkMode = false;
 
 const customBrush = "↓ make your own";
 
+////////////////////////////////// MY BRUSHES ///////////////////////////////////////////////
+
 let myBrushes = [
   {
     name: "↓ prismatic pulse",
@@ -292,6 +294,8 @@ osc(5)
 .out()`,
 };
 
+//////////////////////////////// LOCAL STORAGE /////////////////////////////////////////////////
+
 let settings = JSON.parse(JSON.stringify(defaultSettings)); // this is clone JS object
 
 if (localStorage.hasOwnProperty("paintSettings")) {
@@ -312,6 +316,8 @@ if (localStorage.hasOwnProperty("paintSettings")) {
 function saveSettings() {
   localStorage.setItem("paintSettings", JSON.stringify(settings));
 }
+
+/////////////////////////////////// SETUP //////////////////////////////////////////////
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -334,6 +340,8 @@ function setup() {
 
   resetIdleTimer(); // for screensaver mode
 }
+
+/////////////////////////////////// DRAW //////////////////////////////////////////////
 
 function draw() {
   clear();
@@ -358,6 +366,7 @@ function draw() {
   }
 }
 
+/////////////////////////////////////////////////////////////////////////////////
 // for not drawing on mobile while interacting with GUI
 
 function addTouchListeners(element) {
@@ -378,6 +387,7 @@ function addTouchListeners(element) {
   });
 }
 
+/////////////////////////////////////////////////////////////////////////////////
 // for detecting safari on desktop (and its issues)
 
 function isDesktopSafari() {
