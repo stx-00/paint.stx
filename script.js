@@ -251,7 +251,6 @@ let myBrushes = [
     name: customBrush,
     code: `// code hydra in here! 
 // https://hydra.ojack.xyz/functions/
-
 // use noize() instead of noise() 
 
 // use these to plug in sliders:
@@ -278,7 +277,6 @@ let defaultSettings = {
   darkMode: false,
   myCode: `// code hydra in here! 
 // https://hydra.ojack.xyz/functions/
-
 // use noize() instead of noise() 
 
 // use these to plug in sliders:
