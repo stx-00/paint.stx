@@ -644,7 +644,9 @@ function buildGUI() {
         window.onload = function() {
           setTimeout(() => {
             window.print();
-            window.close();
+            if (!document.hidden) {
+              window.close();
+            }
           }, 500);
         };
       </script>
