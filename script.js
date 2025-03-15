@@ -291,7 +291,7 @@ let defaultSettings = {
 ///////////////////////////////////////
 
 osc(5)
-.mask(shape((100))) 
+.mask(shape(100)) 
 .out()`,
 };
 
