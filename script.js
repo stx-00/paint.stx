@@ -709,10 +709,16 @@ function buildGUI() {
       mouseIsPressed = false;
     }
     isInteractingWithGUI = true;
+  });
 
-    // Force brush update on select interaction
+  mySelect.elt.addEventListener("mouseup", () => {
+    // Force brush update and reset interaction state
+    updateEditor();
     setTimeout(() => {
-      updateEditor();
+      isInteractingWithGUI = false;
+      if (isDesktopSafari()) {
+        mouseIsPressed = false;
+      }
     }, 100);
   });
 
@@ -720,14 +726,9 @@ function buildGUI() {
     if (isDesktopSafari()) {
       mouseIsPressed = false;
     }
-
     settings.index = mySelect.value();
     saveSettings();
     updateEditor();
-
-    setTimeout(() => {
-      isInteractingWithGUI = false;
-    }, 300);
   });
 
   function updateEditor() {
