@@ -705,9 +705,6 @@ function buildGUI() {
   }
 
   mySelect.elt.addEventListener("mousedown", () => {
-    if (isDesktopSafari()) {
-      mouseIsPressed = false;
-    }
     isInteractingWithGUI = true;
   });
 
@@ -716,15 +713,17 @@ function buildGUI() {
     updateEditor();
     setTimeout(() => {
       isInteractingWithGUI = false;
-      if (isDesktopSafari()) {
-        mouseIsPressed = false;
-      }
     }, 100);
   });
 
   mySelect.changed(() => {
+    // Only reset mouseIsPressed in Safari when actually changing brushes
     if (isDesktopSafari()) {
-      mouseIsPressed = false;
+      let oldIndex = settings.index;
+      let newIndex = mySelect.value();
+      if (oldIndex !== newIndex) {
+        mouseIsPressed = false;
+      }
     }
     settings.index = mySelect.value();
     saveSettings();
