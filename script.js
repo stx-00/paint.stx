@@ -709,6 +709,11 @@ function buildGUI() {
       mouseIsPressed = false;
     }
     isInteractingWithGUI = true;
+
+    // Force brush update on select interaction
+    setTimeout(() => {
+      updateEditor();
+    }, 100);
   });
 
   mySelect.changed(() => {
