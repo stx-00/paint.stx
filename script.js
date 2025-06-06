@@ -708,16 +708,6 @@ function buildGUI() {
     isInteractingWithGUI = true;
   });
 
-  // Add a click handler specifically for Safari same-brush selection
-  if (isDesktopSafari()) {
-    mySelect.elt.addEventListener("click", () => {
-      updateEditor();
-      setTimeout(() => {
-        isInteractingWithGUI = false;
-      }, 200);
-    });
-  }
-
   mySelect.elt.addEventListener("mouseup", () => {
     updateEditor();
     if (isDesktopSafari()) {
@@ -734,12 +724,9 @@ function buildGUI() {
   });
 
   mySelect.changed(() => {
-    let oldIndex = settings.index;
-    let newIndex = mySelect.value();
-    settings.index = newIndex;
+    settings.index = mySelect.value();
     saveSettings();
     updateEditor();
-
     if (isDesktopSafari()) {
       // For Safari, we need a longer delay
       setTimeout(() => {
