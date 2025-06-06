@@ -711,6 +711,9 @@ function buildGUI() {
   mySelect.elt.addEventListener("mouseup", () => {
     updateEditor();
     if (isDesktopSafari()) {
+      // For Safari, force an update even if it's the same brush
+      let currentIndex = mySelect.value();
+      updateEditor();
       // For Safari, we need a longer delay
       setTimeout(() => {
         isInteractingWithGUI = false;
@@ -724,9 +727,18 @@ function buildGUI() {
   });
 
   mySelect.changed(() => {
-    settings.index = mySelect.value();
+    let oldIndex = settings.index;
+    let newIndex = mySelect.value();
+
+    // In Safari, if selecting the same brush, force an update
+    if (isDesktopSafari() && oldIndex === newIndex) {
+      updateEditor();
+    }
+
+    settings.index = newIndex;
     saveSettings();
     updateEditor();
+
     if (isDesktopSafari()) {
       // For Safari, we need a longer delay
       setTimeout(() => {
