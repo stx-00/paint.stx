@@ -709,25 +709,35 @@ function buildGUI() {
   });
 
   mySelect.elt.addEventListener("mouseup", () => {
-    // Force brush update and reset interaction state
     updateEditor();
-    setTimeout(() => {
-      isInteractingWithGUI = false;
-    }, 100);
+    if (isDesktopSafari()) {
+      // For Safari, we need a longer delay
+      setTimeout(() => {
+        isInteractingWithGUI = false;
+      }, 200);
+    } else {
+      // Keep Chrome's behavior
+      setTimeout(() => {
+        isInteractingWithGUI = false;
+      }, 50);
+    }
   });
 
   mySelect.changed(() => {
-    // Only reset mouseIsPressed in Safari when actually changing brushes
-    if (isDesktopSafari()) {
-      let oldIndex = settings.index;
-      let newIndex = mySelect.value();
-      if (oldIndex !== newIndex) {
-        mouseIsPressed = false;
-      }
-    }
     settings.index = mySelect.value();
     saveSettings();
     updateEditor();
+    if (isDesktopSafari()) {
+      // For Safari, we need a longer delay
+      setTimeout(() => {
+        isInteractingWithGUI = false;
+      }, 200);
+    } else {
+      // Keep Chrome's behavior
+      setTimeout(() => {
+        isInteractingWithGUI = false;
+      }, 50);
+    }
   });
 
   function updateEditor() {
