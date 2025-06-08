@@ -115,7 +115,7 @@ let myBrushes = [
         () => rotateSlider.value() / 15
       )
   )
-  .modulate(noize(0.6, () => hyperSlider.value()))
+  .modulate(noize(3, () => hyperSlider.value()))
   .color(2.83, 0.91, () => hyperSlider.value() * 50)
   .out()`,
   },
