@@ -705,39 +705,24 @@ function buildGUI() {
   }
 
   mySelect.elt.addEventListener("mousedown", () => {
+    if (isDesktopSafari()) {
+      mouseIsPressed = false;
+    }
     isInteractingWithGUI = true;
   });
 
-  mySelect.elt.addEventListener("mouseup", () => {
-    updateEditor();
-    if (isDesktopSafari()) {
-      // For Safari, we need a longer delay
-      setTimeout(() => {
-        isInteractingWithGUI = false;
-      }, 200);
-    } else {
-      // Keep Chrome's behavior
-      setTimeout(() => {
-        isInteractingWithGUI = false;
-      }, 50);
-    }
-  });
-
   mySelect.changed(() => {
+    if (isDesktopSafari()) {
+      mouseIsPressed = false;
+    }
+
     settings.index = mySelect.value();
     saveSettings();
     updateEditor();
-    if (isDesktopSafari()) {
-      // For Safari, we need a longer delay
-      setTimeout(() => {
-        isInteractingWithGUI = false;
-      }, 200);
-    } else {
-      // Keep Chrome's behavior
-      setTimeout(() => {
-        isInteractingWithGUI = false;
-      }, 50);
-    }
+
+    setTimeout(() => {
+      isInteractingWithGUI = false;
+    }, 300);
   });
 
   function updateEditor() {
