@@ -270,6 +270,8 @@ osc(5)
   },
 ];
 
+//////////////////////////////// LOCAL STORAGE /////////////////////////////////////////////////
+
 let defaultSettings = {
   index: 0,
   sizeSlider: 0.4,
@@ -293,9 +295,8 @@ let defaultSettings = {
 osc(5)
 .mask(shape(100)) 
 .out()`,
+  printQueue: [],
 };
-
-//////////////////////////////// LOCAL STORAGE /////////////////////////////////////////////////
 
 let settings = JSON.parse(JSON.stringify(defaultSettings)); // this is clone JS object
 
@@ -310,6 +311,8 @@ if (localStorage.hasOwnProperty("paintSettings")) {
     const themeColorMeta = document.querySelector("#theme-color");
     themeColorMeta.setAttribute("content", "#000000");
   }
+  // Load print queue from settings
+  printQueue = settings.printQueue || [];
 } else {
   localStorage.setItem("paintSettings", JSON.stringify(defaultSettings));
 }
@@ -563,6 +566,8 @@ function buildGUI() {
     isInteractingWithGUI = true;
     const canvasData = cleverlayer.canvas.toDataURL(); // Convert canvas to image data
     printQueue.push(canvasData); // Add the image to the print queue
+    settings.printQueue = printQueue; // Update settings object
+    saveSettings(); // Save to local storage
     updatePrintCounter(printButton); // Update the counter
     clearCanvas(); // Clear the canvas after adding
     setTimeout(() => {
@@ -573,6 +578,7 @@ function buildGUI() {
   addButton.mouseOut(() => (isInteractingWithGUI = false));
 
   let printButton = createDiv("print").parent(column1).class("button");
+  updatePrintCounter(printButton); // Initialize the counter with the loaded queue
   printButton.mousePressed(() => {
     isInteractingWithGUI = true;
     mouseIsPressed = false;
@@ -683,6 +689,8 @@ function buildGUI() {
 
     // Clear the queue
     printQueue = [];
+    settings.printQueue = printQueue; // Update settings object
+    saveSettings(); // Save to local storage
     updatePrintCounter(printButton);
 
     setTimeout(() => {
