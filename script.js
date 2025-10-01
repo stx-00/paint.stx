@@ -42,7 +42,7 @@ document.body.appendChild(hc);
 hc.style.display = "none"; // Hide Hydra canvas from view
 
 let hydra = new Hydra({
-  detectAudio: false,
+  detectAudio: true,
   canvas: hc,
 });
 noize = noise; // Use noize() since noise() is taken by p5js
