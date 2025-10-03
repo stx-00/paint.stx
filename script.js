@@ -36,8 +36,8 @@ let libs = ["https://unpkg.com/hydra-synth", "includes/libs/hydra-synth.js"];
 
 // Hydra canvas + init
 let hc = document.createElement("canvas"); // Hydra canvas
-hc.width = 500; // Tiny for brush
-hc.height = 500; // Tiny for brush
+hc.width = 1000; // Tiny for brush
+hc.height = 1000; // Tiny for brush
 document.body.appendChild(hc);
 hc.style.display = "none"; // Hide Hydra canvas from view
 
@@ -61,7 +61,7 @@ const customBrush = "↓ make your own";
 let myBrushes = [
   {
     name: "↓ prismatic pulse",
-    code: `osc(() => zoomSlider.value() / 5, 1, 0.3)
+    code: `osc(() => a.fft[1]*10, 1, 0.3)
   .kaleid([3, 4, 5, 7, 8, 9, 10].fast(0.1))
   .color(0.5, 0.3)
   .colorama(0.4)
@@ -71,7 +71,7 @@ let myBrushes = [
   .mask(
     shape(
         () => shapeSlider.value(),
-        0.5,
+        ()=>a.fft[0],
         0.01
       )
       .scale(0.9)
@@ -109,7 +109,7 @@ let myBrushes = [
         0.5,
         0.01
       )
-      .modulate(osc(10).rotate(0, -0.1), 1)
+//      .modulate(osc(10).rotate(0, -0.1), 1)
       .rotate(
         () => rotateSlider.value(),
         () => rotateSlider.value() / 15
@@ -335,6 +335,7 @@ function setup() {
   noStroke();
   noSmooth();
 
+  noCursor();
   // cursor position in the center of the canvas
   mouseX = width / 2;
   mouseY = height / 2;
@@ -345,6 +346,8 @@ function setup() {
 /////////////////////////////////// DRAW //////////////////////////////////////////////
 
 function draw() {
+  noCursor();
+
   clear();
   background(darkMode ? 0 : 255);
 
@@ -403,6 +406,7 @@ function isDesktopSafari() {
 function buildGUI() {
   let guiWrapper = createDiv("").class("guiWrapper");
   let guiContent = createDiv("").parent(guiWrapper).class("guiContent");
+  let guiVisible = true;
 
   function label(txt, parent) {
     createDiv(txt).parent(parent).class("label");
@@ -692,6 +696,125 @@ function buildGUI() {
   clearQueueButton.mouseOver(() => (isInteractingWithGUI = true));
   clearQueueButton.mouseOut(() => (isInteractingWithGUI = false));
 
+  // AUTO DRAW TOGGLE BUTTON
+  let autoButton = createDiv("auto").parent(column1).class("button");
+  function updateAutoButton() {
+    autoButton.html(autoManual ? "stop" : "auto");
+  }
+  updateAutoButton();
+  autoButton.mousePressed(() => {
+    isInteractingWithGUI = true;
+    autoManual = !autoManual;
+    if (autoManual) {
+      if (!idle) startIdleDrawing();
+    } else {
+      if (idle) stopIdleDrawing();
+      resetIdleTimer();
+    }
+    updateAutoButton();
+    setTimeout(() => {
+      isInteractingWithGUI = false;
+    }, 100);
+  });
+  autoButton.mouseOver(() => (isInteractingWithGUI = true));
+  autoButton.mouseOut(() => (isInteractingWithGUI = false));
+
+  // KEYBOARD SHORTCUT: Cmd/Ctrl + A toggles auto/stop
+  document.addEventListener("keydown", (e) => {
+    const isToggleCombo =
+      (e.metaKey || e.ctrlKey) && (e.key === "A" || e.key === "a");
+    if (!isToggleCombo) return;
+    e.preventDefault();
+    isInteractingWithGUI = true;
+    autoManual = !autoManual;
+    if (autoManual) {
+      if (!idle) startIdleDrawing();
+    } else {
+      if (idle) stopIdleDrawing();
+      resetIdleTimer();
+    }
+    updateAutoButton();
+    setTimeout(() => {
+      isInteractingWithGUI = false;
+    }, 100);
+  });
+
+  // KEYBOARD SHORTCUT: Cmd/Ctrl + H toggles code editor
+  document.addEventListener("keydown", (e) => {
+    const isCodeToggle =
+      (e.metaKey || e.ctrlKey) && (e.key === "H" || e.key === "h");
+    if (!isCodeToggle) return;
+    e.preventDefault();
+    isInteractingWithGUI = true;
+    const willBeVisible = editorWrapper.style("display") === "none";
+    editorWrapper.style("display", willBeVisible ? "block" : "none");
+    if (window.innerWidth <= 850) {
+      toggleButton.html(willBeVisible ? "- hide code" : "+ show code");
+    } else {
+      toggleButton.html(willBeVisible ? "- hide" : "+ show");
+    }
+    toggleStates.code = willBeVisible;
+    setTimeout(() => {
+      isInteractingWithGUI = false;
+    }, 100);
+  });
+
+  // KEYBOARD SHORTCUT: Cmd/Ctrl + E clears canvas (trash)
+  document.addEventListener("keydown", (e) => {
+    const isTrashCombo =
+      (e.metaKey || e.ctrlKey) && (e.key === "E" || e.key === "e");
+    if (!isTrashCombo) return;
+    e.preventDefault();
+    isInteractingWithGUI = true;
+    clearCanvas();
+    setTimeout(() => {
+      isInteractingWithGUI = false;
+    }, 100);
+  });
+
+  // KEYBOARD SHORTCUT: Cmd/Ctrl + Shift + P adds current drawing to print queue
+  document.addEventListener("keydown", (e) => {
+    const isAddToPrint =
+      (e.metaKey || e.ctrlKey) &&
+      e.shiftKey &&
+      (e.key === "P" || e.key === "p");
+    if (!isAddToPrint) return;
+    e.preventDefault();
+    isInteractingWithGUI = true;
+    const canvasData = cleverlayer.canvas.toDataURL();
+    printQueue.push(canvasData);
+    updatePrintCounter(printButton);
+    clearCanvas();
+    setTimeout(() => {
+      isInteractingWithGUI = false;
+    }, 100);
+  });
+
+  // KEYBOARD SHORTCUT: Cmd/Ctrl + J hides/shows all GUI (canvas only view)
+  document.addEventListener("keydown", (e) => {
+    const isGuiToggle =
+      (e.metaKey || e.ctrlKey) && (e.key === "J" || e.key === "j");
+    if (!isGuiToggle) return;
+    e.preventDefault();
+    guiVisible = !guiVisible;
+    guiWrapper.style("display", guiVisible ? "block" : "none");
+  });
+
+  // KEYBOARD SHORTCUT: Cmd/Ctrl + Shift + S saves PNG (same as Save button)
+  document.addEventListener("keydown", (e) => {
+    const isSaveCombo =
+      (e.metaKey || e.ctrlKey) &&
+      e.shiftKey &&
+      (e.key === "S" || e.key === "s");
+    if (!isSaveCombo) return;
+    e.preventDefault();
+    isInteractingWithGUI = true;
+    saveCanvas();
+    setTimeout(() => {
+      isInteractingWithGUI = false;
+    }, 100);
+  });
+
   ///////////////////////////////////////////// COLUMN 2 /////////////////////////////////////////////
 
   let column2 = createDiv("").parent(guiContent).class("column2");
@@ -924,6 +1047,7 @@ function buildGUI() {
   addTouchListeners(submitButton);
   addTouchListeners(printButton);
   addTouchListeners(clearQueueButton);
+  addTouchListeners(autoButton);
 
   [sizeSlider, shapeSlider, rotateSlider, zoomSlider, hyperSlider].forEach(
     (slider) => {
@@ -1013,10 +1137,12 @@ let idle = false;
 let idlePos = { x: 0, y: 0 };
 let idleVelocity = { x: 0, y: 0 };
 let angle = 0;
+let autoManual = false; // manual auto-draw toggle
+let autoStartEnabled = false; // disable automatic idle start
 
-const IDLE_TIMEOUT = 60000; // Time before screensaver starts (60 seconds)
-const IDLE_DURATION = 40000; // How long screensaver runs (40 seconds)
-const MOVEMENT_SPEED = 3; // Base movement speed
+const IDLE_TIMEOUT = 2000; // Time before screensaver starts (60 seconds)
+const IDLE_DURATION = 400000; // How long screensaver runs (40 seconds)
+const MOVEMENT_SPEED = 0.5; // Base movement speed
 const CURVE_INTENSITY = 0.1; // How curved the motion is
 const RANDOM_FACTOR = 0.05; // Amount of randomness in motion
 const ANGLE_CHANGE = 0.03; // Speed of direction change
@@ -1034,8 +1160,10 @@ function startIdleDrawing() {
   idleVelocity.x = random(-MOVEMENT_SPEED, MOVEMENT_SPEED);
   idleVelocity.y = random(-MOVEMENT_SPEED, MOVEMENT_SPEED);
 
-  // Set timer to stop drawing
-  idleDrawingTimer = setTimeout(stopIdleDrawing, IDLE_DURATION);
+  // Set timer to stop drawing (only when not manually toggled)
+  if (!autoManual) {
+    idleDrawingTimer = setTimeout(stopIdleDrawing, IDLE_DURATION);
+  }
   drawCurvedPath();
 }
 
@@ -1047,10 +1175,12 @@ function stopIdleDrawing() {
 
 function resetIdleTimer() {
   clearTimeout(idleTimer);
-  if (idle) {
+  if (idle && !autoManual) {
     stopIdleDrawing();
   }
-  idleTimer = setTimeout(startIdleDrawing, IDLE_TIMEOUT);
+  if (!autoManual && autoStartEnabled) {
+    idleTimer = setTimeout(startIdleDrawing, IDLE_TIMEOUT);
+  }
 }
 
 function drawCurvedPath() {
@@ -1085,11 +1215,5 @@ function drawCurvedPath() {
 }
 
 // Event listeners for user activity
-const resetEvents = [
-  "mousemove",
-  "mousedown",
-  "keydown",
-  "touchstart",
-  "touchmove",
-];
+const resetEvents = ["mousemove", "mousedown", "touchstart", "touchmove"];
 resetEvents.forEach((event) => window.addEventListener(event, resetIdleTimer));
