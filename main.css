@@ -37,6 +37,56 @@
   cursor: none !important;
 }
 
+/* Additional fullscreen cursor hiding */
+html:fullscreen,
+html:-webkit-full-screen,
+html:-moz-full-screen,
+html:-ms-fullscreen {
+  cursor: none !important;
+}
+
+html:fullscreen *,
+html:-webkit-full-screen *,
+html:-moz-full-screen *,
+html:-ms-fullscreen * {
+  cursor: none !important;
+}
+
+/* Ensure all interactive elements have no cursor */
+button,
+input,
+select,
+textarea,
+a,
+[role="button"],
+[tabindex] {
+  cursor: none !important;
+}
+
+button:hover,
+input:hover,
+select:hover,
+textarea:hover,
+a:hover,
+[role="button"]:hover,
+[tabindex]:hover,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus,
+a:focus,
+[role="button"]:focus,
+[tabindex]:focus,
+button:active,
+input:active,
+select:active,
+textarea:active,
+a:active,
+[role="button"]:active,
+[tabindex]:active {
+  cursor: none !important;
+}
+
 body {
   margin: 0;
   overflow: hidden;
@@ -116,7 +166,7 @@ canvas {
 
 .button {
   align-self: flex-start; /* so only button text itself is active */
-  cursor: pointer;
+  cursor: none !important;
 }
 
 .infoText {
@@ -153,7 +203,7 @@ canvas {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  cursor: pointer;
+  cursor: none !important;
   position: relative;
   border: none;
   background: transparent;
@@ -187,7 +237,7 @@ canvas {
 }
 
 .toggleButton {
-  cursor: pointer;
+  cursor: none !important;
   align-self: flex-start;
 }
 
@@ -252,7 +302,7 @@ canvas {
 .slider::-webkit-slider-runnable-track {
   width: 100%;
   height: 1px; /* Exact track height */
-  cursor: pointer;
+  cursor: none !important;
   background: #000000; /* Black track line */
   border: none; /* Ensure no borders */
   box-shadow: 0 0 0 0 transparent; /* Remove shadows */
@@ -263,7 +313,7 @@ canvas {
 .slider::-moz-range-track {
   width: 100%;
   height: 1px; /* Exact track height */
-  cursor: pointer;
+  cursor: none !important;
   background: #000000; /* Black track line */
   border: none; /* Ensure no borders */
   margin: 0; /* Reset any browser defaults */
@@ -277,7 +327,7 @@ canvas {
   width: 25px;
   height: 25px;
   background: #ffffff;
-  cursor: pointer;
+  cursor: none !important;
   border-radius: 50%;
   border: 1px solid #000000;
   box-shadow: none;
@@ -288,7 +338,7 @@ canvas {
   width: 25px;
   height: 25px;
   background: #ffffff;
-  cursor: pointer;
+  cursor: none !important;
   border-radius: 50%;
   border: 1px solid #000000;
   box-shadow: none;
@@ -385,6 +435,7 @@ body.dark-mode .infoText a {
 .select:hover,
 .toggleButton:hover {
   animation: rainbowHover 3s linear infinite;
+  cursor: none !important;
 }
 
 /* =============================================================================
@@ -564,7 +615,7 @@ body.dark-mode .infoText a {
 
   .slider-toggle {
     display: block;
-    cursor: pointer;
+    cursor: none !important;
     position: relative;
     margin-bottom: 9px;
   }
@@ -587,10 +638,12 @@ body.dark-mode .infoText a {
     width: 20px;
     height: 20px;
     margin-top: -10px; /* Adjust to align with track */
+    cursor: none !important;
   }
 
   .slider::-moz-range-thumb {
     width: 20px;
     height: 20px;
+    cursor: none !important;
   }
 }

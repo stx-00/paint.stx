@@ -24,6 +24,19 @@ function println(msg) {
   print(msg);
 }
 
+// robust cursor hiding function that works in fullscreen mode
+function hideCursor() {
+  noCursor(); // p5.js method
+  document.body.style.cursor = "none"; // CSS method
+  document.documentElement.style.cursor = "none"; // CSS method for html element
+
+  // Force cursor hiding on all elements
+  const allElements = document.querySelectorAll("*");
+  allElements.forEach((element) => {
+    element.style.cursor = "none";
+  });
+}
+
 /////////////////////////////////////////////////////////////////////////////////
 
 /*
@@ -335,7 +348,7 @@ function setup() {
   noStroke();
   noSmooth();
 
-  noCursor();
+  hideCursor();
   // cursor position in the center of the canvas
   mouseX = width / 2;
   mouseY = height / 2;
@@ -346,7 +359,7 @@ function setup() {
 /////////////////////////////////// DRAW //////////////////////////////////////////////
 
 function draw() {
-  noCursor();
+  hideCursor();
 
   clear();
   background(darkMode ? 0 : 255);
@@ -815,6 +828,25 @@ function buildGUI() {
     }, 100);
   });
 
+  // KEYBOARD SHORTCUT: Cmd/Ctrl + -/= keys to control sizeSlider
+  document.addEventListener("keydown", (e) => {
+    if ((e.metaKey || e.ctrlKey) && (e.key === "-" || e.key === "=")) {
+      e.preventDefault();
+
+      const currentValue = sizeSlider.value();
+      const step = 0.01; // Step size for keyboard control
+      let newValue = currentValue;
+
+      if ((e.metaKey || e.ctrlKey) && e.key === "=") {
+        newValue = Math.min(1, currentValue + step);
+      } else if ((e.metaKey || e.ctrlKey) && e.key === "-") {
+        newValue = Math.max(0.1, currentValue - step);
+      }
+
+      sizeSlider.value(newValue);
+    }
+  });
+
   ///////////////////////////////////////////// COLUMN 2 /////////////////////////////////////////////
 
   let column2 = createDiv("").parent(guiContent).class("column2");
@@ -1150,7 +1182,7 @@ const DRAW_INTERVAL = 50; // Delay between draws (ms)
 
 function startIdleDrawing() {
   idle = true;
-  noCursor();
+  hideCursor();
 
   // Initialize position at current mouse location or random position
   idlePos.x = mouseX || random(width);
@@ -1169,7 +1201,7 @@ function startIdleDrawing() {
 
 function stopIdleDrawing() {
   idle = false;
-  cursor();
+  hideCursor();
   clearTimeout(idleDrawingTimer);
 }
 
@@ -1217,3 +1249,20 @@ function drawCurvedPath() {
 // Event listeners for user activity
 const resetEvents = ["mousemove", "mousedown", "touchstart", "touchmove"];
 resetEvents.forEach((event) => window.addEventListener(event, resetIdleTimer));
+
+// Event listener for fullscreen changes to ensure cursor stays hidden
+document.addEventListener("fullscreenchange", hideCursor);
+document.addEventListener("webkitfullscreenchange", hideCursor);
+document.addEventListener("mozfullscreenchange", hideCursor);
+document.addEventListener("MSFullscreenChange", hideCursor);
+
+// Event listeners to ensure cursor stays hidden during all mouse interactions
+document.addEventListener("mouseover", hideCursor);
+document.addEventListener("mouseenter", hideCursor);
+document.addEventListener("mouseleave", hideCursor);
+document.addEventListener("mousemove", hideCursor);
+document.addEventListener("mousedown", hideCursor);
+document.addEventListener("mouseup", hideCursor);
+document.addEventListener("click", hideCursor);
+document.addEventListener("focus", hideCursor);
+document.addEventListener("blur", hideCursor);
